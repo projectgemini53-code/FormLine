@@ -2,6 +2,8 @@
 
 A read-only, source-linked research site for all ten Royal Randwick races on 31 October 2026. It is a static HTML/CSS/JavaScript site that can be deployed on Vercel's free Hobby plan. It does not connect to PuntersEdge, place bets, or use a server-side database.
 
+Each race has a provisional first, second and third research order. Select a horse to read its reason, the scenario that could change the order, and public Racing NSW sources. The full runner board and saved personal placement tags are in the private localhost app.
+
 ## Run locally
 
 From this folder, run `python3 -m http.server 8767 --bind 127.0.0.1` and open `http://127.0.0.1:8767/`.

@@ -2,10 +2,10 @@
   "event": "Golden Eagle Day",
   "venue": "Royal Randwick",
   "date": "2026-10-31",
-  "prepared_at": "2026-10-30",
-  "track_checked_at": "2026-10-31 06:27 AEDT",
-  "track_snapshot": "Good 4, rail true, fine weather at the 31 October 6:27 am scratching update. Racing NSW reported 2 mm irrigation in 24 hours and 2 mm rain in seven days. Recheck after scratching close at 7:30 am and before R1.",
-  "coverage_note": "Racing NSW lists all 10 races. The form research was prepared on 30 October and the official track and scratchings report checked on 31 October. This static page has no live odds or automatic result updates. Recheck the linked sources before each race.",
+  "prepared_at": "2026-10-31 07:31",
+  "track_checked_at": "2026-10-31 07:31 AEDT",
+  "track_snapshot": "Good 4, rail true and fine weather at the 31 October 7:29 am official scratching update. Racing NSW listed 32 scratchings; its track report recorded 2 mm irrigation in 24 hours and 2 mm rain in seven days. Recheck the official report before each race.",
+  "coverage_note": "Racing NSW lists all 10 races. Form research began on 30 October; the runner board and official scratching report were checked at 7:31 am on 31 October. This page has no live odds or automatic result updates. Recheck the linked sources before each race.",
   "method_note": "A research lean identifies a runner worth examining, not a bet or a proven edge. Public trainer and jockey views are interested opinions. Ground records are descriptive and can be small. No same-race multi or win recommendation is justified without a current bookmaker quote and a tested probability estimate.",
   "sources": {
     "fields": {
@@ -129,6 +129,41 @@
         "preview",
         "jimmysstar",
         "scratchings"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "7",
+          "horse": "Donatello",
+          "reason": "A Good 4 win at 1450 m and second at 1400 m make the 1500 m step plausible. The BM78 class rise is the test.",
+          "watch": "Class rise and a short career make an exact finishing position uncertain.",
+          "sources": [
+            "donatello_form",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "1",
+          "horse": "Agent Zero",
+          "reason": "He was third first-up at Kensington, has won at Randwick, and his stable expects improvement. He gets a more central draw than Force March.",
+          "watch": "His 58 kg and race tempo matter.",
+          "sources": [
+            "preview",
+            "jimmysstar",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "6",
+          "horse": "Force March",
+          "reason": "Two wins and two seconds in his last four starts are the consistent form line among the remaining runners.",
+          "watch": "Barrier nine in an eight-runner field may cost position.",
+          "sources": [
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -172,6 +207,41 @@
         "scratchings",
         "party",
         "preview"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "6",
+          "horse": "Party Boss",
+          "reason": "The Leeton win and Wagga second show progression. His trainer expects a stalking run from barrier four with Tyler Schiller.",
+          "watch": "This is a first Highway attempt against stronger Sydney opposition.",
+          "sources": [
+            "party",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "2",
+          "horse": "Bluish Hue",
+          "reason": "The Rosehill win and narrow 1600 m defeat give him the strongest recent metropolitan comparison.",
+          "watch": "He backs up within a week and drops to 1400 m.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "5",
+          "horse": "Magic Merlin",
+          "reason": "Barrier three offers a better path than several rivals, and the preview notes an interrupted previous run.",
+          "watch": "He needs a clean passage and enough tempo.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -217,6 +287,42 @@
         "preview",
         "scratchings",
         "lightning_form"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "3",
+          "horse": "Lightning Glory",
+          "reason": "The official form lists four wins from five Good-track starts. He is second-up, draws three, and gets a 2 kg claim.",
+          "watch": "Soft-track form and first-time tongue tie introduce uncertainty.",
+          "sources": [
+            "lightning_form",
+            "fields",
+            "preview"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "2",
+          "horse": "Fiddlers Green",
+          "reason": "Barrier one, a 2 kg claim, and the preview’s first-up pattern are the countercase to Lightning Glory.",
+          "watch": "Returning from a spell means current fitness must be inferred.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "4",
+          "horse": "Ruination",
+          "reason": "He made late ground at Randwick last time and may benefit if the leaders set a strong pace.",
+          "watch": "His recent finishing sequence is mixed and his position early matters.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -262,6 +368,41 @@
         "scratchings",
         "preview",
         "alabama"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "1",
+          "horse": "Alabama State",
+          "reason": "A recent Rosehill Midway win and a positive trainer update support the form. Jett Newman’s claim brings the published weight to 61.5 kg.",
+          "watch": "That is still a substantial weight in a large field.",
+          "sources": [
+            "alabama",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "5",
+          "horse": "Cuban Cigar",
+          "reason": "The Racing NSW preview considers his Coonamble Cup run better than the finishing position suggests.",
+          "watch": "Barrier 16 can create a wide or traffic-heavy trip.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "3",
+          "horse": "Dusty Bay",
+          "reason": "He arrives from a 1600 m win and draws barrier two for an economical run.",
+          "watch": "The 63 kg impost and 1500 m setup need a price allowance.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -308,6 +449,42 @@
         "scratchings",
         "preview",
         "jimmysstar"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "9",
+          "horse": "Think Itz You",
+          "reason": "Two recent wins at 1800–1850 m make him the local improver in this 2000 m race.",
+          "watch": "He has to show the form extends another 150–200 m.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "2",
+          "horse": "Perisher",
+          "reason": "His first Australian start was a Rosehill win; the stable points to overseas form around this trip and a turn of foot.",
+          "watch": "The step to 2000 m locally and 59.5 kg after the claim remain tests.",
+          "sources": [
+            "preview",
+            "jimmysstar",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "8",
+          "horse": "Columbus",
+          "reason": "A recent 1800 m win and second give a repeatable alternative if the two leading distance projections fail.",
+          "watch": "The extra 200 m is still unproven in this setup.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -352,6 +529,41 @@
         "scratchings",
         "stewards",
         "preview"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "7",
+          "horse": "Chix",
+          "reason": "She won first-up at Kensington over 1250 m and draws barrier three at 57 kg.",
+          "watch": "The BM78 field is stronger than the recent form line.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "5",
+          "horse": "Metallic Cat",
+          "reason": "Two competitive 1200 m runs this preparation and barrier four give her a plausible on-speed position.",
+          "watch": "She needs the tempo and 1300 m finish to suit.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "9",
+          "horse": "Hurry Miss",
+          "reason": "Two recent 1300 m wins put her at the right distance.",
+          "watch": "Barrier 14 could require a wide trip or a strong late pace.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -397,6 +609,41 @@
         "preview",
         "jimmysstar",
         "ninja"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "1",
+          "horse": "Jimmysstar",
+          "reason": "He won this race last year and the stable reports a very fast final 200 m in the Everest.",
+          "watch": "The wide published draw could cost ground or leave him with traffic.",
+          "sources": [
+            "jimmysstar",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "8",
+          "horse": "Headwall",
+          "reason": "Fourth in the Everest and barrier three give a strong form-and-map alternative.",
+          "watch": "The preview raises a genuine 1300 m question.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "6",
+          "horse": "Ninja",
+          "reason": "His Everest effort was close to the leading group, and Tommy Berry expects to race on speed.",
+          "watch": "Barrier 13 may make that plan expensive.",
+          "sources": [
+            "ninja",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -448,6 +695,42 @@
         "ninja",
         "jimmysstar",
         "gear"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "16",
+          "horse": "Sheza Alibi",
+          "reason": "Her official 13:8-4-1 career record and wins on Good and Soft ground make her the form benchmark. Barrier six helps.",
+          "watch": "The published record has no 1500 m start; a short price may already reflect her quality.",
+          "sources": [
+            "sheza_form",
+            "sheza",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "1",
+          "horse": "Beiwacht",
+          "reason": "The stable expects an on-speed run and his major wins at 1400 m support a prominent position.",
+          "watch": "The last 100 m at 1500 m and pressure from other leaders are the questions.",
+          "sources": [
+            "waller",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "17",
+          "horse": "Apocalyptic",
+          "reason": "The Silver Eagle win is a direct lead-up to this race, and her rider has discussed the wide barrier publicly.",
+          "watch": "Barrier 18 demands a favourable track pattern and trip.",
+          "sources": [
+            "ninja",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -503,6 +786,42 @@
         "starz_form",
         "friday",
         "preview"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "10",
+          "horse": "Anthracite",
+          "reason": "Official form shows a Good-track 8:4-1-1 split and 2000 m 2:1-1-0. He beat Barrengarry narrowly at the trip.",
+          "watch": "He backs up seven days after a Randwick win.",
+          "sources": [
+            "anthracite_form",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "14",
+          "horse": "Barrengarry",
+          "reason": "He missed Anthracite by only 0.03 lengths at 2000 m and has two Randwick wins.",
+          "watch": "His official distance summary has a second but no win.",
+          "sources": [
+            "barrengarry_form",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "9",
+          "horse": "Starzintheireyes",
+          "reason": "Barrier four and 54 kg improve the map; another public analysis favours his setup. His two official wins came on Soft.",
+          "watch": "Good 4 has produced placings but no win in his five-start official sample.",
+          "sources": [
+            "starz_form",
+            "friday",
+            "fields"
+          ]
+        }
       ]
     },
     {
@@ -550,6 +869,41 @@
         "somerton",
         "friday",
         "preview"
+      ],
+      "ranked": [
+        {
+          "place": 1,
+          "number": "14",
+          "horse": "Somerton Smart",
+          "reason": "Four wins from eight starts and a fresh Tamworth win make a progressive profile. The trainer hopes for a stalking run from barrier five.",
+          "watch": "He faces a deeper metropolitan BM78 field.",
+          "sources": [
+            "somerton",
+            "fields"
+          ]
+        },
+        {
+          "place": 2,
+          "number": "6",
+          "horse": "Fuadee",
+          "reason": "A Warwick Farm win and barrier two underpin the Friday Focus countercase.",
+          "watch": "The stronger Randwick field and 57.5 kg need weighing against price.",
+          "sources": [
+            "friday",
+            "fields"
+          ]
+        },
+        {
+          "place": 3,
+          "number": "15",
+          "horse": "Better Late",
+          "reason": "A 52.5 kg carried weight after the claim and barrier seven could support an economical on-speed run.",
+          "watch": "She still needs to prove she can match the stronger recent winning form.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
       ]
     }
   ]
