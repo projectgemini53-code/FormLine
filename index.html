@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Source-linked research for all ten races at Royal Randwick on Golden Eagle Day, 31 October 2026.">
+  <title>Golden Eagle Day | FormLine</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#race-panel">Skip to race research</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand" aria-label="FormLine racing research">
+        <span class="brand-mark">F</span>
+        <span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span>
+      </div>
+      <span class="header-tag">ROYAL RANDWICK <span aria-hidden="true">/</span> 31 OCT 2026</span>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">GOLDEN EAGLE DAY · RACE-BY-RACE RESEARCH</p>
+        <h1 id="page-title">Read the form.<br><span>Question the price.</span></h1>
+        <p class="hero-copy">Ten races at Royal Randwick, each with a form case, opposing runners, track scenarios and the questions to answer before the jump.</p>
+      </div>
+      <div class="hero-badge"><span>10</span><small>RACES<br>RESEARCHED</small></div>
+    </section>
+
+    <section class="status" aria-label="Research status">
+      <div><span class="status-dot"></span><strong>Research snapshot</strong><span id="snapshot-date">Loading…</span></div>
+      <p>Public sources and dated form analysis. No live odds or automatic updates.</p>
+    </section>
+
+    <section class="conditions" aria-labelledby="conditions-title">
+      <div><p class="eyebrow">TRACK REPORT</p><h2 id="conditions-title">Current published conditions</h2><p id="track-snapshot">Loading track report…</p><small id="track-time"></small></div>
+      <a class="outline-link" id="track-link" href="https://mdata.racingnsw.com.au/FreeFields/Scratchings.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick" target="_blank" rel="noopener noreferrer">Check official scratchings ↗</a>
+    </section>
+
+    <section class="research" aria-labelledby="research-title">
+      <div class="section-heading"><div><p class="eyebrow">THE RACE CARD</p><h2 id="research-title">Choose a race</h2></div><p>Each lean is a starting point for research, not a bet.</p></div>
+      <div id="race-tabs" class="race-tabs" role="tablist" aria-label="Randwick race research"></div>
+      <div class="content-grid">
+        <article id="race-panel" class="race-panel" role="tabpanel" tabindex="0" aria-live="polite"><div class="loading">Loading race research…</div></article>
+        <aside class="race-index" aria-labelledby="index-title"><p class="eyebrow">AT A GLANCE</p><h2 id="index-title">All 10 races</h2><div id="race-index-list"></div></aside>
+      </div>
+    </section>
+    <section class="method" aria-labelledby="method-title"><div><p class="eyebrow">HOW TO USE THIS</p><h2 id="method-title">Evidence first. Price second.</h2></div><div id="method-copy"></div></section>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><strong>FORMLINE</strong><span>Royal Randwick · 31 October 2026</span><span>Public research only · No bets placed</span></div></footer>
+</body>
+</html>

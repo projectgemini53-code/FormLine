@@ -1,0 +1,556 @@
+{
+  "event": "Golden Eagle Day",
+  "venue": "Royal Randwick",
+  "date": "2026-10-31",
+  "prepared_at": "2026-10-30",
+  "track_checked_at": "2026-10-31 06:27 AEDT",
+  "track_snapshot": "Good 4, rail true, fine weather at the 31 October 6:27 am scratching update. Racing NSW reported 2 mm irrigation in 24 hours and 2 mm rain in seven days. Recheck after scratching close at 7:30 am and before R1.",
+  "coverage_note": "Racing NSW lists all 10 races. The form research was prepared on 30 October and the official track and scratchings report checked on 31 October. This static page has no live odds or automatic result updates. Recheck the linked sources before each race.",
+  "method_note": "A research lean identifies a runner worth examining, not a bet or a proven edge. Public trainer and jockey views are interested opinions. Ground records are descriptive and can be small. No same-race multi or win recommendation is justified without a current bookmaker quote and a tested probability estimate.",
+  "sources": {
+    "fields": {
+      "title": "Racing NSW final fields",
+      "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick"
+    },
+    "scratchings": {
+      "title": "Racing NSW scratchings and track",
+      "url": "https://mdata.racingnsw.com.au/FreeFields/Scratchings.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick"
+    },
+    "preview": {
+      "title": "Racing NSW 10-race preview",
+      "url": "https://www.racingnsw.com.au/news/latest-racing-news/randwick-preview-tips-for-golden-eagle-day-saturday-31st-october/"
+    },
+    "stewards": {
+      "title": "Racing NSW stewards notices",
+      "url": "https://www.racingnsw.com.au/news/country-racing/stewards-notifications-saturday-31st-oct-to-tuesday-3rd-nov/"
+    },
+    "party": {
+      "title": "Party Boss trainer interview",
+      "url": "https://www.racingnsw.com.au/news/country-racing/colvin-previews-partys-championships-prospects-with-highway-debut/"
+    },
+    "alabama": {
+      "title": "Alabama State trainer interview",
+      "url": "https://www.racingnsw.com.au/news/latest-racing-news/jetts-no-stranger-to-the-fancied-alabama-state-randwick-saturday/"
+    },
+    "jimmysstar": {
+      "title": "Jimmysstar stable interview",
+      "url": "https://www.racingnsw.com.au/news/latest-racing-news/jimmys-russell-balding-defence-not-wide-of-the-mark/"
+    },
+    "ninja": {
+      "title": "Ninja and Apocalyptic rider interview",
+      "url": "https://www.racingnsw.com.au/news/latest-racing-news/apocalyptic-barrier-throws-berry-a-golden-curve-ball/"
+    },
+    "sheza": {
+      "title": "Sheza Alibi rider interview",
+      "url": "https://www.racingnsw.com.au/news/latest-racing-news/nolen-unfazed-by-alibis-unorthodox-path-to-eagle/"
+    },
+    "waller": {
+      "title": "Waller on Beiwacht and Autumn Boy",
+      "url": "https://www.racingnsw.com.au/news/latest-racing-news/waller-banking-on-beiwacht-being-a-golden-bully/"
+    },
+    "gear": {
+      "title": "Autumn Boy late gear approval",
+      "url": "https://www.racingnsw.com.au/news/metropolitan-news/late-gear-change-autumn-boy-randwick/"
+    },
+    "friday": {
+      "title": "Friday Focus alternate view",
+      "url": "https://www.racingnsw.com.au/news/country-news/friday-focus-a-snapshot-of-saturday-racing-175/"
+    },
+    "somerton": {
+      "title": "Somerton Smart trainer interview",
+      "url": "https://www.racingnsw.com.au/news/latest-racing-news/grills-hoping-sydney-mission-proves-a-smart-move/"
+    },
+    "donatello_form": {
+      "title": "Donatello official horse form",
+      "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick&horsecode=NDg4Njc1MTI3NjA%3D&raceentry=MTQ0MzQxODM3MTAw&src=horseform&stage=Acceptances"
+    },
+    "sheza_form": {
+      "title": "Sheza Alibi official horse form",
+      "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick&horsecode=NDg1NzQwMDU3NTA%3D&raceentry=MTQzNTk4MjAyMzgw&src=horseform&stage=Acceptances"
+    },
+    "starz_form": {
+      "title": "Starzintheireyes official horse form",
+      "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick&horsecode=NDkwMTI1MDczNTA%3D&raceentry=MTQ0Mjk4NTIzMjUw&src=horseform&stage=Acceptances"
+    },
+    "anthracite_form": {
+      "title": "Anthracite official horse form",
+      "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick&horsecode=NDg0MTA5Njc1MTA%3D&raceentry=MTQ0MzEzOTc2MjUw&src=horseform&stage=Acceptances"
+    },
+    "barrengarry_form": {
+      "title": "Barrengarry official horse form",
+      "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick&horsecode=NDg1NzAxMTUyMzA%3D&raceentry=MTQ0MjgxODA2NzQw&src=horseform&stage=Acceptances"
+    },
+    "lightning_form": {
+      "title": "Lightning Glory official horse form",
+      "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick&horsecode=NDg0MDc4ODYwMDA%3D&raceentry=MTQ0MjUwNDU1MzMw&src=horseform&stage=Acceptances"
+    }
+  },
+  "races": [
+    {
+      "number": 1,
+      "time": "12:10 pm",
+      "name": "Toyota Forklifts Handicap",
+      "distance_m": 1500,
+      "grade": "BM78 handicap",
+      "feed": "Official fields and public reports",
+      "lean": "Donatello",
+      "lean_number": 7,
+      "thesis": "A progressive 1500 m candidate in a nine-horse field, with Agent Zero the main counterargument.",
+      "evidence": [
+        {
+          "text": "Donatello won at 1450 m on Good 4 on 1 October, then finished second at 1400 m on Good 4 on 21 October. The official career record includes one win and one second from three Good-track starts.",
+          "sources": [
+            "donatello_form"
+          ]
+        },
+        {
+          "text": "His recent 1400 m run ended only 0.55 lengths behind the winner. The 1500 m step looks plausible, but this is a move from BM68 into BM78 company.",
+          "sources": [
+            "donatello_form",
+            "fields"
+          ]
+        },
+        {
+          "text": "Agent Zero was third first-up at Kensington and has a prior Randwick win; his stable expects improvement. Force March has two wins and two seconds in his last four runs but starts from barrier nine.",
+          "sources": [
+            "preview",
+            "jimmysstar",
+            "fields"
+          ]
+        }
+      ],
+      "alternatives": "Agent Zero if the race is strongly run and his 58 kg is manageable; Force March if the small field lets him settle from the outside.",
+      "ground": "Good 4 suits Donatello's recent evidence. If the track softens, his own Soft sample is small, so reassess against Agent Zero and Force March rather than applying a mechanical wet-track bonus.",
+      "risk": "Only eight official career starts and a class rise; short-priced support alone would not establish value.",
+      "race_day": "Confirm final track, barrier changes and live win/place prices. A stable comment mentions blinkers for Agent Zero, but the gear page showed no change when checked; verify the official declaration.",
+      "source_ids": [
+        "fields",
+        "donatello_form",
+        "preview",
+        "jimmysstar",
+        "scratchings"
+      ]
+    },
+    {
+      "number": 2,
+      "time": "12:45 pm",
+      "name": "TAB Highway Handicap",
+      "distance_m": 1400,
+      "grade": "Class 3 Highway",
+      "feed": "Official fields and public reports",
+      "lean": "Party Boss",
+      "lean_number": 6,
+      "thesis": "Third-up local improver with a workable draw; Bluish Hue is the more established city form line.",
+      "evidence": [
+        {
+          "text": "Party Boss won at Leeton over 1150 m and was second at Wagga over 1300 m. The trainer describes him as an improving horse, but this is his first Highway race in Sydney.",
+          "sources": [
+            "party"
+          ]
+        },
+        {
+          "text": "Trainer Gary Colvin expects him to be competitive in his first Highway and describes a plan to settle behind the speed. Barrier four and Tyler Schiller support that possible map, though the plan is not a guarantee.",
+          "sources": [
+            "party",
+            "fields"
+          ]
+        },
+        {
+          "text": "Bluish Hue won at Rosehill two starts ago and was narrowly beaten at 1600 m last week; he backs up within seven days and drops to 1400 m. Magic Merlin is drawn three after an interrupted previous run.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
+      ],
+      "alternatives": "Bluish Hue for proven Sydney form; Magic Merlin if a clear passage and a faster pace help his late run.",
+      "ground": "The published Good 4 supports using the recent Leeton and Wagga runs as context. If the track softens materially, inspect each contender’s official wet-track form before changing the assessment.",
+      "risk": "First Highway attempt, deeper field and 57.5 kg. Famoso and Santatime were scratched on race morning; Street Force's wide gate and the emergency list still make the final pace map important.",
+      "race_day": "Recheck scratchings after 7:30 am, whether emergencies gain a start, and the actual place terms before considering an each-way paper entry.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "party",
+        "preview"
+      ]
+    },
+    {
+      "number": 3,
+      "time": "1:20 pm",
+      "name": "Mostyncopper Handicap",
+      "distance_m": 1300,
+      "grade": "BM78, colts/geldings/entires",
+      "feed": "Official fields and public reports",
+      "lean": "Lightning Glory",
+      "lean_number": 3,
+      "thesis": "A Good-track alternative to the published preview's fresh Fiddlers Green selection.",
+      "evidence": [
+        {
+          "text": "Racing NSW lists Lightning Glory at four wins from five Good-track starts and no placing from three Soft starts. He was fifth at 1250 m first-up, about a length away, and is second-up from barrier three with a 2 kg claim. A tongue tie is listed as first-time gear.",
+          "sources": [
+            "lightning_form",
+            "fields",
+            "preview"
+          ]
+        },
+        {
+          "text": "Fiddlers Green draws barrier one with a 2 kg claim. The Racing NSW preview notes his fresh-run pattern; he remains an alternative if the market price allows for the uncertainty of a return from a spell.",
+          "sources": [
+            "fields",
+            "preview"
+          ]
+        },
+        {
+          "text": "Ruination made ground at Randwick last time after settling back. He can improve if positioned closer, but his latest finishing sequence is mixed.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        }
+      ],
+      "alternatives": "Fiddlers Green if early money and a positive map support the first-up case; Ruination if the expected tempo sets up a closer.",
+      "ground": "Lightning Glory’s official split is Good 5:4-0-1 versus Soft 3:0-0-0. That makes a downgrade a reason to reassess, while the sample is too small to prove he cannot handle rain.",
+      "risk": "This is an open race with no clear pace edge. The official Good-track record is only five starts and is not a calibrated win probability.",
+      "race_day": "Check the final rating and whether the inside runners can secure clear running; compare actual quotes rather than treating a short form record as a betting edge.",
+      "source_ids": [
+        "fields",
+        "preview",
+        "scratchings",
+        "lightning_form"
+      ]
+    },
+    {
+      "number": 4,
+      "time": "2:00 pm",
+      "name": "Four Pillars Midway",
+      "distance_m": 1500,
+      "grade": "BM68 Midway",
+      "feed": "Official fields and public reports",
+      "lean": "Alabama State",
+      "lean_number": 1,
+      "thesis": "Reliable recent Midway winner; Cuban Cigar offers a compelling closing-run alternative with a harder draw.",
+      "evidence": [
+        {
+          "text": "Alabama State won a Rosehill Midway over 1400 m on 10 October. Trainer Jack Pilkington reports he has stayed fit; apprentice Jett Newman claims 3 kg, but the published 64.5 kg still becomes a substantial 61.5 kg carried weight.",
+          "sources": [
+            "alabama",
+            "fields"
+          ]
+        },
+        {
+          "text": "The Racing NSW preview argues Cuban Cigar’s Coonamble Cup finish was better than the result. Barrier 16 in a large field creates a genuine traffic cost, even if his closing run is strong.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "text": "Dusty Bay comes off a 1600 m win and has barrier two; his 63 kg is another weight question. Octa De Lago has been scratched from the published field.",
+          "sources": [
+            "preview",
+            "fields",
+            "scratchings"
+          ]
+        }
+      ],
+      "alternatives": "Cuban Cigar if the price compensates for a likely wide or traffic-affected trip; Dusty Bay if the inside draw produces an economical run.",
+      "ground": "Good 4 leaves the current form case intact. A softer surface could change the tempo and disadvantage of barrier 16; consult the official wet-track form before assigning a surface edge.",
+      "risk": "Eighteen initial main-field acceptors, possible emergencies and a high carried weight for Alabama State make this more uncertain than a simple last-start-win reading.",
+      "race_day": "Confirm the final field, rail pattern, carried weights and each-way place count. A favourite quote alone is not enough for a win bet.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "preview",
+        "alabama"
+      ]
+    },
+    {
+      "number": 5,
+      "time": "2:40 pm",
+      "name": "ALM On-Premise Handicap",
+      "distance_m": 2000,
+      "grade": "BM78 handicap",
+      "feed": "Official fields and public reports",
+      "lean": "Think Itz You",
+      "lean_number": 9,
+      "thesis": "A local-distance form alternative to the market's likely focus on imported Perisher.",
+      "evidence": [
+        {
+          "text": "Think Itz You arrives after two wins at 1850 m and 1800 m. The official field puts him on 57.5 kg from barrier nine. His first attempt at 2000 m remains the central test.",
+          "sources": [
+            "fields",
+            "preview"
+          ]
+        },
+        {
+          "text": "Perisher won his first Australian start at Rosehill over 1500 m and has overseas winning form around this trip. The stable describes him as a horse who settles and quickens; after the 3 kg claim he is listed to carry 59.5 kg from barrier ten.",
+          "sources": [
+            "preview",
+            "jimmysstar",
+            "fields"
+          ]
+        },
+        {
+          "text": "Columbus has recent 1800 m form; the Racing NSW preview notes Koolibah’s 2000 m win. Koolibah is drawn three on 52 kg after the claim. Medatsu, Barrengarry, Samarelle and Mornington Pier were scratched from this race.",
+          "sources": [
+            "fields",
+            "scratchings",
+            "preview"
+          ]
+        }
+      ],
+      "alternatives": "Perisher if the local form and market support the step to 2000 m; Columbus for repeatable 1800 m form; Koolibah as a light-weight distance watch.",
+      "ground": "The 2000 m projection matters more than an unsupported surface adjustment. If the track downgrades, inspect each runner’s official wet-track and distance form before preferring the import or the local improver.",
+      "risk": "The two leading narratives are both distance projections. Perisher's apparent class edge can be fully priced into a short quote, while Think Itz You has not yet proven 2000 m.",
+      "race_day": "Verify the final field, pace and track before comparing prices. Treat imported form and a single local run as uncertain inputs.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "preview",
+        "jimmysstar"
+      ]
+    },
+    {
+      "number": 6,
+      "time": "3:20 pm",
+      "name": "E Security Group Handicap",
+      "distance_m": 1300,
+      "grade": "BM78 fillies and mares",
+      "feed": "Official fields and public reports",
+      "lean": "Chix",
+      "lean_number": 7,
+      "thesis": "Strong recent winning sequence with a favourable draw, though the evidence is from a small career and easier company.",
+      "evidence": [
+        {
+          "text": "Chix won first-up at Kensington over 1250 m, according to the Racing NSW preview, and draws barrier three at 57 kg. Her recent record is strong, but she rises into a deeper BM78 field.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "text": "Metallic Cat has been competitive twice at 1200 m this preparation and draws barrier four. Hurry Miss has two recent 1300 m wins but barrier 14 may force a more difficult trip.",
+          "sources": [
+            "preview",
+            "fields"
+          ]
+        },
+        {
+          "text": "Sylph has been scratched. Stewards report Regal Problem will carry 1 kg over the original allotment, and Miss Spacegirl has a first-time synthetic hoof filler on the near side.",
+          "sources": [
+            "scratchings",
+            "stewards"
+          ]
+        }
+      ],
+      "alternatives": "Metallic Cat if she controls the front section; Hurry Miss if the surface softens and there is enough pace to bring her into the finish.",
+      "ground": "The current case is based on recent wins, draw and class. Ground splits have not been independently assessed for this public note; if rain arrives, recheck the official horse form before upgrading any runner.",
+      "risk": "Chix rises in grade. The stewards' overweight and plating notices are official information, but neither proves a performance change.",
+      "race_day": "Recheck the rating and late scratchings; compare a current price with the stronger class level before making any paper decision.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "stewards",
+        "preview"
+      ]
+    },
+    {
+      "number": 7,
+      "time": "4:00 pm",
+      "name": "The Russell Balding Stakes",
+      "distance_m": 1300,
+      "grade": "Group 2",
+      "feed": "Official fields and public reports",
+      "lean": "Jimmysstar",
+      "lean_number": 1,
+      "thesis": "Defending winner with a strong late Everest run; the outside draw makes his path and price central.",
+      "evidence": [
+        {
+          "text": "Jimmysstar won this race last year. His stable says he is more comfortable getting to the outside, and Racing NSW reports he ran the fastest final 200 m in the Everest at 11.80 seconds. He starts from barrier 16 in the published field.",
+          "sources": [
+            "jimmysstar",
+            "fields"
+          ]
+        },
+        {
+          "text": "Headwall was fourth in the Everest and draws barrier three, but 1300 m remains a distance question in the preview. Ninja was close behind the leaders in the Everest; rider Tommy Berry expects him to race on speed despite barrier 13.",
+          "sources": [
+            "preview",
+            "ninja",
+            "fields"
+          ]
+        },
+        {
+          "text": "Wanaruah and emergency Chidiac are listed as scratched in the afternoon update, which may alter the effective outside barrier and pace map.",
+          "sources": [
+            "scratchings"
+          ]
+        }
+      ],
+      "alternatives": "Headwall if the pace is moderate and the inside path is favourable; Ninja if early speed secures an economical position.",
+      "ground": "The available public case rests on race pattern and recent elite form, not a measured Good-versus-Soft advantage. Recheck the track rather than assigning an unsupported ground boost.",
+      "risk": "An outside draw can mean extra distance covered or traffic from the back. The stable's confidence is an interested opinion, not inside certainty.",
+      "race_day": "Watch earlier races for an outside-lane bias, verify scratchings and inspect a live quote before treating him as a win or place candidate.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "preview",
+        "jimmysstar",
+        "ninja"
+      ]
+    },
+    {
+      "number": 8,
+      "time": "4:45 pm",
+      "name": "Asahi Super Dry Golden Eagle",
+      "distance_m": 1500,
+      "grade": "Group 1 · four-year-olds",
+      "feed": "Official fields and public reports",
+      "lean": "Sheza Alibi",
+      "lean_number": 16,
+      "thesis": "The most proven form candidate, but a short favourite can still be a poor-value bet.",
+      "evidence": [
+        {
+          "text": "Sheza Alibi's official record is 13 starts, eight wins, four seconds and one third. At Randwick she is 3:2-1-0; on Good tracks 8:5-2-1 and on Soft tracks 5:3-2-0. Barrier six gives a more flexible map than several rivals.",
+          "sources": [
+            "sheza_form",
+            "fields"
+          ]
+        },
+        {
+          "text": "Her latest 2000 m second was beaten 0.15 lengths in track-record time. Luke Nolen reports she recovered well and has sharpened for the drop to 1500 m, but she has no official 1500 m start in that form summary.",
+          "sources": [
+            "sheza_form",
+            "sheza"
+          ]
+        },
+        {
+          "text": "Beiwacht's stable expects him to roll forward from barrier ten; his major wins are at 1400 m, so 1500 m is a question. Apocalyptic won the Silver Eagle but draws 18; Amazing Journey is an imported first-up wildcard from barrier 15. Autumn Boy has approved late blinkers-off gear.",
+          "sources": [
+            "waller",
+            "ninja",
+            "jimmysstar",
+            "gear",
+            "fields"
+          ]
+        }
+      ],
+      "alternatives": "Beiwacht if he controls the tempo without pressure; Apocalyptic if a wide draw becomes an advantage; Amazing Journey only with extra confidence from market and parade evidence.",
+      "ground": "Sheza Alibi has demonstrated wins on both Good and Soft official surfaces; a downgrade alone does not remove her case. A heavy rating would be new ground in her published record and deserves a fresh assessment.",
+      "risk": "The 16 runners remaining after two published scratchings, tempo, exact 1500 m test and short market price can outweigh a strong form profile. A public stable view is not privileged information.",
+      "race_day": "Confirm the Good/Soft rating, pace pressure on Beiwacht, final barriers after scratchings and actual fixed odds. Do not call the favourite a value bet without a defensible price comparison.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "sheza_form",
+        "sheza",
+        "waller",
+        "ninja",
+        "jimmysstar",
+        "gear"
+      ]
+    },
+    {
+      "number": 9,
+      "time": "5:20 pm",
+      "name": "Sydney Gold Cup",
+      "distance_m": 2000,
+      "grade": "Listed quality",
+      "feed": "Official fields and public reports",
+      "lean": "Anthracite",
+      "lean_number": 10,
+      "thesis": "A pace and Good-track reference point; Barrengarry and Starzintheireyes are live alternatives with different race shapes.",
+      "evidence": [
+        {
+          "text": "Anthracite's official Good-track record is 8:4-1-1 and his 2000 m record is 2:1-1-0. He beat Barrengarry narrowly at 2000 m on 10 October, then won at Randwick over 1600 m on 24 October; he carries 53.5 kg from barrier five.",
+          "sources": [
+            "anthracite_form",
+            "fields"
+          ]
+        },
+        {
+          "text": "Barrengarry was only 0.03 lengths behind Anthracite in that 2000 m race and has two Randwick wins, but his official distance record is 2:0-1-0. He is drawn six at 53 kg.",
+          "sources": [
+            "barrengarry_form",
+            "fields",
+            "preview"
+          ]
+        },
+        {
+          "text": "Starzintheireyes draws four and drops to 54 kg. Friday Focus favours his improved setup, while his official Good-track record is 5:0-4-0 versus Soft 4:2-0-0; this suggests a possible condition angle, not a guaranteed wet-track improvement.",
+          "sources": [
+            "friday",
+            "starz_form",
+            "fields"
+          ]
+        },
+        {
+          "text": "Pounding and Perisher were scratched before race day; Tavi Time was also scratched on race morning.",
+          "sources": [
+            "scratchings"
+          ]
+        }
+      ],
+      "alternatives": "Barrengarry if a faster tempo allows his late run; Starzintheireyes if he settles closer from barrier four or the track softens and the price is attractive.",
+      "ground": "Good 4 favours the demonstrated Anthracite case. Starzintheireyes has placed often on Good but his two official wins are on Soft, so rain would raise interest while leaving sample-size uncertainty.",
+      "risk": "Anthracite backs up seven days after his latest win and must stay at 2000 m; Barrengarry has not won at the trip. Different public analysts favour different horses.",
+      "race_day": "Recheck the final pace map and going. Compare live 2000 m win/place markets; do not combine old quoted prices from different dates as if simultaneous.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "anthracite_form",
+        "barrengarry_form",
+        "starz_form",
+        "friday",
+        "preview"
+      ]
+    },
+    {
+      "number": 10,
+      "time": "5:55 pm",
+      "name": "Catanach's Jewellers Handicap",
+      "distance_m": 1100,
+      "grade": "BM78 handicap",
+      "feed": "Official fields and public reports",
+      "lean": "Somerton Smart",
+      "lean_number": 14,
+      "thesis": "Lightly raced country sprinter with a suitable stalking draw, but the metropolitan class rise is real.",
+      "evidence": [
+        {
+          "text": "Somerton Smart has won four of eight starts according to his trainer interview. He won fresh over 1000 m at Tamworth, draws barrier five at 54.5 kg, and his trainer hopes he can sit behind a contested pace rather than lead.",
+          "sources": [
+            "somerton",
+            "fields"
+          ]
+        },
+        {
+          "text": "Friday Focus makes a separate case for Fuadee after a sharp Warwick Farm win; he is drawn two at 57.5 kg. This is a useful counterview to the main race preview's Somerton Smart selection.",
+          "sources": [
+            "friday",
+            "fields",
+            "preview"
+          ]
+        },
+        {
+          "text": "Better Late has a lighter 52.5 kg after the claim and barrier seven; Where'stheprofit has a recent Dubbo win but carries 58.5 kg. Compensation, Pride To Follow, Pokerjack and Nullarbor Jane were scratched.",
+          "sources": [
+            "fields",
+            "preview",
+            "scratchings"
+          ]
+        }
+      ],
+      "alternatives": "Fuadee if the Warwick Farm form translates and the inside draw works; Better Late if she gets a cheap on-speed run at the lower weight.",
+      "ground": "The current public case is about class, pace and draw. No verified Good-versus-Soft split was available for these contenders in the inspected data, so any rain requires a fresh official-form check.",
+      "risk": "Somerton Smart's trainer explicitly treats this as a step into deeper water. A strong country record is not by itself a Randwick BM78 probability estimate.",
+      "race_day": "Confirm final track and actual runners, then watch whether earlier 1100 m races favour leaders or closers. Check live prices; paper-test only if a defensible edge exists.",
+      "source_ids": [
+        "fields",
+        "scratchings",
+        "somerton",
+        "friday",
+        "preview"
+      ]
+    }
+  ]
+}
