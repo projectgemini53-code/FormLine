@@ -1,8 +1,6 @@
-# FormLine · Golden Eagle Day research
+# FormLine · Melbourne Cup Day research
 
-A read-only, source-linked research site for all ten Royal Randwick races on 31 October 2026. It is a static HTML/CSS/JavaScript site that can be deployed on Vercel's free Hobby plan. It does not connect to PuntersEdge, place bets, or use a server-side database.
-
-Each race has a provisional first, second and third research order. Select a horse to read its reason, the scenario that could change the order, and public Racing NSW sources. The full runner board and saved personal placement tags are in the private localhost app.
+A static, source-linked research site for all ten Flemington races on 3 November 2026, with 24 Melbourne Cup runner dossiers and a dated Inside track section. It can deploy to Vercel's free Hobby plan. It does not use PuntersEdge, place bets, or require a server database. Cup favourite and placement marks save in the visitor's browser.
 
 ## Run locally
 
@@ -10,8 +8,12 @@ From this folder, run `python3 -m http.server 8767 --bind 127.0.0.1` and open `h
 
 ## Deploy on Vercel
 
-Import this repository as a Vercel project. Select **Other** as the framework preset, leave the build command empty, and use the repository root as the output directory. The root `index.html` is the site entry point. No environment variables or database are needed.
+Import this repository as a Vercel project. Select **Other** as the framework preset, leave the build command empty, and use the repository root as the output directory. No environment variables or database are needed.
 
-The analysis is a dated research snapshot. It does not automatically refresh odds, scratchings, track condition, or results. Check the linked Racing NSW sources before using it. Public stable comments are interested opinions, and a research lean is not a verified betting edge.
+## Phone app mode
 
-The private local analytics application, its API key, SQLite database and PuntersEdge form snapshot are deliberately excluded from this public site.
+The site includes a web app manifest, service worker, and responsive navigation drawer. On iPhone, open the HTTPS site in Safari and choose **Share → Add to Home Screen**. On Android, choose **Install app** or **Add to Home screen**. Launch from the saved icon to use standalone mode without ordinary browser tabs. A website cannot hide Safari or Chrome controls while it remains in a normal tab.
+
+The analysis and Inside track reports are dated snapshots. They do not automatically refresh odds, scratchings, ground or results. Check the linked VRC, Racing.com and Bureau of Meteorology sources before each race. A stable comment is an interested opinion and a form watchlist is not a verified betting edge.
+
+The private local analytics application, its API key, full acceptance snapshot and SQLite database are excluded from this public repository.

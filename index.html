@@ -2,55 +2,44 @@
 <html lang="en-AU">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="Source-linked research for all ten races at Royal Randwick on Golden Eagle Day, 31 October 2026.">
-  <title>Golden Eagle Day | FormLine</title>
+  <meta name="theme-color" content="#112826">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Source-linked research for Melbourne Cup Day at Flemington on 3 November 2026.">
+  <title>Melbourne Cup Day | FormLine</title>
   <link rel="icon" type="image/png" href="logo-green.png">
+  <link rel="apple-touch-icon" href="logo-green.png">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#race-panel">Skip to race research</a>
+  <a class="skip-link" href="#race-panel">Skip to research</a>
   <header class="site-header">
     <div class="header-inner">
-      <div class="brand" aria-label="FormLine racing research">
-        <span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span>
-        <span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span>
-      </div>
-      <span class="header-tag">ROYAL RANDWICK <span aria-hidden="true">/</span> 31 OCT 2026</span>
+      <button type="button" id="menuToggle" class="menu-toggle" aria-controls="appSidebar" aria-expanded="false" aria-label="Open navigation">☰</button>
+      <div class="brand" aria-label="FormLine racing research"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></div>
+      <nav class="desktop-nav" aria-label="Sections"><a href="#research">Race research</a><a href="#news">Inside track</a><a href="#install">Install app</a></nav>
+      <span class="header-tag">FLEMINGTON <span aria-hidden="true">/</span> 3 NOV 2026</span>
     </div>
   </header>
+  <aside id="appSidebar" class="mobile-sidebar" aria-label="Mobile navigation">
+    <div class="brand"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></div>
+    <nav aria-label="Mobile sections"><a href="#research">Race research</a><a href="#news">Inside track</a><a href="#install">Install app</a><a href="https://www.vrc.com.au/track-and-weather-conditions/" target="_blank" rel="noopener noreferrer">Official track report ↗</a></nav>
+    <p>Public research snapshot · no bets placed</p>
+  </aside>
+  <button type="button" id="menuScrim" class="menu-scrim" aria-label="Close navigation" tabindex="-1"></button>
   <main class="shell">
-    <section class="hero" aria-labelledby="page-title">
-      <div>
-        <p class="eyebrow">GOLDEN EAGLE DAY · RACE-BY-RACE RESEARCH</p>
-        <h1 id="page-title">Read the form.<br><span>Question the price.</span></h1>
-        <p class="hero-copy">Ten races at Royal Randwick, each with a form case, opposing runners, track scenarios and the questions to answer before the jump.</p>
-      </div>
-      <div class="hero-badge"><span>10</span><small>RACES<br>RESEARCHED</small></div>
-    </section>
-
-    <section class="status" aria-label="Research status">
-      <div><span class="status-dot"></span><strong>Research snapshot</strong><span id="snapshot-date">Loading…</span></div>
-      <p>Public sources and dated form analysis. No live odds or automatic updates.</p>
-    </section>
-
-    <section class="conditions" aria-labelledby="conditions-title">
-      <div><p class="eyebrow">TRACK REPORT</p><h2 id="conditions-title">Current published conditions</h2><p id="track-snapshot">Loading track report…</p><small id="track-time"></small></div>
-      <a class="outline-link" id="track-link" href="https://mdata.racingnsw.com.au/FreeFields/Scratchings.aspx?Key=2026Oct31%2CNSW%2CRoyal+Randwick" target="_blank" rel="noopener noreferrer">Check official scratchings ↗</a>
-    </section>
-
-    <section class="research" aria-labelledby="research-title">
-      <div class="section-heading"><div><p class="eyebrow">THE RACE CARD</p><h2 id="research-title">Choose a race</h2></div><p>Each lean is a starting point for research, not a bet.</p></div>
-      <div id="race-tabs" class="race-tabs" role="tablist" aria-label="Randwick race research"></div>
-      <div class="content-grid">
-        <article id="race-panel" class="race-panel" role="tabpanel" tabindex="0" aria-live="polite"><div class="loading">Loading race research…</div></article>
-        <aside class="race-index" aria-labelledby="index-title"><p class="eyebrow">AT A GLANCE</p><h2 id="index-title">All 10 races</h2><div id="race-index-list"></div></aside>
-      </div>
-    </section>
+    <section class="hero" aria-labelledby="page-title"><div><p class="eyebrow">MELBOURNE CUP DAY · 10-RACE RESEARCH</p><h1 id="page-title">Read the form.<br><span>Question the price.</span></h1><p class="hero-copy">Flemington, Tuesday 3 November. Explore each race, then examine the full 24-runner Cup dossier and the public reports that could change the picture.</p></div><div class="hero-badge"><span>10</span><small>RACES<br>RESEARCHED</small></div></section>
+    <section class="status" aria-label="Research status"><div><span class="status-dot"></span><strong>Research snapshot</strong><span id="snapshot-date">Loading…</span></div><p>Public sources and editorial form notes. No live odds or automatic news updates.</p></section>
+    <section class="conditions" aria-labelledby="conditions-title"><div><p class="eyebrow">TRACK SCENARIO</p><h2 id="conditions-title">Check the going before the jump</h2><p id="track-snapshot">Loading track report…</p><small id="track-time"></small></div><a class="outline-link" href="https://www.vrc.com.au/track-and-weather-conditions/" target="_blank" rel="noopener noreferrer">Official VRC track report ↗</a></section>
+    <section id="research" class="research" aria-labelledby="research-title"><div class="section-heading"><div><p class="eyebrow">THE RACE CARD</p><h2 id="research-title">Choose a race</h2></div><p>Watchlists are form cases. Confirm final odds before any betting decision.</p></div><div id="race-tabs" class="race-tabs" role="tablist" aria-label="Flemington race research"></div><div class="content-grid"><article id="race-panel" class="race-panel" role="tabpanel" tabindex="0" aria-live="polite"><div class="loading">Loading Cup research…</div></article><aside class="race-index" aria-labelledby="index-title"><p class="eyebrow">AT A GLANCE</p><h2 id="index-title">All ten races</h2><div id="race-index-list"></div></aside></div></section>
+    <section id="news" class="news-section" aria-labelledby="news-title"><div class="section-heading"><div><p class="eyebrow">PUBLIC REPORTS · SOURCE-LINKED</p><h2 id="news-title">Inside track</h2></div><p>Critical rider, stable, field and ground details. Dated reports, not private tips.</p></div><div id="news-list" class="news-grid"><div class="loading">Loading source-linked reports…</div></div></section>
+    <section id="install" class="install-panel" aria-labelledby="install-title"><div><p class="eyebrow">PHONE APP MODE</p><h2 id="install-title">Launch without a browser tab</h2><p>On iPhone, open this site in Safari, tap Share, then <strong>Add to Home Screen</strong>. On Android, use the browser menu’s <strong>Install app</strong> or <strong>Add to Home screen</strong>. Open the saved FormLine icon for standalone mode.</p></div><button id="installBtn" type="button" hidden>Install FormLine</button></section>
     <section class="method" aria-labelledby="method-title"><div><p class="eyebrow">HOW TO USE THIS</p><h2 id="method-title">Evidence first. Price second.</h2></div><div id="method-copy"></div></section>
   </main>
-  <footer class="site-footer"><div class="footer-inner"><strong>FORMLINE</strong><span>Royal Randwick · 31 October 2026</span><span>Public research only · No bets placed</span></div></footer>
+  <footer class="site-footer"><div class="footer-inner"><strong>FORMLINE</strong><span>Flemington · 3 November 2026</span><span>Public research only · No bets placed</span></div></footer>
 </body>
 </html>
