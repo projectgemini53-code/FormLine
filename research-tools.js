@@ -37,7 +37,7 @@ function sourceTitle(url) {
   if (url.includes('tab.co.nz/punters/')) return 'TAB race preview';
   return new URL(url).hostname.replace(/^www\./, '');
 }
-function number(value) { const n = Number(value); return Number.isFinite(n) ? n : null; }
+function number(value) { if (value == null || typeof value === 'string' && !value.trim()) return null; const n = Number(value); return Number.isFinite(n) ? n : null; }
 function money(value) { return value == null ? '—' : '$' + Number(value).toFixed(2); }
 function odds(value) { return number(value) > 1 ? Number(value).toFixed(2) : '—'; }
 function dateTime(value) {
@@ -183,6 +183,8 @@ async function seedTodayCards() {
           existing.trackSourceUrl = safeUrl(card.track_snapshot?.source_url);
           for (const horse of existing.runners || []) {
             const seed = (raw.runners || []).find(row => Number(row.number) === horse.number && String(row.name || '').toLowerCase() === horse.name.toLowerCase());
+            if (seed && horse.barrier === 0 && seed.barrier == null) horse.barrier = null;
+            if (seed && horse.weight === 0 && (seed.weight_kg ?? seed.weight) == null) horse.weight = null;
             if (seed && !horse.runStyle) horse.runStyle = String(seed.run_style || '').slice(0, 45);
             if (seed && !horse.styleNote) horse.styleNote = String(seed.style_note || '').slice(0, 180);
             if (seed && !horse.sourceUrls) horse.sourceUrls = (Array.isArray(seed.source_urls) ? seed.source_urls : []).map(safeUrl).filter(Boolean).slice(0, 5);
