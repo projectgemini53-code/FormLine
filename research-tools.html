@@ -12,7 +12,10 @@
   <link rel="apple-touch-icon" href="logo-green.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="research-tools.css">
+  <link rel="stylesheet" href="calculator.css">
+  <link rel="stylesheet" href="all-horses.css">
   <script src="research-tools.js" defer></script>
+  <script src="calculator.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#toolMain">Skip to workspace</a>
@@ -22,6 +25,7 @@
       <p class="sidebar-caption">PERSONAL WORKSPACE</p>
       <nav class="side-nav" aria-label="Research tools">
         <button type="button" data-view="races" class="active"><span aria-hidden="true">◫</span> Race board</button>
+        <button type="button" data-view="calculator"><span aria-hidden="true">∑</span> Betting calculator</button>
         <button type="button" data-view="journal"><span aria-hidden="true">▤</span> Paper journal</button>
         <button type="button" data-view="results"><span aria-hidden="true">≡</span> Results</button>
         <button type="button" data-view="performance"><span aria-hidden="true">◷</span> Performance</button>
@@ -43,8 +47,9 @@
       <div class="tool-layout">
         <main id="toolMain" tabindex="-1">
           <section class="view" id="view-races">
-            <div class="page-heading"><p class="eyebrow">01 / PERSONAL RACE BOARD</p><h1>Research a race, then record the price.</h1><p>Build a card manually or load the protected feed on demand when the site owner has configured it. Freeze a paper selection before the jump; saved quotes and results can become stale.</p></div>
+            <div class="page-heading"><p class="eyebrow">01 / PERSONAL RACE BOARD</p><h1>Research a race, then record the price.</h1><p>The 3 November 2026 Flemington and Randwick race schedules load automatically on race day. The Cup has a 24-runner public dossier; other public cards may contain only researched horses or a schedule. Use the personal feed or add runners to complete a field, then freeze any paper decision before the jump.</p></div>
             <div class="source-banner"><div><strong>No automatic updates</strong><p>Check the official card, current going, scratchings, paid places and actual offered quote before recording a selection. The site does not independently verify manual figures.</p></div><span>ON-DEMAND ONLY</span></div>
+            <p class="day-board-status" id="dayBoardStatus" role="status">Loading today’s Flemington and Randwick research cards…</p>
             <div class="feed-card"><div><p class="eyebrow">OPTIONAL OWNER-ONLY FEED</p><h2>Load an Australian race card</h2><p>Requires the site owner to configure the private PuntersEdge gateway. Choose today or one of the next three days, enter your private FormLine access code, and load on demand. This page never polls in the background. Quotes can change before you act.</p></div><div class="feed-controls"><label for="feedDate">Meeting date</label><input id="feedDate" type="date"><label for="feedCode">FormLine access code</label><input id="feedCode" type="password" autocomplete="off" placeholder="Access code"><button id="loadBoard" type="button" class="button button-primary">↻ Load card</button><span id="feedStatus" role="status">Connection not checked</span></div></div>
             <details class="editor-card" id="raceEditor"><summary><span>＋</span> Add or edit a race</summary>
               <form id="raceForm" class="editor-form"><input type="hidden" name="raceId">
@@ -64,6 +69,24 @@
               </form>
             </details>
             <div class="board-layout"><aside class="meeting-panel"><div class="panel-title"><span>MEETINGS</span><b id="meetingCount">0</b></div><div id="meetingList" class="meeting-list"></div></aside><div class="race-workspace"><div id="raceTabs" class="race-tabs" role="tablist" aria-label="Races at selected meeting"></div><div id="raceDetail" class="race-detail"></div></div></div>
+          </section>
+
+          <section class="view" id="view-calculator" hidden>
+            <div class="page-heading"><p class="eyebrow">PAPER TOOL / BETTING CALCULATOR</p><h1>Check the return before you record it.</h1><p>Enter the actual decimal quote and your total paper stake. This calculator shows possible returns; it does not recommend a bet or place one.</p></div>
+            <div class="calculator-layout">
+              <form class="calculator-card" id="calcForm">
+                <div class="calc-card-heading"><span aria-hidden="true">∑</span><div><strong>Return calculator</strong><small>Decimal odds · Australian dollars</small></div></div>
+                <div class="calc-fields">
+                  <label>Bet type<select id="calcMode"><option value="win">Win</option><option value="place">Place</option><option value="eachway">Each way</option><option value="multi">Same-race multi</option></select></label>
+                  <label>Total paper stake ($)<input id="calcStake" type="number" min="0.01" max="100000" step="0.01" inputmode="decimal" value="10"></label>
+                  <label><span id="calcOddsLabel">Win decimal odds</span><input id="calcOdds" type="number" min="1.01" max="10000" step="0.01" inputmode="decimal" value="4.20"></label>
+                  <label id="calcPlaceField" hidden>Actual place decimal odds<input id="calcPlaceOdds" type="number" min="1.01" max="10000" step="0.01" inputmode="decimal" value="1.80"></label>
+                </div>
+                <p id="calcTermsNote" class="calc-note">If the horse wins, the gross return includes your stake.</p>
+              </form>
+              <div class="calculator-result" id="calcResult" aria-live="polite"></div>
+            </div>
+            <div class="calc-explain"><article><h2>Break-even chance</h2><p>For a single decimal quote, divide 1 by the odds. That is the success rate needed to break even before any other costs. It is not the horse’s true chance.</p></article><article><h2>Same-race multis</h2><p>Use the bookmaker’s <strong>actual combined quote</strong>. Outcomes in the same race depend on each other, so multiplying leg odds gives a misleading price.</p></article><article><h2>Record a forward test</h2><p>The calculator does not save a selection. Use the Race board to freeze a paper decision before the listed jump time, then enter final results later.</p><button type="button" data-show-view="races" class="button button-primary">Open race board →</button></article></div>
           </section>
 
           <section class="view" id="view-journal" hidden><div class="page-heading"><p class="eyebrow">02 / FORWARD TEST</p><h1>Paper journal</h1><p>Selections are frozen with the race details, entered quote and recorded time. Only records made before the entered jump time count as forward paper tests.</p></div><div id="journalSummary" class="metric-grid"></div><div id="journalList" class="journal-list"></div></section>

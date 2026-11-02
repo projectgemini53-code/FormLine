@@ -1,0 +1,106 @@
+{
+  "date": "2026-11-03",
+  "venue": "Randwick",
+  "prepared_at": "2026-11-03T08:34:23+11:00",
+  "status": "Public race schedule only. Randwick was Good 4 with rail +2m at 6:31am AEDT on 3 Nov (https://www.racingqueensland.com.au/racing/profiles/track/thoroughbred/rand). The field, current track condition and scratchings must be checked before each race.",
+  "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+  "event_url": "https://www.australianturfclub.com.au/races/",
+  "races": [
+    {
+      "number": 1,
+      "name": "Midway Handicap",
+      "start_time": "2026-11-03T11:45:00+11:00",
+      "distance_m": 1800,
+      "grade": "Benchmark 72",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 2,
+      "name": "TAB Highway Handicap",
+      "start_time": "2026-11-03T12:25:00+11:00",
+      "distance_m": 1000,
+      "grade": "Class 3",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 3,
+      "name": "Alinta Energy Handicap",
+      "start_time": "2026-11-03T13:05:00+11:00",
+      "distance_m": 1300,
+      "grade": "Benchmark 64",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 4,
+      "name": "Toyota Forklifts Handicap",
+      "start_time": "2026-11-03T13:40:00+11:00",
+      "distance_m": 1500,
+      "grade": "Benchmark 88",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 5,
+      "name": "Big Dance",
+      "start_time": "2026-11-03T14:20:00+11:00",
+      "distance_m": 1600,
+      "grade": "Listed",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 6,
+      "name": "Barn Dance",
+      "start_time": "2026-11-03T15:30:00+11:00",
+      "distance_m": 1300,
+      "grade": "Handicap",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 7,
+      "name": "Little Dance",
+      "start_time": "2026-11-03T16:10:00+11:00",
+      "distance_m": 1600,
+      "grade": "Quality",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 8,
+      "name": "Asahi Super Dry Choisir Handicap",
+      "start_time": "2026-11-03T16:50:00+11:00",
+      "distance_m": 1100,
+      "grade": "Benchmark 100",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 9,
+      "name": "Quayclean Handicap",
+      "start_time": "2026-11-03T17:30:00+11:00",
+      "distance_m": 1000,
+      "grade": "Benchmark 84",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    },
+    {
+      "number": 10,
+      "name": "The Agency Real Estate Handicap",
+      "start_time": "2026-11-03T18:05:00+11:00",
+      "distance_m": 1200,
+      "grade": "Benchmark 84",
+      "source_url": "https://racehub.com.au/form-guide/horse-racing/randwick/2026-11-03",
+      "ground": "Good 4"
+    }
+  ],
+  "track_snapshot": {
+    "ground": "Good 4",
+    "observed_at": "2026-11-03T06:31:00+11:00",
+    "source_url": "https://www.racingqueensland.com.au/racing/profiles/track/thoroughbred/rand",
+    "note": "Morning observation; verify current rating before the jump."
+  }
+}

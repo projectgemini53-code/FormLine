@@ -18,6 +18,8 @@ let selectedStrategy = 'market';
 let educationTab = 'bets';
 let glossaryCategory = 'All';
 let railTab = 'pending';
+let allHorsesOpen = false;
+let allHorseFilters = { search: '', gate: '', weight: '', style: '', form: '', status: 'active', sort: 'number' };
 let resultOffset = 0;
 let lastLookback = 24;
 let feedCode = (() => { try { return sessionStorage.getItem(CODE_KEY) || ''; } catch { return ''; } })();
@@ -27,6 +29,13 @@ function esc(value) {
 }
 function safeUrl(value) {
   try { const url = new URL(String(value)); return /^https?:$/.test(url.protocol) ? url.href : ''; } catch { return ''; }
+}
+function sourceTitle(url) {
+  if (url.includes('/every-runner-in-the-2026-lexus-melbourne-cup/')) return 'VRC runner review';
+  if (url.includes('/lexus-melbourne-cup-field-and-barriers-')) return 'VRC final field';
+  if (url.includes('racing.com/form/')) return 'Racing.com form';
+  if (url.includes('tab.co.nz/punters/')) return 'TAB race preview';
+  return new URL(url).hostname.replace(/^www\./, '');
 }
 function number(value) { const n = Number(value); return Number.isFinite(n) ? n : null; }
 function money(value) { return value == null ? '—' : '$' + Number(value).toFixed(2); }
@@ -138,16 +147,95 @@ function normalizedAcceptanceRaces(card, fetchedAt) {
         venue: String(meeting.venue || '').slice(0, 90), raceNumber: number(item.race_number), raceName: String(item.race_name || `Race ${item.race_number || ''}`).slice(0, 140),
         startTime, distance: number(item.distance_m), paidPlaces: null, ground: String(meeting.track?.track_condition || '').slice(0, 45),
         raceClass: String(item.race_class || item.conditions || '').slice(0, 100), notes: '', fetchedAt,
+        fieldComplete: true, fieldScope: 'Accepted field',
         runners
       });
     }
   }
   return races;
 }
+async function seedTodayCards() {
+  const status = $('#dayBoardStatus');
+  if (sydneyDate(new Date()) !== '2026-11-03') {
+    status.textContent = 'The dated 3 November race-day seed is no longer loaded automatically. Use your saved cards or load a current meeting on demand.';
+    return;
+  }
+  const files = ['data/flemington-2026-11-03.json', 'data/randwick-2026-11-03.json'];
+  const loaded = await Promise.allSettled(files.map(async path => {
+    const response = await fetch(path, { cache: 'no-store' });
+    if (!response.ok) throw Error(`HTTP ${response.status}`);
+    return response.json();
+  }));
+  let added = 0, refreshed = 0, meetings = 0;
+  for (const result of loaded) {
+    if (result.status !== 'fulfilled') continue;
+    const card = result.value;
+    if (card?.date !== '2026-11-03' || !['Flemington', 'Randwick'].includes(card.venue) || !Array.isArray(card.races)) continue;
+    meetings++;
+    for (const raw of card.races) {
+      const raceNumber = Number(raw.number), time = new Date(raw.start_time);
+      if (!Number.isInteger(raceNumber) || raceNumber < 1 || raceNumber > 30 || Number.isNaN(time.getTime()) || !Array.isArray(raw.runners || [])) continue;
+      const existing = store.races.find(race => race.venue?.toLowerCase() === card.venue.toLowerCase() && race.raceNumber === raceNumber && sydneyDate(race.startTime) === card.date);
+      if (existing) {
+        if (existing.source === 'public') {
+          if (!existing.ground) existing.ground = String(raw.ground || '').slice(0, 45);
+          existing.trackObservedAt = String(card.track_snapshot?.observed_at || '');
+          existing.trackSourceUrl = safeUrl(card.track_snapshot?.source_url);
+          for (const horse of existing.runners || []) {
+            const seed = (raw.runners || []).find(row => Number(row.number) === horse.number && String(row.name || '').toLowerCase() === horse.name.toLowerCase());
+            if (seed && !horse.runStyle) horse.runStyle = String(seed.run_style || '').slice(0, 45);
+            if (seed && !horse.styleNote) horse.styleNote = String(seed.style_note || '').slice(0, 180);
+            if (seed && !horse.sourceUrls) horse.sourceUrls = (Array.isArray(seed.source_urls) ? seed.source_urls : []).map(safeUrl).filter(Boolean).slice(0, 5);
+          }
+          refreshed++;
+        }
+        continue;
+      }
+      const raceId = `public:${card.date.replaceAll('-', '')}:${card.venue}:${raceNumber}`;
+      const runners = (raw.runners || []).filter(row => row && Number.isInteger(Number(row.number)) && Number(row.number) > 0 && (row.name || row.runner_name)).slice(0, 40).map(row => ({
+        id: `${raceId}:${Number(row.number)}`, providerRef: '', number: Number(row.number), name: String(row.name || row.runner_name).slice(0, 100),
+        barrier: number(row.barrier), weight: number(row.weight_kg ?? row.weight), jockey: String(row.jockey || '').slice(0, 100),
+        trainer: String(row.trainer || '').slice(0, 100), runStyle: String(row.run_style || '').slice(0, 45), styleNote: String(row.style_note || '').slice(0, 180), form: String(row.form || '').slice(0, 80),
+        sourceUrls: (Array.isArray(row.source_urls) ? row.source_urls : []).map(safeUrl).filter(Boolean).slice(0, 5),
+        historyScore: '', historyNotes: '', conditionNotes: '', editorialNote: String(row.editorial_note || '').slice(0, 1000),
+        scratched: row.scratched === true ? true : row.scratched === false ? false : null, winOdds: null, placeOdds: null, top3Odds: null, top4Odds: null,
+        quoteAt: '', quoteTier: '', quoteStale: false, source: 'public'
+      }));
+      store.races.push({
+        id: raceId, providerId: '', source: 'public', sourceUrl: safeUrl(raw.source_url || card.source_url),
+        venue: card.venue, raceNumber, raceName: String(raw.name || `Race ${raceNumber}`).slice(0, 140),
+        startTime: time.toISOString(), distance: number(raw.distance_m), paidPlaces: null,
+        ground: String(raw.ground || '').slice(0, 45), raceClass: String(raw.grade || '').slice(0, 100),
+        trackObservedAt: String(card.track_snapshot?.observed_at || ''), trackSourceUrl: safeUrl(card.track_snapshot?.source_url),
+        fieldComplete: raw.runners_complete === true, fieldScope: String(raw.field_scope || 'schedule_only'),
+        notes: String(card.source_note || card.status || 'Dated public research card; recheck official race-day details.').slice(0, 1000),
+        fetchedAt: String(card.prepared_at || ''), runners
+      });
+      added++;
+    }
+  }
+  if (added || refreshed) { saveStore(); renderAll(); }
+  status.textContent = meetings === 2
+    ? `Today’s Flemington and Randwick cards are loaded (${added ? `${added} new races` : 'saved cards refreshed'}). Cup R7 has 24 dated entrants; other public cards are partial or schedule-only. Check current fields, going and scratches.`
+    : `Loaded ${meetings} of 2 public meeting cards. Check the official race schedule if a meeting is missing.`;
+}
+function openRequestedRace() {
+  const params = new URLSearchParams(location.search);
+  const venue = params.get('venue'), number = Number(params.get('race'));
+  if (!['Flemington', 'Randwick'].includes(venue) || !Number.isInteger(number) || number < 1 || number > 30) return;
+  const race = store.races.find(row => row.venue?.toLowerCase() === venue.toLowerCase() && row.raceNumber === number && sydneyDate(row.startTime) === '2026-11-03');
+  if (!race) return;
+  selectedMeeting = meetingKey(race);
+  selectedRaceId = race.id;
+  allHorsesOpen = params.get('all') === '1';
+  setView('races');
+  if (allHorsesOpen) requestAnimationFrame(() => $('#allHorsesPanel')?.scrollIntoView({ block: 'start' }));
+}
 function mergeFeedRace(next) {
-  const index = store.races.findIndex(r => r.id === next.id);
+  const index = store.races.findIndex(r => r.id === next.id || (r.source === 'public' && r.raceNumber === next.raceNumber && meetingKey(r) === meetingKey(next)));
   if (index < 0) { store.races.push(next); return; }
   const prior = store.races[index];
+  next.id = prior.id;
   const sameRunner = (a, b) => a.id === b.id || Boolean(a.providerRef && b.providerRef && a.providerRef === b.providerRef) ||
     (a.number != null && a.number === b.number && a.name.toLowerCase() === b.name.toLowerCase());
   const paired = (old, fresh, keepQuote) => ({
@@ -178,6 +266,8 @@ function mergeFeedRace(next) {
   next.ground ||= prior.ground;
   next.notes = prior.notes || '';
   next.researchStatus = hasNewQuotes ? (next.researchStatus || '') : (prior.researchStatus || '');
+  next.fieldComplete = Boolean(next.fieldComplete || prior.fieldComplete);
+  next.fieldScope ||= prior.fieldScope || '';
   store.races[index] = next;
 }
 function matchProviderRace(raw) {
@@ -235,11 +325,11 @@ async function gateway(action, params = {}) {
 }
 
 function setView(view) {
-  if (!['races', 'journal', 'results', 'performance', 'strategies', 'education', 'method'].includes(view)) return;
+  if (!['races', 'calculator', 'journal', 'results', 'performance', 'strategies', 'education', 'method'].includes(view)) return;
   currentView = view;
   $$('.view').forEach(node => { node.hidden = node.id !== `view-${view}`; });
   $$('.side-nav [data-view]').forEach(node => node.classList.toggle('active', node.dataset.view === view));
-  $('#currentViewTitle').textContent = ({ races: 'Race board', journal: 'Paper journal', results: 'Results', performance: 'Performance', strategies: 'Strategies', education: 'Education', method: 'Method & data' })[view];
+  $('#currentViewTitle').textContent = ({ races: 'Race board', calculator: 'Betting calculator', journal: 'Paper journal', results: 'Results', performance: 'Performance', strategies: 'Strategies', education: 'Education', method: 'Method & data' })[view];
   closeNav();
   if (view === 'races') renderBoard();
   if (view === 'journal') renderJournal();
@@ -283,14 +373,68 @@ function renderBoard() {
   renderRaceDetail();
 }
 function runnerSourceLabel(runner) {
-  const source = runner.source === 'provider' ? 'Provider quote' : 'Your entered quote';
+  const source = runner.source === 'provider' ? 'Provider quote' : runner.source === 'public' ? 'Dated public research · no saved price' : 'Your entered quote';
   if (!runner.quoteAt) return source;
   return `${source} · ${dateTime(runner.quoteAt)}${runner.source === 'provider' && !quoteFresh(runner) ? ' · STALE' : ''}`;
 }
 function renderRunnerCard(runner, race) {
   const open = runner.id === expandedRunnerId;
   const facts = [runner.barrier != null ? `Gate ${runner.barrier}` : '', runner.weight != null ? `${runner.weight}kg` : '', runner.runStyle || '', runner.form ? `Form ${runner.form}` : ''].filter(Boolean);
-  return `<div class="runner-card ${open ? 'open' : ''} ${runner.scratched ? 'scratch' : ''}"><button class="runner-summary" type="button" data-expand-runner="${esc(runner.id)}" aria-expanded="${open}"><span class="saddle">${esc(runner.number ?? '—')}</span><span><strong>${esc(runner.name)}${runner.scratched ? ' · SCRATCHED' : ''}</strong><small>${esc(facts.join(' · ') || 'Runner details pending')}</small></span><span class="runner-prices"><span>WIN<b>${esc(odds(runner.winOdds))}</b></span><span>PLACE<b>${esc(odds(runner.placeOdds))}</b></span></span></button>${open ? `<div class="runner-body"><div class="runner-meta"><span>Jockey: ${esc(runner.jockey || '—')}</span><span>Trainer: ${esc(runner.trainer || '—')}</span><span>Record: ${esc(runner.historyScore || '—')}</span><span>Runner type: ${esc(runner.runStyle || 'Unknown')}</span></div><p><strong>Past runs:</strong> ${esc(runner.historyNotes || 'No history entered or loaded.')}</p><p><strong>Ground notes:</strong> ${esc(runner.conditionNotes || 'No ground record entered or loaded.')}</p><p class="quote-note">${esc(runnerSourceLabel(runner))}. Top 3: ${esc(odds(runner.top3Odds))}; Top 4: ${esc(odds(runner.top4Odds))}. Confirm any quote with the bookmaker.</p><div class="runner-tools"><button class="button button-quiet" type="button" data-edit-runner="${esc(runner.id)}">Edit runner</button>${!runner.scratched && !raceStarted(race) ? `<button class="button button-primary" type="button" data-select-runner="${esc(runner.id)}">Use in paper bet</button>` : ''}${race.providerId ? `<button class="button button-quiet" type="button" data-load-form="${esc(race.id)}">Load recent form</button>` : ''}</div></div>` : ''}</div>`;
+  return `<div class="runner-card ${open ? 'open' : ''} ${runner.scratched ? 'scratch' : ''}"><button class="runner-summary" type="button" data-expand-runner="${esc(runner.id)}" aria-expanded="${open}"><span class="saddle">${esc(runner.number ?? '—')}</span><span><strong>${esc(runner.name)}${runner.scratched ? ' · SCRATCHED' : ''}</strong><small>${esc(facts.join(' · ') || 'Runner details pending')}</small></span><span class="runner-prices"><span>WIN<b>${esc(odds(runner.winOdds))}</b></span><span>PLACE<b>${esc(odds(runner.placeOdds))}</b></span></span></button>${open ? `<div class="runner-body"><div class="runner-meta"><span>Jockey: ${esc(runner.jockey || '—')}</span><span>Trainer: ${esc(runner.trainer || '—')}</span><span>Record: ${esc(runner.historyScore || '—')}</span><span>Runner type: ${esc(runner.runStyle || 'Unknown')}</span></div>${runner.styleNote ? `<p class="runner-editorial"><strong>Run-style evidence:</strong> ${esc(runner.styleNote)}</p>` : ''}${runner.editorialNote ? `<p class="runner-editorial"><strong>Research note:</strong> ${esc(runner.editorialNote)}</p>` : ''}<p><strong>Past runs:</strong> ${esc(runner.historyNotes || 'No history entered or loaded.')}</p><p><strong>Ground notes:</strong> ${esc(runner.conditionNotes || 'No ground record entered or loaded.')}</p><p class="quote-note">${esc(runnerSourceLabel(runner))}. Top 3: ${esc(odds(runner.top3Odds))}; Top 4: ${esc(odds(runner.top4Odds))}. Confirm any quote with the bookmaker.</p><div class="runner-tools"><button class="button button-quiet" type="button" data-edit-runner="${esc(runner.id)}">Edit runner</button>${!runner.scratched && !raceStarted(race) ? `<button class="button button-primary" type="button" data-select-runner="${esc(runner.id)}">Use in paper bet</button>` : ''}${race.providerId ? `<button class="button button-quiet" type="button" data-load-form="${esc(race.id)}">Load recent form</button>` : ''}</div></div>` : ''}</div>`;
+}
+function allHorseCard(runner) {
+  const facts = [runner.barrier != null ? `Gate ${runner.barrier}` : 'Gate unconfirmed', runner.weight != null ? `${runner.weight}kg` : 'Weight unconfirmed', runner.jockey || 'Rider unconfirmed'].join(' · ');
+  const quote = runner.winOdds || runner.placeOdds ? `<div class="all-horse-prices">${runner.winOdds ? `<span>WIN <strong>${esc(odds(runner.winOdds))}</strong></span>` : ''}${runner.placeOdds ? `<span>PLACE <strong>${esc(odds(runner.placeOdds))}</strong></span>` : ''}<small>${quoteFresh(runner) ? 'Saved quote · check current price' : 'Stale quote · recheck'}</small></div>` : '<p class="all-horse-no-price">No saved odds · enter the actual price in a paper selection</p>';
+  const notes = [runner.styleNote ? `<p><strong>Run-style evidence:</strong> ${esc(runner.styleNote)}</p>` : '', runner.historyNotes ? `<p><strong>Past runs:</strong> ${esc(runner.historyNotes)}</p>` : '', runner.conditionNotes ? `<p><strong>Ground:</strong> ${esc(runner.conditionNotes)}</p>` : ''].filter(Boolean).join('');
+  const sourceLinks = (Array.isArray(runner.sourceUrls) ? runner.sourceUrls : []).map(safeUrl).filter(Boolean).slice(0, 5).map(url => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(sourceTitle(url))} ↗</a>`).join('');
+  return `<article class="all-horse-card ${runner.scratched ? 'is-scratched' : ''}"><div class="all-horse-top"><span class="all-horse-no">${esc(runner.number ?? '—')}</span><div><h4>${esc(runner.name)}</h4><p>${esc(facts)}</p></div>${runner.scratched ? '<span class="all-horse-flag">SCRATCHED</span>' : ''}</div><div class="all-horse-chips"><span>FORM <strong>${esc(runner.form || '—')}</strong></span><span>TRAINER <strong>${esc(runner.trainer || '—')}</strong></span>${runner.runStyle ? `<span>TYPE <strong>${esc(runner.runStyle)}</strong></span>` : ''}${runner.historyScore ? `<span>1–2–3 <strong>${esc(runner.historyScore)}</strong></span>` : ''}</div>${runner.editorialNote ? `<p class="all-horse-note">${esc(runner.editorialNote)}</p>` : ''}${quote}${notes || sourceLinks ? `<details class="all-horse-detail"><summary>Run style, form and sources</summary>${notes}${sourceLinks ? `<div class="all-horse-sources">${sourceLinks}</div>` : ''}</details>` : ''}</article>`;
+}
+function allHorsePanelHtml(race) {
+  const coverage = race.fieldComplete
+    ? `This dated card includes ${race.runners.length} declared runners. Recheck late scratchings, rider changes and going.`
+    : race.runners.length
+      ? `Only ${race.runners.length} researched horses are listed on this public card; this is not the complete field. Load your personal feed for the full acceptance card.`
+      : 'Race schedule only. Load your personal feed or add runners to examine the full field.';
+  return `<div class="all-horse-launch"><div><strong>All horses</strong><p>Open a clear runner list with gate, weight, form and scratching filters.</p></div><button type="button" class="button button-primary" id="allHorsesToggle" data-all-horses aria-controls="allHorsesPanel" aria-expanded="${allHorsesOpen}">${allHorsesOpen ? 'Close all horses' : 'All horses'} <span aria-hidden="true">→</span></button></div><section id="allHorsesPanel" class="all-horses-panel" aria-label="Horses on this race card" ${allHorsesOpen ? '' : 'hidden'}><div class="all-horses-heading"><div><p class="eyebrow">FIELD EXPLORER</p><h3>Compare the runners</h3><p>${esc(coverage)}</p></div><span>${esc(race.runners.length)} on this card</span></div><div class="all-horse-filters" id="allHorseFilters"><label>Search horse or connections<input id="allHorseSearch" type="search" placeholder="Horse, jockey or trainer"></label><label>Gate<select id="allHorseGate"><option value="">Any gate</option><option value="inside">1–6 inside</option><option value="middle">7–12</option><option value="outer">13–18</option><option value="wide">19+</option></select></label><label>Weight<select id="allHorseWeight"><option value="">Any weight</option><option value="light">Up to 53kg</option><option value="mid">Over 53–55kg</option><option value="high">Over 55kg</option></select></label><label>Runner style<select id="allHorseStyle"><option value="">Any style</option><option value="Leader">Leader</option><option value="On pace">On pace</option><option value="Midfield">Midfield</option><option value="Backmarker">Backmarker</option><option value="Versatile">Versatile</option><option value="Unknown">Unknown</option></select></label><label>Recent form<select id="allHorseForm"><option value="">Any form</option><option value="win">Won last start</option><option value="placed">Top 3 last start</option><option value="recorded">Has form string</option><option value="unknown">No form string</option></select></label><label>Status<select id="allHorseStatus"><option value="active">Not marked scratched</option><option value="all">All incl. scratched</option><option value="scratched">Scratched only</option></select></label><label>Sort<select id="allHorseSort"><option value="number">Saddlecloth</option><option value="gate">Gate number</option><option value="weight">Lightest weight</option><option value="name">Horse name</option></select></label></div><p id="allHorseCount" class="all-horse-count" role="status"></p><div id="allHorseGrid" class="all-horse-grid"></div></section>`;
+}
+function renderAllHorseGrid() {
+  const panel = $('#allHorsesPanel'), race = raceById();
+  if (!panel || !race || panel.hidden) return;
+  const search = $('#allHorseSearch').value.trim().toLowerCase();
+  const gateFilter = $('#allHorseGate').value, weightFilter = $('#allHorseWeight').value;
+  const styleFilter = $('#allHorseStyle').value, formFilter = $('#allHorseForm').value, statusFilter = $('#allHorseStatus').value, sort = $('#allHorseSort').value;
+  allHorseFilters = { search, gate: gateFilter, weight: weightFilter, style: styleFilter, form: formFilter, status: statusFilter, sort };
+  const rows = race.runners.filter(runner => {
+    if (search && ![runner.name, runner.jockey, runner.trainer, runner.runStyle, runner.styleNote, runner.form].join(' ').toLowerCase().includes(search)) return false;
+    if (statusFilter === 'active' && runner.scratched || statusFilter === 'scratched' && !runner.scratched) return false;
+    const gate = runner.barrier, kg = runner.weight;
+    if (gateFilter && (gate == null || !(gateFilter === 'inside' && gate <= 6 || gateFilter === 'middle' && gate >= 7 && gate <= 12 || gateFilter === 'outer' && gate >= 13 && gate <= 18 || gateFilter === 'wide' && gate >= 19))) return false;
+    if (weightFilter && (kg == null || !(weightFilter === 'light' && kg <= 53 || weightFilter === 'mid' && kg > 53 && kg <= 55 || weightFilter === 'high' && kg > 55))) return false;
+    if (styleFilter && (runner.runStyle || 'Unknown') !== styleFilter) return false;
+    const digits = String(runner.form || '').match(/\d/g) || [], last = digits.at(-1);
+    if (formFilter === 'win' && last !== '1' || formFilter === 'placed' && !['1', '2', '3'].includes(last) || formFilter === 'recorded' && !digits.length || formFilter === 'unknown' && digits.length) return false;
+    return true;
+  });
+  rows.sort((a, b) => sort === 'gate' ? (a.barrier ?? 99) - (b.barrier ?? 99) || a.number - b.number : sort === 'weight' ? (a.weight ?? 99) - (b.weight ?? 99) || a.number - b.number : sort === 'name' ? a.name.localeCompare(b.name) : a.number - b.number);
+  $('#allHorseCount').textContent = `${rows.length} of ${race.runners.length} card entries shown${race.fieldComplete ? ' · dated declared field' : ' · partial card'}`;
+  $('#allHorseGrid').innerHTML = rows.length ? rows.map(allHorseCard).join('') : empty('No horses match', 'Try a wider gate, weight, status or form filter.');
+}
+function mountAllHorsePanel(race) {
+  const field = $('#raceDetail .runner-list')?.closest('.race-section');
+  if (!field) return;
+  field.id = 'compactFieldSection';
+  field.insertAdjacentHTML('beforebegin', allHorsePanelHtml(race));
+  field.hidden = allHorsesOpen;
+  if (allHorsesOpen) {
+    $('#allHorseSearch').value = allHorseFilters.search;
+    $('#allHorseGate').value = allHorseFilters.gate;
+    $('#allHorseWeight').value = allHorseFilters.weight;
+    $('#allHorseStyle').value = allHorseFilters.style;
+    $('#allHorseForm').value = allHorseFilters.form;
+    $('#allHorseStatus').value = allHorseFilters.status;
+    $('#allHorseSort').value = allHorseFilters.sort;
+    renderAllHorseGrid();
+  }
 }
 function runnerEditorHtml() {
   return `<details class="editor-card" id="runnerEditor"><summary><span>＋</span> Add or edit a runner</summary><form id="runnerForm" class="editor-form"><input type="hidden" name="runnerId"><div class="field-grid"><label>Number <input name="number" type="number" min="1" max="99" required></label><label>Horse <input name="name" maxlength="100" required></label><label>Barrier <input name="barrier" type="number" min="1" max="40"></label><label>Weight (kg) <input name="weight" type="number" min="30" max="80" step="0.5"></label><label>Jockey <input name="jockey" maxlength="100"></label><label>Trainer <input name="trainer" maxlength="100"></label><label>Runner type <select name="runStyle"><option value="">Unknown</option><option>Leader</option><option>On pace</option><option>Midfield</option><option>Backmarker</option><option>Versatile</option></select></label><label>Form string <input name="form" maxlength="80" placeholder="e.g. 1-324"></label><label>1st–2nd–3rd record <input name="historyScore" maxlength="35" placeholder="e.g. 4-3-0"></label><label>Quote observed (your device time) <input name="quoteAt" type="datetime-local"></label><label>Win odds <input name="winOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Place odds <input name="placeOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 3 leg odds <input name="top3Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 4 leg odds <input name="top4Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label class="field-wide">Past run history <textarea name="historyNotes" rows="3" maxlength="2000" placeholder="Date, distance, ground and finishing place for each run."></textarea></label><label class="field-wide">Ground / condition notes <textarea name="conditionNotes" rows="2" maxlength="1500" placeholder="How has this horse gone on similar ground?"></textarea></label><label class="result-flag field-wide"><input name="scratched" type="checkbox"> Scratched / withdrawn</label></div><p class="field-help">Runner style, form and prices are research notes. They do not create a probability forecast.</p><div class="form-actions"><button class="button button-primary" type="submit">Save runner</button><button class="button button-quiet" type="button" id="cancelRunnerEdit">Cancel</button></div></form></details>`;
@@ -400,7 +544,9 @@ function renderRaceDetail() {
   if (!race) { $('#raceDetail').innerHTML = empty('Choose a race', 'Add a race above, or load the protected card when the gateway is configured.'); return; }
   const source = safeUrl(race.sourceUrl);
   const facts = [`R${race.raceNumber ?? '—'}`, race.distance ? `${race.distance}m` : '', race.ground || 'Ground not entered', race.paidPlaces ? `${race.paidPlaces} places paid` : 'Paid places unknown', race.raceClass || '', raceStarted(race) ? 'Started' : 'Upcoming'].filter(Boolean);
-  $('#raceDetail').innerHTML = `<div class="race-title-row"><div><p class="eyebrow">${esc(race.venue)} · ${esc(dateTime(race.startTime))}</p><h2>${esc(race.raceName)}</h2><p>${race.source === 'provider' ? `PuntersEdge card checked ${esc(dateTime(race.fetchedAt))}` : race.source === 'result-only' ? 'Result-only card' : 'Your manually entered card'}</p></div><div class="race-actions"><button class="button button-quiet" type="button" data-edit-race="${esc(race.id)}">Edit race</button>${race.providerId ? `<button class="button button-quiet" type="button" data-load-meeting="${esc(race.id)}">Check meeting</button>` : ''}</div></div><div class="fact-list">${facts.map(f => `<span>${esc(f)}</span>`).join('')}</div>${race.notes ? `<div class="race-note">${esc(race.notes)}</div>` : ''}${source ? `<a class="race-source" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Open card source ↗</a>` : ''}<section class="race-section"><h3>Field <span class="subtle">${race.runners.length} runners</span></h3><p>Tap a horse for jockey, weight, form, ground history and price details. A blank runner style means it has not been established.</p><div class="runner-list">${race.runners.length ? race.runners.slice().sort((a, b) => Number(a.number || 0) - Number(b.number || 0)).map(r => renderRunnerCard(r, race)).join('') : empty('No runners entered', 'Use Add or edit a runner below to build this field.')}</div></section>${runnerEditorHtml()}${shortlistHtml(race)}${bettingHtml(race)}${noBetHtml(race)}<section class="race-section"><h3>Earlier races here</h3><p>Final results saved for the same meeting can help you compare how the track played. One result alone does not prove a bias.</p>${renderEarlierResults(race)}</section>`;
+  const trackObservation = race.trackObservedAt && race.trackSourceUrl ? `<div class="track-observation"><strong>Ground snapshot:</strong> ${esc(race.ground || 'unknown')} at ${esc(dateTime(race.trackObservedAt))}. This is a morning report, not a live feed. <a href="${esc(race.trackSourceUrl)}" target="_blank" rel="noopener noreferrer">Check source ↗</a></div>` : '';
+  $('#raceDetail').innerHTML = `<div class="race-title-row"><div><p class="eyebrow">${esc(race.venue)} · ${esc(dateTime(race.startTime))}</p><h2>${esc(race.raceName)}</h2><p>${race.source === 'provider' ? `PuntersEdge card checked ${esc(dateTime(race.fetchedAt))}` : race.source === 'result-only' ? 'Result-only card' : race.source === 'public' ? `Public research snapshot · ${esc(dateTime(race.fetchedAt))}` : 'Your manually entered card'}</p></div><div class="race-actions"><button class="button button-quiet" type="button" data-edit-race="${esc(race.id)}">Edit race</button>${race.providerId ? `<button class="button button-quiet" type="button" data-load-meeting="${esc(race.id)}">Check meeting</button>` : ''}</div></div><div class="fact-list">${facts.map(f => `<span>${esc(f)}</span>`).join('')}</div>${trackObservation}${race.notes ? `<div class="race-note">${esc(race.notes)}</div>` : ''}${source ? `<a class="race-source" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Open card source ↗</a>` : ''}<section class="race-section"><h3>${race.fieldComplete ? 'Declared field' : race.source === 'public' ? 'Public research list' : 'Field'} <span class="subtle">${race.runners.length} runners</span></h3><p>Tap a horse for jockey, weight, form, ground history and price details. A blank runner style means it has not been established.</p><div class="runner-list">${race.runners.length ? race.runners.slice().sort((a, b) => Number(a.number || 0) - Number(b.number || 0)).map(r => renderRunnerCard(r, race)).join('') : empty('No runners entered', 'Use Add or edit a runner below to build this field.')}</div></section>${runnerEditorHtml()}${shortlistHtml(race)}${bettingHtml(race)}${noBetHtml(race)}<section class="race-section"><h3>Earlier races here</h3><p>Final results saved for the same meeting can help you compare how the track played. One result alone does not prove a bias.</p>${renderEarlierResults(race)}</section>`;
+  mountAllHorsePanel(race);
   if (!raceStarted(race)) fillSingleQuote();
   if ($('#multiForm')) { $('#multiForm').elements.secondId.value = race.runners.filter(r => !r.scratched)[1]?.id || ''; updateMultiPreview(); }
 }
@@ -849,10 +995,11 @@ async function importBackup(file) {
 
 document.addEventListener('click', event => {
   const target = event.target.closest('button'); if (!target) return;
+  if (target.hasAttribute('data-all-horses')) { allHorsesOpen = !allHorsesOpen; renderRaceDetail(); if (allHorsesOpen) $('#allHorsesPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (target.dataset.view) { setView(target.dataset.view); return; }
   if (target.dataset.showView) { setView(target.dataset.showView); return; }
-  if (target.dataset.meeting) { selectedMeeting = target.dataset.meeting; selectedRaceId = ''; renderBoard(); return; }
-  if (target.dataset.race) { selectedRaceId = target.dataset.race; expandedRunnerId = ''; renderBoard(); return; }
+  if (target.dataset.meeting) { selectedMeeting = target.dataset.meeting; selectedRaceId = ''; allHorsesOpen = false; allHorseFilters = { search: '', gate: '', weight: '', style: '', form: '', status: 'active', sort: 'number' }; renderBoard(); return; }
+  if (target.dataset.race) { selectedRaceId = target.dataset.race; expandedRunnerId = ''; allHorsesOpen = false; allHorseFilters = { search: '', gate: '', weight: '', style: '', form: '', status: 'active', sort: 'number' }; renderBoard(); return; }
   if (target.dataset.expandRunner) { expandedRunnerId = expandedRunnerId === target.dataset.expandRunner ? '' : target.dataset.expandRunner; renderRaceDetail(); return; }
   if (target.dataset.editRace) { const race = raceById(target.dataset.editRace); if (race) editRace(race); return; }
   if (target.dataset.editRunner) { const runner = runnerById(raceById(), target.dataset.editRunner); if (runner) editRunner(runner); return; }
@@ -904,10 +1051,12 @@ document.addEventListener('submit', event => {
   } catch (error) { notice(error.message, true); }
 });
 document.addEventListener('change', event => {
+  if (event.target.closest('#allHorseFilters')) renderAllHorseGrid();
   if (event.target.closest('#singleForm') && ['runnerId', 'market'].includes(event.target.name)) fillSingleQuote();
   if (event.target.closest('#multiForm') && ['firstId', 'secondId', 'firstMarket', 'secondMarket'].includes(event.target.name)) updateMultiPreview();
 });
 document.addEventListener('input', event => {
+  if (event.target.closest('#allHorseFilters')) renderAllHorseGrid();
   if (event.target.id === 'glossarySearch') {
     const query = event.target.value; renderGlossary(query);
     const input = $('#glossarySearch'); input.focus(); input.setSelectionRange(query.length, query.length);
@@ -927,3 +1076,5 @@ $('#feedDate').max = sydneyDate(new Date(Date.now() + 3 * 86400000));
 $('#feedStatus').textContent = feedCode ? 'Access code saved for this browser session · connection not checked' : 'Connection not checked · access code required';
 renderBoard();
 renderRail();
+if (location.hash === '#calculator') setView('calculator');
+seedTodayCards().catch(() => { $('#dayBoardStatus').textContent = 'Today’s public cards could not be loaded. Add a race or try the protected feed.'; }).finally(openRequestedRace);

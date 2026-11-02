@@ -1,0 +1,1020 @@
+{
+  "date": "2026-11-03",
+  "venue": "Flemington",
+  "prepared_at": "2026-11-02T19:55:00+11:00",
+  "source_url": "https://www.vrc.com.au/race-days-and-events/2026-2027/lexus-melbourne-cup-day/",
+  "source_note": "Dated editorial seed from FormLine public research, not a live or complete race-day field. R1–R6 and R8–R10 include three watchlist runners only; R7 has the 24 declared Cup entrants. Flemington was Soft 5 with rail out 3m at 7:32am AEDT on 3 Nov (https://www.racingqueensland.com.au/racing/profiles/track/thoroughbred/flem); recheck scratchings, riders, ground and prices before each race. No licensed odds included.",
+  "races": [
+    {
+      "number": 1,
+      "name": "Darley Maribyrnong Plate",
+      "start_time": "2026-11-03T10:45:00+11:00",
+      "distance_m": 1000,
+      "grade": "Set Weights",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 1,
+          "name": "Royal Press",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A narrow Listed Debutant Stakes second gives him race-day evidence that many opponents lack.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 2,
+          "name": "Amsterdam",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "An unraced Anamoe colt whose jump-out reports have attracted attention.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 7,
+          "name": "Funded",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Another debutant to monitor at the jump and in the market.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Pin & Win Community Handicap",
+      "start_time": "2026-11-03T11:20:00+11:00",
+      "distance_m": 2000,
+      "grade": "BenchMark 80",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 7,
+          "name": "Johnich",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A recent 2000m Caulfield win followed a strong preparation and directly beat Politely Dun.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/",
+            "https://www.racing.com/news/2026/11/01/news-jockeys-harry-coffey-update-011126"
+          ]
+        },
+        {
+          "number": 5,
+          "name": "Politely Dun",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "His recent Caulfield second came behind Johnich and gives a direct comparison at the trip.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/",
+            "https://www.racing.com/news/2026/11/01/news-jockeys-harry-coffey-update-011126"
+          ]
+        },
+        {
+          "number": 13,
+          "name": "Yauson",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "The recent sequence of two wins and a third is an alternative form line.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/",
+            "https://www.racing.com/news/2026/11/01/news-jockeys-harry-coffey-update-011126"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "name": "TAB ONE POOL Trophy",
+      "start_time": "2026-11-03T12:00:00+11:00",
+      "distance_m": 1800,
+      "grade": "Set Weights plus Penalties",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 2,
+          "name": "Star Of Macedon",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Made ground in the Gothic Stakes after an earlier maiden win; the longer Flemington run may help.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 8,
+          "name": "Fringilla",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Recent win and placing make a coherent form sequence among lightly raced rivals.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 1,
+          "name": "Mister Whiskers",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Two wins from two starts make him a serious unbeaten countercase.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "name": "The Schweppervescence Plate",
+      "start_time": "2026-11-03T12:40:00+11:00",
+      "distance_m": 1000,
+      "grade": "Set Weights plus Penalties",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 11,
+          "name": "Semantics",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won a Bendigo 1000m maiden on resumption after a two-year-old placing; an on-speed map is plausible.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 12,
+          "name": "Parcae",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Unbeaten in two starts and one of several lightly raced improvers.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Ole Go",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A recent win gives a current-form alternative.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Australian Heritage Cup",
+      "start_time": "2026-11-03T13:20:00+11:00",
+      "distance_m": 2800,
+      "grade": "BenchMark 96",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 4,
+          "name": "Tempesti",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Second to Cup runner So You Are in the ATC St Leger and previously close at this course and distance.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 17,
+          "name": "Autumnheat",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Two recent wins make him a progressive alternative.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 18,
+          "name": "Black Peppermint",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Also arrives off consecutive wins, adding a second current-form countercase.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "name": "Asahi Super Dry Plate",
+      "start_time": "2026-11-03T13:55:00+11:00",
+      "distance_m": 1800,
+      "grade": "Handicap",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 5,
+          "name": "St Lawrence",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won at Flemington over 1700m and then the Murray Bridge Cup; James McDonald is booked.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 7,
+          "name": "Wymark",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "His recent win and third provide a current-form alternative.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 10,
+          "name": "Darkbonee",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A recent win and second make him another live comparison.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "name": "Lexus Melbourne Cup",
+      "start_time": "2026-11-03T15:00:00+11:00",
+      "distance_m": 3200,
+      "grade": "Handicap",
+      "ground": "Soft 5",
+      "field_scope": "declared_cup_field",
+      "runners_complete": true,
+      "source_url": "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+      "runners": [
+        {
+          "number": 1,
+          "name": "Sons And Lovers",
+          "barrier": 3,
+          "weight_kg": 57.5,
+          "jockey": "Dylan Browne McMonagle",
+          "trainer": "Joseph O'Brien",
+          "form": "13x14451x2",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Three consecutive strong staying runs, including a 2800m Group 2 win, make him a reliable stamina profile.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Versatile",
+          "style_note": "Can control a slow pace; adaptable"
+        },
+        {
+          "number": 2,
+          "name": "Trustyourinstinct",
+          "barrier": 18,
+          "weight_kg": 57.0,
+          "jockey": "James McDonald",
+          "trainer": "Joseph O'Brien",
+          "form": "x76x721214",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Curragh Cup winner over 2816m with a late turn of foot; James McDonald is a notable booking. His earlier two-mile win was over hurdles, not on the flat.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+            "https://www.irishracing.com/news/torrens-keeps-it-simple-from-the-front-on-trustyourinstinct/248307"
+          ],
+          "run_style": "Backmarker",
+          "style_note": "Back / late finishing run"
+        },
+        {
+          "number": 3,
+          "name": "Knight's Choice",
+          "barrier": 2,
+          "weight_kg": 56.5,
+          "jockey": "Robbie Dolan",
+          "trainer": "John Symons & Sheila Laxon",
+          "form": "6x708x0930",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "The 2024 Cup winner was an unlucky Herbert Power third this spring.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Backmarker",
+          "style_note": "Back in 2024 Cup win"
+        },
+        {
+          "number": 4,
+          "name": "Middle Earth",
+          "barrier": 1,
+          "weight_kg": 56.5,
+          "jockey": "Mark Zahra",
+          "trainer": "Ciaron Maher",
+          "form": "x891x87898",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Third in the 2025 Cup and on a similar preparation, with Mark Zahra retaining the ride.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+            "https://www.racing.com/news/2026/11/01/news-preview-ciaron-maher-melbourne-cup-runners-barriers-jockeys"
+          ],
+          "run_style": "Midfield",
+          "style_note": "Midfield in 2025 Cup; last in recent Cox Plate"
+        },
+        {
+          "number": 5,
+          "name": "Vauban",
+          "barrier": 22,
+          "weight_kg": 56.5,
+          "jockey": "Jordan Childs",
+          "trainer": "Gai Waterhouse & Adrian Bott",
+          "form": "6506x133x9",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "This is another Cup attempt after a sixth last year, and he has the class to stay competitive.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Backmarker",
+          "style_note": "Back half in 2025 Cup"
+        },
+        {
+          "number": 6,
+          "name": "Enfjaar",
+          "barrier": 8,
+          "weight_kg": 56.0,
+          "jockey": "Ray Dawson",
+          "trainer": "Roger Varian",
+          "form": "x543x381x3",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "The Caulfield Cup third brings high-class Australian form from a 2400m test.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "On pace",
+          "style_note": "Led at Goodwood; tracked speed at Caulfield"
+        },
+        {
+          "number": 7,
+          "name": "Royal Supremacy",
+          "barrier": 21,
+          "weight_kg": 56.0,
+          "jockey": "Ben Allen",
+          "trainer": "Ciaron Maher",
+          "form": "0x0331x910",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A Group 1 Metropolitan winner with genuine staying class.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Leader",
+          "style_note": "Leader / on pace"
+        },
+        {
+          "number": 8,
+          "name": "Wine Dark Sea",
+          "barrier": 23,
+          "weight_kg": 56.0,
+          "jockey": "Damian Lane",
+          "trainer": "Harry Charlton",
+          "form": "162x1151x0",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won a Group 3 over 2715m abroad and has Damian Lane aboard.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Leader",
+          "style_note": "Led at Newbury; forward at Caulfield"
+        },
+        {
+          "number": 9,
+          "name": "Asterix",
+          "barrier": 6,
+          "weight_kg": 55.0,
+          "jockey": "Jye McNeil",
+          "trainer": "Chris Waller",
+          "form": "11661x5300",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Has a Group 3 2400m win and an inside-middle draw.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Backmarker",
+          "style_note": "Last on fence at Caulfield"
+        },
+        {
+          "number": 10,
+          "name": "Goodie Two Shoes",
+          "barrier": 19,
+          "weight_kg": 55.0,
+          "jockey": "Wayne Lordan",
+          "trainer": "Joseph O'Brien",
+          "form": "113x2x8210",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Second in last year’s Cup and a Group 2 winner over 2816m this year.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Midfield",
+          "style_note": "Off pace in 2025 Cup"
+        },
+        {
+          "number": 11,
+          "name": "Juja Kibo",
+          "barrier": 14,
+          "weight_kg": 55.0,
+          "jockey": "Sam Clipperton",
+          "trainer": "Ciaron Maher",
+          "form": "93339x3211",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won both the Metropolitan and Moonee Valley Gold Cup, showing a sharp finish.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+            "https://www.racing.com/news/2026/11/01/news-preview-ciaron-maher-melbourne-cup-runners-barriers-jockeys"
+          ],
+          "run_style": "Midfield",
+          "style_note": "Off the pace in latest Moonee Valley Gold Cup"
+        },
+        {
+          "number": 12,
+          "name": "Hopewell Rock",
+          "barrier": 15,
+          "weight_kg": 54.5,
+          "jockey": "Zac Lloyd",
+          "trainer": "George Boughey",
+          "form": "3229x3612x",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A Goodwood 2816m win and narrow Ebor second create a credible staying case.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Unknown",
+          "style_note": "Stayed on over 2816m; settling spot unclear"
+        },
+        {
+          "number": 13,
+          "name": "Onesmoothoperator",
+          "barrier": 13,
+          "weight_kg": 54.5,
+          "jockey": "Declan Bates",
+          "trainer": "Tim Fitzsimmons",
+          "form": "0x10x9x090",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Has won major Cup lead-ups in earlier seasons.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Versatile",
+          "style_note": "Back in recent Herbert Power; mid-field in 2025 Cup"
+        },
+        {
+          "number": 14,
+          "name": "Soul Of Spain",
+          "barrier": 5,
+          "weight_kg": 54.5,
+          "jockey": "Tommy Berry",
+          "trainer": "Chris Waller",
+          "form": "4262x68378",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Second in the Sydney Cup at 3200m is unusually direct distance evidence.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Unknown",
+          "style_note": "Made a mid-race move at Caulfield; usual spot unclear"
+        },
+        {
+          "number": 15,
+          "name": "Zahrann",
+          "barrier": 11,
+          "weight_kg": 54.5,
+          "jockey": "Ben Melham",
+          "trainer": "Ciaron Maher",
+          "form": "17x53x4106",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Naturalism winner who improved late when sixth in the Caulfield Cup.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Backmarker",
+          "style_note": "Finished late at Caulfield; usual spot unclear"
+        },
+        {
+          "number": 16,
+          "name": "So You Are",
+          "barrier": 7,
+          "weight_kg": 54.0,
+          "jockey": "Rachel King",
+          "trainer": "Bjorn Baker",
+          "form": "7432421111",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Four straight wins including the Bendigo Cup make him one of the fittest current-form runners.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "On pace",
+          "style_note": "On pace in Bendigo Cup"
+        },
+        {
+          "number": 17,
+          "name": "Future History",
+          "barrier": 12,
+          "weight_kg": 53.5,
+          "jockey": "Jamie Melham",
+          "trainer": "Gregory Hickman",
+          "form": "4x436x3249",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Recent staying efforts keep him in the field and Jamie Melham rides.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "On pace",
+          "style_note": "On pace in 2023 Cup"
+        },
+        {
+          "number": 18,
+          "name": "James J Braddock",
+          "barrier": 24,
+          "weight_kg": 53.5,
+          "jockey": "Craig Williams",
+          "trainer": "Joseph O'Brien",
+          "form": "21x5136x6",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Epsom Derby third and Craig Williams booking give class upside.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Unknown",
+          "style_note": "Settling spot unclear"
+        },
+        {
+          "number": 19,
+          "name": "Kizlyar",
+          "barrier": 20,
+          "weight_kg": 53.5,
+          "jockey": "Beau Mertens",
+          "trainer": "Joseph O'Brien",
+          "form": "93x011x2x0",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A former hurdler may appreciate a stronger stamina test than his local debut.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Unknown",
+          "style_note": "Settling spot unclear"
+        },
+        {
+          "number": 20,
+          "name": "Point Of Law",
+          "barrier": 9,
+          "weight_kg": 53.0,
+          "jockey": "Ethan Brown",
+          "trainer": "Ciaron Maher",
+          "form": "2141x1",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Geelong Cup winner at his Australian debut, with 53kg and barrier nine.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+            "https://www.racing.com/news/2026/11/01/news-preview-ciaron-maher-melbourne-cup-runners-barriers-jockeys"
+          ],
+          "run_style": "On pace",
+          "style_note": "On pace / outside leader at Geelong"
+        },
+        {
+          "number": 21,
+          "name": "Strictly Business",
+          "barrier": 4,
+          "weight_kg": 53.0,
+          "jockey": "Dean Yendall",
+          "trainer": "Thomas Carberry",
+          "form": "1x5802x000",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A VRC Oaks 2500m winner with barrier four and Dean Yendall now named.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+            "https://www.racing.com/news/2026/10/31/news-melbourne-cup-final-field-311026"
+          ],
+          "run_style": "Unknown",
+          "style_note": "Settling spot unclear"
+        },
+        {
+          "number": 22,
+          "name": "Mr Monaco",
+          "barrier": 16,
+          "weight_kg": 52.5,
+          "jockey": "Jabez Johnstone",
+          "trainer": "Ciaron Maher",
+          "form": "x5110x4013",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won The Bart Cummings over 2500m and closed for third in the Moonee Valley Gold Cup.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+            "https://www.racing.com/news/2026/11/01/news-preview-ciaron-maher-melbourne-cup-runners-barriers-jockeys"
+          ],
+          "run_style": "Versatile",
+          "style_note": "On pace in The Bart Cummings; finished late in MV Cup"
+        },
+        {
+          "number": 23,
+          "name": "Zakouma",
+          "barrier": 10,
+          "weight_kg": 52.0,
+          "jockey": "William Pike",
+          "trainer": "Grahame Begg",
+          "form": "11171x6650",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won the Andrew Ramsden over 2800m at Flemington and carries only 52kg.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/"
+          ],
+          "run_style": "Backmarker",
+          "style_note": "Finished strongly at shorter trips; usual spot unclear"
+        },
+        {
+          "number": 24,
+          "name": "Shockletz",
+          "barrier": 17,
+          "weight_kg": 51.0,
+          "jockey": "Harry Coffey",
+          "trainer": "Ciaron Maher",
+          "form": "1x34864162",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Archer Stakes winner at Flemington and down to 51kg after a strong preparation.",
+          "source_urls": [
+            "https://www.vrc.com.au/latest-news/lexus-melbourne-cup-field-and-barriers-announced-for-166th-running/",
+            "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+            "https://www.racing.com/news/2026/11/01/news-preview-ciaron-maher-melbourne-cup-runners-barriers-jockeys",
+            "https://www.racing.com/news/2026/11/01/news-jockeys-harry-coffey-update-011126"
+          ],
+          "run_style": "Backmarker",
+          "style_note": "Back / ridden cold in last two lead-ups"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "name": "Crown Amanda Elliott",
+      "start_time": "2026-11-03T15:50:00+11:00",
+      "distance_m": 1400,
+      "grade": "Quality",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 5,
+          "name": "Ranarsson",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won his first two starts at Cranbourne, including a dominant 1400m win.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 4,
+          "name": "Beautiful You",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Two wins and repeated placings create a consistent alternative.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 2,
+          "name": "Barracks",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A first-up win and recent second keep him in the form conversation.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "name": "The Hong Kong Jockey Club Stakes",
+      "start_time": "2026-11-03T16:35:00+11:00",
+      "distance_m": 1400,
+      "grade": "Set Weights plus Penalties",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 2,
+          "name": "Shadhavar",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Won the Tristarc over 1400m by a clear margin and has Craig Williams aboard.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 14,
+          "name": "Milos Filos",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Her recent win and third offer a form alternative.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 8,
+          "name": "Terilee",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Recent placings and a direct Tristarc form line make her relevant.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "name": "Channel 9 Trophy",
+      "start_time": "2026-11-03T17:15:00+11:00",
+      "distance_m": 1400,
+      "grade": "BenchMark 90",
+      "ground": "Soft 5",
+      "field_scope": "editorial_watchlist_only",
+      "runners_complete": false,
+      "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "runners": [
+        {
+          "number": 1,
+          "name": "Buccleuch",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Six wins in 11 starts and a recent Caulfield 1400m win make the strongest simple form case.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Porter",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "A recent win provides an alternative if the favourite is overbet.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        },
+        {
+          "number": 7,
+          "name": "Jett Smash",
+          "barrier": null,
+          "weight_kg": null,
+          "jockey": "",
+          "trainer": "",
+          "form": "",
+          "scratched": null,
+          "emergency": false,
+          "editorial_note": "Four wins in the recent form string show ability, with a latest sixth to explain.",
+          "source_urls": [
+            "https://www.racing.com/form/2026-11-03/flemington/",
+            "https://www.tab.co.nz/punters/2026/11/2026-melbourne-cup-day-tips-preview-flemington-tuesday-3-november/"
+          ]
+        }
+      ]
+    }
+  ],
+  "track_snapshot": {
+    "ground": "Soft 5",
+    "observed_at": "2026-11-03T07:32:00+11:00",
+    "source_url": "https://www.racingqueensland.com.au/racing/profiles/track/thoroughbred/flem",
+    "note": "Morning observation; verify current rating before the jump."
+  }
+}

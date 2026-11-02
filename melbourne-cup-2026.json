@@ -2,9 +2,9 @@
   "event": "Melbourne Cup Day",
   "venue": "Flemington",
   "date": "2026-11-03",
-  "prepared_at": "2 November 2026, 7:55pm AEDT",
+  "prepared_at": "3 November 2026, 8:45am AEDT",
   "status": "Dated research snapshot; no live odds or automatic news feed",
-  "track_snapshot": "Pre-race ground remains uncertain after forecast rain. Treat Good 4 and Soft 5–6 as scenarios, not the official race-day rating. Check the VRC race-day report before relying on a ground-based case.",
+  "track_snapshot": "Flemington was reported Soft 5, rail out 3m, at 7:32am AEDT on 3 November. This is a dated morning observation, not a live rating; recheck the track and scratches before the Cup. Soft 6 is a further-rain scenario.",
   "method_note": "Watchlists are editorial form cases and not calibrated probabilities or verified betting edges. We did not assign a value bet without an accepted current price. Stable comments are interested opinions. Check official scratchings, rider declarations and the track before the jump.",
   "sources": {
     "vrc_field": {
@@ -58,6 +58,10 @@
     "track": {
       "title": "VRC track and weather report",
       "url": "https://www.vrc.com.au/track-and-weather-conditions/"
+    },
+    "track_profile": {
+      "title": "Flemington morning track profile, 3 November 7:32am AEDT",
+      "url": "https://www.racingqueensland.com.au/racing/profiles/track/thoroughbred/flem"
     },
     "tab_preview": {
       "title": "TAB NZ Cup Day race preview, 2 November",
@@ -365,7 +369,7 @@
       "grade": "Handicap",
       "active_runners": 24,
       "question": "A capacity 3200m handicap with many first-time two-milers. Separate most-likely finishers from value at a bookmaker price.",
-      "ground": "Point Of Law, Hopewell Rock and Shockletz all have a 3200m question. A Soft 5–6 would require new ground comparisons; no forecast is a track rating.",
+      "ground": "Flemington was Soft 5 in the 7:32am morning report. Point Of Law, Hopewell Rock and Shockletz still have a 3200m question; recheck the going and any further rain before upgrading a wet-ground case.",
       "watchlist": [
         {
           "number": 20,
@@ -949,16 +953,16 @@
       "id": "track-weather",
       "kind": "Track scenario",
       "date": "2026-11-02",
-      "headline": "Rain could change the going",
-      "detail": "The API acceptance snapshot reported Good 4, rail out 3m, with showers. The Bureau of Meteorology forecast rain on Monday and a possible shower Tuesday. The actual race-day rating is still unknown.",
-      "impact": "Recheck the VRC track report; compare each runner’s Good and Soft record after the rating is published.",
+      "headline": "Flemington moved to Soft 5 in the morning report",
+      "detail": "The Flemington track profile reported Soft 5, rail out 3m and 7.4mm of rain over the previous 24 hours at 7:32am AEDT on 3 November. This is a morning snapshot and can change before the Cup.",
+      "impact": "Recheck the current rating and any late scratchings. The Soft 6 line-up is a further-rain scenario, not the published morning rating.",
       "horses": [
         "Point Of Law",
         "Shockletz",
         "Mr Monaco"
       ],
       "sources": [
-        "weather",
+        "track_profile",
         "track"
       ]
     },

@@ -107,8 +107,8 @@
     },
     {
       "id": "soft",
-      "label": "Soft track",
-      "summary": "Wait for an official rating. A rain-affected surface makes Point Of Law's untested ground more important and can make the 3200m a greater stamina test. Do not upgrade any runner solely from a weather forecast."
+      "label": "Soft / more rain",
+      "summary": "Flemington was Soft 5 at 7:32am on Cup morning. If further rain makes it slower, Point Of Law's untested ground becomes a greater uncertainty and 3200m may demand more stamina. Check the current rating and actual runner records before changing an order."
     }
   ],
   "style_signals": {
