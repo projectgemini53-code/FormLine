@@ -4,9 +4,9 @@ Source-linked Melbourne Cup research and a personal Australian racing paper-test
 
 - **Race research:** the dated ten-race Flemington card, 24 Cup runner dossiers, saved favourites/finish tags, and dated Inside track reports.
 - **Cup history and forecast:** every top-four finisher in the 2011–2025 Melbourne Cups (60 runners), with effective starting gate, listed kilograms, jockey, observed race position, lead-up form, race narrative and sources; an explained, provisional 2026 top four and pace scenarios.
-- **Research tools:** a race board, manual or protected on-demand card/results/form/ground lookups, win/place and two-runner Top 3/4 paper bets, paper journal, simple final-result settlement, performance view, four strategy guides and an A–Z racing glossary. Research records stay in the browser and can be exported/imported as a backup.
+- **Research tools:** a race board, manual or protected on-demand card/results/form/ground lookups, owner-only win/place price watchlists and dependent Top 3/4 pair ideas, win/place and two-runner Top 3/4 paper bets, paper journal with pre-race no-bet decisions, simple final-result settlement, performance view, four strategy guides and an A–Z racing glossary. Research records stay in the browser and can be exported/imported as a backup.
 
-No real bets are placed. Forecasts are editorial hypotheses, not calibrated probabilities or proven betting edges. The historical top-four data omits losing starters and cannot establish a barrier success rate. The free PuntersEdge plan does not provide a long point-in-time odds archive or genuine pre-race same-race multi combination quotes; enter the *actual combined quote* for a paper multi rather than multiplying leg prices.
+No real bets are placed. Forecasts and the owner-only market watchlists are unvalidated research hypotheses, not calibrated probabilities or proven betting edges. The historical top-four data omits losing starters and cannot establish a barrier success rate. The free PuntersEdge plan does not provide a long point-in-time odds archive or genuine pre-race same-race multi combination quotes; enter the *actual combined quote* for a paper multi rather than multiplying leg prices.
 
 ## Run locally
 

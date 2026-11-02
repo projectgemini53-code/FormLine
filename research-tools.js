@@ -6,7 +6,7 @@ const STORE_KEY = 'formline_research_workspace_v1';
 const CODE_KEY = 'formline_access_code_session';
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
-const emptyStore = () => ({ version: 1, races: [], bets: [], results: {} });
+const emptyStore = () => ({ version: 1, races: [], bets: [], noBets: [], results: {} });
 let store = loadStore();
 let currentView = 'races';
 let selectedMeeting = '';
@@ -63,7 +63,10 @@ function quoteFresh(runner) {
 function loadStore() {
   try {
     const parsed = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
-    if (parsed?.version === 1 && Array.isArray(parsed.races) && Array.isArray(parsed.bets) && parsed.results && typeof parsed.results === 'object') return parsed;
+    if (parsed?.version === 1 && Array.isArray(parsed.races) && Array.isArray(parsed.bets) && parsed.results && typeof parsed.results === 'object') {
+      parsed.noBets = Array.isArray(parsed.noBets) ? parsed.noBets : [];
+      return parsed;
+    }
   } catch { /* An empty workspace is safer than a broken page. */ }
   return emptyStore();
 }
@@ -102,7 +105,8 @@ function normalizedProviderRunner(raw, fetchedAt) {
     trainer: String(raw.trainer || '').slice(0, 100), runStyle: '', form: String(raw.form || raw.last10 || '').slice(0, 80),
     historyScore: '', historyNotes: '', conditionNotes: '', scratched: Boolean(raw.scratched),
     winOdds: validPrice(book.win_price), placeOdds: validPrice(book.place_price), top3Odds: validPrice(book.top3_price), top4Odds: validPrice(book.top4_price),
-    quoteAt, quoteTier: String(book.refresh_tier || ''), quoteStale: Boolean(book.stale), source: 'provider'
+    quoteAt, quoteTier: String(book.refresh_tier || ''), quoteStale: Boolean(book.stale), source: 'provider',
+    research: raw.research && typeof raw.research === 'object' ? raw.research : { win: null, place: null }
   };
 }
 function normalizedPricedRace(raw, fetchedAt) {
@@ -115,7 +119,8 @@ function normalizedPricedRace(raw, fetchedAt) {
     venue: String(raw.venue).slice(0, 90), raceNumber: number(raw.race_number), raceName: String(raw.race_name || `Race ${raw.race_number || ''}`).slice(0, 140),
     startTime: time.toISOString(), distance: number(raw.distance_m), paidPlaces: number(raw.places_paid), ground: String(raw.track_condition || '').slice(0, 45),
     raceClass: String(raw.race_class || '').slice(0, 100), notes: '', fetchedAt,
-    runners: (Array.isArray(raw.runners) ? raw.runners : []).filter(x => x && (x.name || x.runner_name)).slice(0, 40).map(x => ({ ...normalizedProviderRunner(x, fetchedAt), scratched: Boolean(x.scratched || scratched.has(Number(x.number))) }))
+    researchStatus: String(raw.research_status || '').slice(0, 200),
+    runners: (Array.isArray(raw.runners) ? raw.runners : []).filter(x => x && !x.emergency && (x.name || x.runner_name)).slice(0, 40).map(x => ({ ...normalizedProviderRunner(x, fetchedAt), scratched: Boolean(x.scratched || scratched.has(Number(x.number))) }))
   };
 }
 function normalizedAcceptanceRaces(card, fetchedAt) {
@@ -143,17 +148,41 @@ function mergeFeedRace(next) {
   const index = store.races.findIndex(r => r.id === next.id);
   if (index < 0) { store.races.push(next); return; }
   const prior = store.races[index];
-  const priorRunners = new Map((prior.runners || []).map(r => [r.id, r]));
-  next.runners = next.runners.map(r => {
-    const old = priorRunners.get(r.id);
-    return old ? { ...r, runStyle: old.runStyle || '', historyScore: old.historyScore || '', historyNotes: old.historyNotes || '', conditionNotes: old.conditionNotes || '' } : r;
+  const sameRunner = (a, b) => a.id === b.id || Boolean(a.providerRef && b.providerRef && a.providerRef === b.providerRef) ||
+    (a.number != null && a.number === b.number && a.name.toLowerCase() === b.name.toLowerCase());
+  const paired = (old, fresh, keepQuote) => ({
+    ...old, ...fresh,
+    id: old.id, providerRef: fresh.providerRef || old.providerRef,
+    runStyle: fresh.runStyle || old.runStyle || '', historyScore: fresh.historyScore || old.historyScore || '',
+    historyNotes: fresh.historyNotes || old.historyNotes || '', conditionNotes: fresh.conditionNotes || old.conditionNotes || '',
+    ...(keepQuote ? {
+      winOdds: old.winOdds, placeOdds: old.placeOdds, top3Odds: old.top3Odds, top4Odds: old.top4Odds,
+      quoteAt: old.quoteAt, quoteTier: old.quoteTier, quoteStale: old.quoteStale, research: old.research
+    } : {})
   });
-  // A priced response can replace an acceptance-only card, but never erase its prices.
-  if (!next.runners.some(r => r.winOdds) && prior.runners?.some(r => r.winOdds) && prior.fetchedAt === next.fetchedAt) return;
+  const hasNewQuotes = next.runners.some(r => r.winOdds || r.placeOdds);
+  if (hasNewQuotes) {
+    // The accepted field can include horses without a current bookmaker price.
+    next.runners = (prior.runners || []).map(old => {
+      const fresh = next.runners.find(r => sameRunner(old, r));
+      return fresh ? paired(old, fresh, false) : old;
+    }).concat(next.runners.filter(r => !(prior.runners || []).some(old => sameRunner(old, r))));
+  } else {
+    // A later acceptance refresh updates scratchings without making old prices look new.
+    next.runners = next.runners.map(fresh => {
+      const old = (prior.runners || []).find(r => sameRunner(r, fresh));
+      return old ? paired(old, fresh, Boolean(old.winOdds || old.placeOdds)) : fresh;
+    });
+  }
   next.paidPlaces ||= prior.paidPlaces;
   next.ground ||= prior.ground;
   next.notes = prior.notes || '';
+  next.researchStatus = hasNewQuotes ? (next.researchStatus || '') : (prior.researchStatus || '');
   store.races[index] = next;
+}
+function matchProviderRace(raw) {
+  const ids = new Set([raw?.race_id, ...(Array.isArray(raw?.race_id_aliases) ? raw.race_id_aliases : [])].filter(Boolean).map(String));
+  return store.races.find(race => race.providerId && ids.has(String(race.providerId)));
 }
 function normalizedProviderResult(raw, fetchedAt) {
   if (!raw?.race_id) return null;
@@ -161,7 +190,7 @@ function normalizedProviderResult(raw, fetchedAt) {
   const placings = Array.isArray(raw.placings) ? raw.placings : [];
   const rows = fullField.length ? fullField : placings;
   const positions = {};
-  const found = store.races.find(r => r.providerId === String(raw.race_id));
+  const found = matchProviderRace(raw);
   if (found) for (const runner of found.runners || []) {
     const row = rows.find(p =>
       (runner.providerRef && p?.runner_ref && String(p.runner_ref) === runner.providerRef) ||
@@ -182,9 +211,9 @@ function normalizedProviderResult(raw, fetchedAt) {
   const positive = Object.values(positions).filter(v => Number(v) > 0);
   const duplicate = new Set(positive).size !== positive.length;
   return {
-    raceId: `pe:${raw.race_id}`, status: raw.status === 'final' ? 'final' : 'provisional',
+    raceId: found?.id || `pe:${raw.race_id}`, status: raw.status === 'final' ? 'final' : 'provisional',
     ground: String(raw.track_condition || '').slice(0, 45), positions,
-    special: Boolean(duplicate || (Array.isArray(raw.deductions) && raw.deductions.length) || raw.dead_heat),
+    special: Boolean(duplicate || (Array.isArray(raw.deductions) && raw.deductions.some(item => Number(item?.win) > 0 || Number(item?.place) > 0)) || raw.dead_heat || rows.some(row => row?.dead_heat)),
     note: '', source: 'provider', fetchedAt, savedAt: new Date().toISOString()
   };
 }
@@ -267,6 +296,94 @@ function runnerEditorHtml() {
   return `<details class="editor-card" id="runnerEditor"><summary><span>＋</span> Add or edit a runner</summary><form id="runnerForm" class="editor-form"><input type="hidden" name="runnerId"><div class="field-grid"><label>Number <input name="number" type="number" min="1" max="99" required></label><label>Horse <input name="name" maxlength="100" required></label><label>Barrier <input name="barrier" type="number" min="1" max="40"></label><label>Weight (kg) <input name="weight" type="number" min="30" max="80" step="0.5"></label><label>Jockey <input name="jockey" maxlength="100"></label><label>Trainer <input name="trainer" maxlength="100"></label><label>Runner type <select name="runStyle"><option value="">Unknown</option><option>Leader</option><option>On pace</option><option>Midfield</option><option>Backmarker</option><option>Versatile</option></select></label><label>Form string <input name="form" maxlength="80" placeholder="e.g. 1-324"></label><label>1st–2nd–3rd record <input name="historyScore" maxlength="35" placeholder="e.g. 4-3-0"></label><label>Quote observed (your device time) <input name="quoteAt" type="datetime-local"></label><label>Win odds <input name="winOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Place odds <input name="placeOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 3 leg odds <input name="top3Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 4 leg odds <input name="top4Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label class="field-wide">Past run history <textarea name="historyNotes" rows="3" maxlength="2000" placeholder="Date, distance, ground and finishing place for each run."></textarea></label><label class="field-wide">Ground / condition notes <textarea name="conditionNotes" rows="2" maxlength="1500" placeholder="How has this horse gone on similar ground?"></textarea></label><label class="result-flag field-wide"><input name="scratched" type="checkbox"> Scratched / withdrawn</label></div><p class="field-help">Runner style, form and prices are research notes. They do not create a probability forecast.</p><div class="form-actions"><button class="button button-primary" type="submit">Save runner</button><button class="button button-quiet" type="button" id="cancelRunnerEdit">Cancel</button></div></form></details>`;
 }
 function marketOptions(race) { return (race.runners || []).filter(r => !r.scratched).map(r => `<option value="${esc(r.id)}">${esc(r.number ?? '—')}. ${esc(r.name)}</option>`).join(''); }
+const pairCache = new Map();
+function percent(value) { return Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : '—'; }
+function currentEstimate(runner, market) {
+  const value = runner.research?.[market];
+  const chance = Number(value?.probability), books = Number(value?.books);
+  const until = Date.parse(value?.valid_until || '');
+  return Number.isFinite(chance) && chance > 0 && chance <= 1 && books >= 3 && Number.isFinite(until) && until > Date.now()
+    ? { chance, books, validUntil: until } : null;
+}
+function marketShortlist(race, market) {
+  const active = race.runners.filter(r => !r.scratched);
+  if (active.length < 2) return [];
+  const compared = !race.researchStatus && active.every(r => currentEstimate(r, market));
+  return active.map(runner => {
+    const estimate = compared ? currentEstimate(runner, market) : null;
+    const price = market === 'win' ? runner.winOdds : runner.placeOdds;
+    return quoteFresh(runner) && validPrice(price)
+      ? { runner, price, chance: estimate?.chance ?? null, books: estimate?.books ?? 0, gap: estimate ? estimate.chance * price - 1 : null } : null;
+  }).filter(Boolean).sort((a, b) => compared ? b.gap - a.gap : a.price - b.price).slice(0, 3);
+}
+function pairFinishProbability(weights, first, second, top) {
+  if (first === second || weights.length < top || weights.length > 30) return null;
+  let states = new Map([[0, { chance: 1, mass: 0 }]]);
+  for (let place = 1; place <= top; place++) {
+    const next = new Map();
+    for (const [mask, state] of states) {
+      const remaining = 1 - state.mass;
+      if (remaining <= 0) continue;
+      for (let index = 0; index < weights.length; index++) {
+        const bit = 1 << index;
+        if (mask & bit) continue;
+        const nextMask = mask | bit;
+        if (place === top && (!(nextMask & (1 << first)) || !(nextMask & (1 << second)))) continue;
+        const old = next.get(nextMask);
+        const chance = state.chance * weights[index] / remaining;
+        if (old) old.chance += chance;
+        else next.set(nextMask, { chance, mass: state.mass + weights[index] });
+      }
+    }
+    states = next;
+  }
+  return Math.max(0, Math.min(1, [...states.values()].reduce((sum, state) => sum + state.chance, 0)));
+}
+function pairShortlist(race, top) {
+  const active = race.runners.filter(r => !r.scratched);
+  if (active.length < top || active.length > 30) return [];
+  const compared = !race.researchStatus && active.every(r => currentEstimate(r, 'win'));
+  if (!compared && !active.every(r => quoteFresh(r) && validPrice(r.winOdds))) return [];
+  const rawWeights = active.map(runner => compared ? currentEstimate(runner, 'win').chance : 1 / runner.winOdds);
+  const total = rawWeights.reduce((sum, value) => sum + value, 0);
+  const weights = rawWeights.map(value => value / total);
+  const basis = compared ? 'other books' : 'Sportsbet only';
+  const key = `${race.id}|${race.fetchedAt}|${top}|${basis}|${active.map((runner, index) => `${runner.id}:${weights[index].toFixed(8)}`).join('|')}`;
+  if (pairCache.has(key)) return pairCache.get(key);
+  const candidates = active.map((runner, index) => ({ runner, index, weight: weights[index] })).sort((a, b) => b.weight - a.weight).slice(0, 8);
+  const pairs = [];
+  for (let i = 0; i < candidates.length; i++) for (let j = i + 1; j < candidates.length; j++) {
+    const first = candidates[i], second = candidates[j];
+    const chance = pairFinishProbability(weights, first.index, second.index, top);
+    if (chance != null) pairs.push({ first: first.runner, second: second.runner, chance, basis });
+  }
+  pairs.sort((a, b) => b.chance - a.chance);
+  const result = pairs.slice(0, 3);
+  pairCache.set(key, result);
+  return result;
+}
+function shortlistHtml(race) {
+  if (raceStarted(race)) return '';
+  const intro = `<div class="shortlist-head"><div><p class="eyebrow">OWNER-ONLY MODEL WATCHLIST</p><h3>Price and placing research</h3><p>Comparison estimates use at least three other complete, fresh bookmaker books after removing each book's margin. They are unvalidated and do not prove a betting edge. Confirm the current Sportsbet quote yourself.</p></div><span>RESEARCH SIGNALS</span></div>`;
+  if (race.source !== 'provider') return `<section class="analysis-board race-section">${intro}${empty('No market comparison', 'A manually entered quote cannot supply a full multi-book market estimate. Load the protected feed on demand.')}</section>`;
+  const coverageNote = race.researchStatus ? `<p class="shortlist-coverage">${esc(race.researchStatus)} Single-book ranks below are descriptive only.</p>` : '';
+  const groups = ['win', 'place'].map(market => {
+    const rows = marketShortlist(race, market);
+    return `<div class="shortlist-group"><div class="shortlist-group-title"><strong>${market === 'win' ? 'Win price watchlist' : 'Likely place / price watchlist'}</strong><small>${market === 'place' ? `${race.paidPlaces || 'Unknown'} paid places · check terms` : 'Fixed win market'}</small></div>${rows.length ? rows.map((item, index) => {
+      const context = [item.runner.form ? `Form ${item.runner.form}` : '', item.runner.barrier != null ? `gate ${item.runner.barrier}` : '', item.runner.weight != null ? `${item.runner.weight}kg` : '', item.runner.jockey ? `jockey ${item.runner.jockey}` : ''].filter(Boolean).join(' · ');
+      const compared = item.gap != null;
+      const reason = compared
+        ? `Sportsbet ${odds(item.price)} implies ${percent(1 / item.price)}; ${item.books} other complete books estimate ${percent(item.chance)} after margin adjustment. Indicative gap ${item.gap >= 0 ? '+' : ''}${percent(item.gap)}. ${context || 'No extra form detail'} is context only, not part of this estimate.`
+        : `Current Sportsbet ${market} quote ${odds(item.price)} ranks this runner near the front of this saved market. No three-book consensus or value estimate is available. ${context || 'No extra form detail'} is context only.`;
+      return `<button type="button" class="shortlist-pick ${compared && item.gap >= .05 ? 'candidate' : 'watch'}" data-suggest-runner="${esc(item.runner.id)}" data-suggest-market="${market}"><span class="shortlist-rank">${index + 1}</span><span class="shortlist-main"><strong>${esc(item.runner.number ?? '—')}. ${esc(item.runner.name)}</strong><small>${compared ? item.gap >= .05 ? 'Paper candidate' : 'Watch only · below 5% filter' : 'Single-book rank · no value claim'} · ${market.toUpperCase()} ${esc(odds(item.price))}</small><em>${esc(reason)}</em></span><span class="shortlist-gap">${compared ? `${item.gap >= 0 ? '+' : ''}${esc(percent(item.gap))}` : 'RANK'}</span></button>`;
+    }).join('') : `<p class="shortlist-empty">${market === 'place' && !race.paidPlaces ? 'Paid-place terms are unknown.' : 'No current Sportsbet quote. Refresh closer to the jump.'}</p>`}</div>`;
+  }).join('');
+  const pairGroups = mode === 'sportsbet' ? [3, 4].map(top => {
+    const rows = pairShortlist(race, top);
+    return `<div class="shortlist-group pair-group"><div class="shortlist-group-title"><strong>Two horses both Top ${top}</strong><small>Same-race ranking estimate</small></div>${rows.length ? rows.map((pair, index) => `<button type="button" class="shortlist-pick pair-pick" data-pair-first="${esc(pair.first.id)}" data-pair-second="${esc(pair.second.id)}" data-pair-top="${top}"><span class="shortlist-rank">${index + 1}</span><span class="shortlist-main"><strong>${esc(pair.first.name)} + ${esc(pair.second.name)}</strong><small>Both Top ${top} · ${pair.basis === 'Sportsbet only' ? 'rough single-book' : 'comparison-book'} joint chance ${esc(percent(pair.chance))}${pair.basis === 'Sportsbet only' ? '' : ` · indicative fair price ${esc(odds(1 / pair.chance))}`}</small><em>Calculated together in a Plackett–Luce race ranking from ${pair.basis === 'Sportsbet only' ? 'one bookmaker’s win prices, with no independent value estimate' : 'other bookmakers’ margin-adjusted win prices'}. Outcomes are dependent. Enter the actual combined quote in the paper multi form.</em></span><span class="shortlist-gap">${esc(percent(pair.chance))}</span></button>`).join('') : `<p class="shortlist-empty">A current full-field win market is needed; large fields above 30 are not ranked. You can still record a manually priced paper multi.</p>`}</div>`;
+  }).join('') : '';
+  return `<section class="analysis-board race-section" id="modelWatchlist">${intro}${coverageNote}<div class="shortlist-grid">${groups}</div>${pairGroups ? `<div class="pair-watchlists"><h4>Same Race Multi pair ideas</h4><p>These are likely finishing combinations from a ranking model, not positive-value bets. They do not calculate a bookmaker combined price.</p><div class="shortlist-grid">${pairGroups}</div></div>` : ''}<p class="shortlist-foot">The 5% paper flag was chosen for research; it has not been shown to be profitable. Single-book ranks have no independent value estimate. Form, gate, ground, weight and jockey need separate analysis. Quotes expire, and no selection is sent to a bookmaker.</p></section>`;
+}
 function bettingHtml(race) {
   const active = !raceStarted(race), activeRunners = race.runners.filter(r => !r.scratched);
   if (!active) return `<div class="race-section"><h3>Paper bets are closed</h3><p>The entered jump time has passed. Use Results to record the finish, then review any decisions made before the jump.</p></div>`;
@@ -274,12 +391,16 @@ function bettingHtml(race) {
   const first = activeRunners[0];
   return `<section class="race-section" id="paperEntry"><h3>Build a paper selection</h3><p>Selections are recorded before the jump. Confirm the real quote yourself; no money is sent anywhere.</p><div class="mode-switch" role="group" aria-label="Betting context"><button type="button" data-mode="sportsbet" class="${mode === 'sportsbet' ? 'active' : ''}" aria-pressed="${mode === 'sportsbet'}">Online Sportsbet</button><button type="button" data-mode="track" class="${mode === 'track' ? 'active' : ''}" aria-pressed="${mode === 'track'}">At the races</button></div><form class="bet-form" id="singleForm"><label>Horse<select name="runnerId" required>${marketOptions(race)}</select></label><label>Market<select name="market"><option value="win">Win</option><option value="place" ${!race.paidPlaces ? 'disabled' : ''}>Place${race.paidPlaces ? ` · ${race.paidPlaces} paid` : ' · paid places unknown'}</option></select></label><label>Actual decimal odds<input name="odds" type="number" min="1.01" step="0.01" inputmode="decimal" required placeholder="e.g. 4.20"></label><label>Paper stake ($)<input name="stake" type="number" min="0.01" max="100000" step="0.01" value="5" inputmode="decimal" required></label><div class="bet-preview" id="singlePreview">${mode === 'track' ? 'Enter the on-course price you saw.' : `Saved win quote for ${esc(first.name)}: ${esc(odds(first.winOdds))}. Recheck before recording.`}</div><label class="result-flag field-wide"><input name="confirmed" type="checkbox" required> I checked the actual quote and race terms before recording this paper bet.</label><button class="button button-primary field-wide" type="submit">Save pre-race paper bet</button></form>${mode === 'sportsbet' && activeRunners.length >= 2 ? `<div class="multi-panel"><h4>Two horses in Top 3 or Top 4</h4><p>Select different runners. Enter the bookmaker’s actual combined quote; individual leg prices cannot be multiplied to get it.</p><form class="bet-form" id="multiForm"><label>First horse<select name="firstId" required>${marketOptions(race)}</select></label><label>First finish<select name="firstMarket"><option value="top3">Top 3</option><option value="top4">Top 4</option></select></label><label>Second horse<select name="secondId" required>${marketOptions(race)}</select></label><label>Second finish<select name="secondMarket"><option value="top3">Top 3</option><option value="top4">Top 4</option></select></label><label>Actual combined odds<input name="odds" type="number" min="1.01" step="0.01" inputmode="decimal" required></label><label>Paper stake ($)<input name="stake" type="number" min="0.01" max="100000" step="0.01" value="5" inputmode="decimal" required></label><div class="bet-preview" id="multiPreview">Both outcomes must happen. There is no combined quote in this feed.</div><label class="result-flag field-wide"><input name="confirmed" type="checkbox" required> I checked the actual combined quote and Top 3/4 terms.</label><button class="button button-primary field-wide" type="submit">Save pre-race paper multi</button></form></div>` : ''}</section>`;
 }
+function noBetHtml(race) {
+  if (raceStarted(race)) return '';
+  return `<section class="race-section no-bet-panel"><h3>Log a decision to pass</h3><p>Record a no-bet before the jump as part of the forward test. It stays separate from paper bets and ROI.</p><form id="noBetForm" class="no-bet-form"><label>Research method<select name="strategy"><option value="market">Market gap</option><option value="prices">Price shopping</option><option value="ground">Ground &amp; form</option><option value="multi">Two horses Top 3/4</option></select></label><label>Why pass?<input name="reason" maxlength="500" required placeholder="e.g. No three-book consensus or price too short"></label><button class="button button-quiet" type="submit">Log no bet</button></form></section>`;
+}
 function renderRaceDetail() {
   const race = raceById();
   if (!race) { $('#raceDetail').innerHTML = empty('Choose a race', 'Add a race above, or load the protected card when the gateway is configured.'); return; }
   const source = safeUrl(race.sourceUrl);
   const facts = [`R${race.raceNumber ?? '—'}`, race.distance ? `${race.distance}m` : '', race.ground || 'Ground not entered', race.paidPlaces ? `${race.paidPlaces} places paid` : 'Paid places unknown', race.raceClass || '', raceStarted(race) ? 'Started' : 'Upcoming'].filter(Boolean);
-  $('#raceDetail').innerHTML = `<div class="race-title-row"><div><p class="eyebrow">${esc(race.venue)} · ${esc(dateTime(race.startTime))}</p><h2>${esc(race.raceName)}</h2><p>${race.source === 'provider' ? `PuntersEdge card checked ${esc(dateTime(race.fetchedAt))}` : race.source === 'result-only' ? 'Result-only card' : 'Your manually entered card'}</p></div><div class="race-actions"><button class="button button-quiet" type="button" data-edit-race="${esc(race.id)}">Edit race</button>${race.providerId ? `<button class="button button-quiet" type="button" data-load-meeting="${esc(race.id)}">Check meeting</button>` : ''}</div></div><div class="fact-list">${facts.map(f => `<span>${esc(f)}</span>`).join('')}</div>${race.notes ? `<div class="race-note">${esc(race.notes)}</div>` : ''}${source ? `<a class="race-source" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Open card source ↗</a>` : ''}<section class="race-section"><h3>Field <span class="subtle">${race.runners.length} runners</span></h3><p>Tap a horse for jockey, weight, form, ground history and price details. A blank runner style means it has not been established.</p><div class="runner-list">${race.runners.length ? race.runners.slice().sort((a, b) => Number(a.number || 0) - Number(b.number || 0)).map(r => renderRunnerCard(r, race)).join('') : empty('No runners entered', 'Use Add or edit a runner below to build this field.')}</div></section>${runnerEditorHtml()}${bettingHtml(race)}<section class="race-section"><h3>Earlier races here</h3><p>Final results saved for the same meeting can help you compare how the track played. One result alone does not prove a bias.</p>${renderEarlierResults(race)}</section>`;
+  $('#raceDetail').innerHTML = `<div class="race-title-row"><div><p class="eyebrow">${esc(race.venue)} · ${esc(dateTime(race.startTime))}</p><h2>${esc(race.raceName)}</h2><p>${race.source === 'provider' ? `PuntersEdge card checked ${esc(dateTime(race.fetchedAt))}` : race.source === 'result-only' ? 'Result-only card' : 'Your manually entered card'}</p></div><div class="race-actions"><button class="button button-quiet" type="button" data-edit-race="${esc(race.id)}">Edit race</button>${race.providerId ? `<button class="button button-quiet" type="button" data-load-meeting="${esc(race.id)}">Check meeting</button>` : ''}</div></div><div class="fact-list">${facts.map(f => `<span>${esc(f)}</span>`).join('')}</div>${race.notes ? `<div class="race-note">${esc(race.notes)}</div>` : ''}${source ? `<a class="race-source" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Open card source ↗</a>` : ''}<section class="race-section"><h3>Field <span class="subtle">${race.runners.length} runners</span></h3><p>Tap a horse for jockey, weight, form, ground history and price details. A blank runner style means it has not been established.</p><div class="runner-list">${race.runners.length ? race.runners.slice().sort((a, b) => Number(a.number || 0) - Number(b.number || 0)).map(r => renderRunnerCard(r, race)).join('') : empty('No runners entered', 'Use Add or edit a runner below to build this field.')}</div></section>${runnerEditorHtml()}${shortlistHtml(race)}${bettingHtml(race)}${noBetHtml(race)}<section class="race-section"><h3>Earlier races here</h3><p>Final results saved for the same meeting can help you compare how the track played. One result alone does not prove a bias.</p>${renderEarlierResults(race)}</section>`;
   if (!raceStarted(race)) fillSingleQuote();
   if ($('#multiForm')) { $('#multiForm').elements.secondId.value = race.runners.filter(r => !r.scratched)[1]?.id || ''; updateMultiPreview(); }
 }
@@ -335,8 +456,9 @@ function metrics() {
 function metric(label, value, sub = '', negative = false) { return `<div class="metric ${negative ? 'negative' : ''}"><small>${esc(label)}</small><strong>${esc(value)}</strong><p>${esc(sub)}</p></div>`; }
 function renderJournal() {
   const m = metrics();
-  $('#journalSummary').innerHTML = metric('PAPER DECISIONS', store.bets.length, 'Frozen before listed jump') + metric('AWAITING RESULT', m.pending, 'No final result yet') + metric('SETTLED', m.settled.length, 'Simple outcomes only') + metric('NEEDS REVIEW', m.review, 'Special terms or missing places');
+  $('#journalSummary').innerHTML = metric('PAPER BETS', store.bets.length, `${store.noBets.length} no-bet decisions logged`) + metric('AWAITING RESULT', m.pending, 'No final result yet') + metric('SETTLED', m.settled.length, 'Simple outcomes only') + metric('NEEDS REVIEW', m.review, 'Special terms or missing places');
   $('#journalList').innerHTML = store.bets.length ? store.bets.slice().reverse().map(bet => `<article class="journal-entry"><div class="journal-entry-head"><div><strong>${esc(betLabel(bet))}</strong><small>${esc(bet.venue)} · R${esc(bet.raceNumber)} · ${esc(dateTime(bet.createdAt))}</small></div><span class="status-pill ${esc(bet.status)}">${esc(bet.status)}</span></div><p>${esc(bet.mode === 'track' ? 'At the races' : 'Online Sportsbet')} · ${esc(bet.kind === 'multi' ? 'Same Race Multi' : 'Single')} · Frozen quote ${esc(odds(bet.odds))} · Paper stake ${esc(money(bet.stake))}</p><p>${esc(bet.settlementNote || 'Awaiting a final result.')}</p><footer><span>Potential gross return ${esc(money(bet.stake * bet.odds))}</span><strong>${bet.profit == null ? 'Pending' : `Net ${money(bet.profit)}`}</strong></footer></article>`).join('') : empty('No paper decisions yet', 'Add a future race and record a quote before its jump time.');
+  if (store.noBets.length) $('#journalList').innerHTML += `<section class="no-bet-log"><h2>Decisions to pass</h2><p>These pre-race observations are excluded from paper returns and ROI.</p>${store.noBets.slice().reverse().map(row => `<article><strong>${esc(row.venue)} R${esc(row.raceNumber)} · ${esc(row.strategy)}</strong><small>${esc(dateTime(row.createdAt))}</small><p>${esc(row.reason)}</p></article>`).join('')}</section>`;
 }
 function renderRail() {
   const pending = store.bets.filter(b => b.status === 'pending');
@@ -374,7 +496,7 @@ const strategies = [
   { id: 'market', name: 'Market gap', status: 'Research method', lead: 'Compare an offered fixed price with a probability estimate from several independent bookmaker books.', steps: [
     ['INPUTS', 'Full current market books', 'A proper comparison needs every runner’s quote from at least three other bookmakers, with margins removed. One bookmaker price alone cannot establish a fair chance.'],
     ['RULE', 'Estimated chance × odds − 1', 'A positive result is an estimated gap, not a guaranteed edge. The localhost model used +5% as an unvalidated paper-test flag.'],
-    ['TEST', 'Freeze, settle, compare', 'Save prices and estimates before the jump, then assess later outcomes against a market-only baseline and all recorded no-bets.'] ], caution: 'This public workspace has no market-consensus model. It shows raw implied chance from a price only; it does not claim a positive-value selection.' },
+    ['TEST', 'Freeze, settle, compare', 'Save prices and estimates before the jump, then assess later outcomes against a market-only baseline and all recorded no-bets.'] ], caution: 'The owner-only feed estimates a market consensus only with at least three complete fresh comparison books. Otherwise it ranks one bookmaker’s current prices without a value claim. Neither method is a proven edge.' },
   { id: 'prices', name: 'Price shopping', status: 'Comparison', lead: 'For the same runner and market, a higher accepted decimal quote improves the return if that outcome wins.', steps: [
     ['INPUTS', 'Current comparable quotes', 'Compare win with win, place with the same paid-place terms, and check timestamps and bookmaker rules.'],
     ['RULE', 'Same outcome, stronger quote', 'The payout at $4.20 is greater than at $4.00 for a winning $1 stake, assuming identical terms.'],
@@ -386,7 +508,7 @@ const strategies = [
   { id: 'multi', name: 'Two horses Top 3/4', status: 'Paper test', lead: 'Record a same-race combination where two different horses must each finish in their chosen Top 3 or Top 4 market.', steps: [
     ['INPUTS', 'Two distinct runners', 'Each leg may be Top 3 or Top 4. Check field size and the bookmaker’s exact market terms.'],
     ['RULE', 'Use the actual combined quote', 'The outcomes share one race and are dependent. Do not multiply leg prices to invent the multi quote.'],
-    ['TEST', 'Freeze both legs and settle', 'Record the real combined price before the jump and compare both legs with official final positions. Review scratches, dead heats and deductions.'] ], caution: 'This public page calculates paper payouts, not joint probabilities or fair prices. An attractive combined quote is not evidence of value.' }
+    ['TEST', 'Freeze both legs and settle', 'Record the real combined price before the jump and compare both legs with official final positions. Review scratches, dead heats and deductions.'] ], caution: 'The owner-only watchlist estimates dependent pair chances from win prices, but does not have an actual combined bookmaker quote. Its estimates are unvalidated and do not establish value.' }
 ];
 function renderStrategies() {
   $('#strategyTabs').innerHTML = strategies.map(s => `<button type="button" role="tab" data-strategy="${s.id}" aria-selected="${selectedStrategy === s.id}" class="${selectedStrategy === s.id ? 'active' : ''}">${esc(s.name)}</button>`).join('');
@@ -415,7 +537,7 @@ const lessons = {
     ['Ground and form study', 'One win from one Soft run is not a 100% future chance. Small-sample records are context, not probabilities.'],
     ['Paper bet and snapshot', 'A paper bet is hypothetical. The frozen record captures entered price, market, race and runner before the jump, reducing hindsight bias.'],
     ['ROI and drawdown', 'ROI is net profit divided by total settled stake. Drawdown is the fall from a prior cumulative high. Track both with sample size.'],
-    ['Calibration and Brier score', 'Calibration checks whether predicted probabilities match observed frequencies. Brier score measures probability forecast error; this page does not generate probabilities to score.'] ] }
+    ['Calibration and Brier score', 'Calibration checks whether predicted probabilities match observed frequencies. Brier score measures probability forecast error; the owner-only watchlist generates unvalidated estimates but does not evaluate their calibration.'] ] }
 };
 const glossary = [
   ['Barrier', 'Race & form', 'The starting gate allocated to a runner; also called the draw.', 'draw gate'],
@@ -477,7 +599,7 @@ const glossary = [
   ['Paper bet', 'Testing', 'A hypothetical selection recorded for testing; no wager is placed.', 'simulation'],
   ['Price shopping', 'Testing', 'Compare current prices for the same outcome; a higher price does not itself prove value.', 'compare odds'],
   ['ROI', 'Testing', 'Net profit divided by total stake across settled paper bets.', 'return on investment'],
-  ['Value', 'Testing', 'A price above a trustworthy fair-price estimate. This workspace does not calculate a fair price.', 'edge expected value']
+  ['Value', 'Testing', 'A price above a trustworthy fair-price estimate. The owner-only market comparison is unvalidated and is not a trustworthy fair-price model.', 'edge expected value']
 ];
 function renderEducation() {
   $$('.education-tabs button').forEach(button => { const active = button.dataset.education === educationTab; button.classList.toggle('active', active); button.setAttribute('aria-selected', String(active)); });
@@ -491,7 +613,7 @@ function renderGlossary(query = '') {
   $('#educationContent').innerHTML = `<div class="glossary-toolbar"><input class="glossary-search" id="glossarySearch" type="search" value="${esc(query)}" placeholder="Search racing terms" aria-label="Search racing terms"><div class="glossary-filters">${categories.map(category => `<button type="button" data-glossary="${esc(category)}" class="${glossaryCategory === category ? 'active' : ''}" aria-pressed="${glossaryCategory === category}">${esc(category)}</button>`).join('')}</div></div><p class="glossary-count">${rows.length} of ${glossary.length} terms</p><div class="glossary-grid">${rows.length ? rows.map(([term, category, definition]) => `<article class="glossary-entry"><small>${esc(category)}</small><h3>${esc(term)}</h3><p>${esc(definition)}</p></article>`).join('') : empty('No matching terms', 'Try another word or category.')}</div>`;
 }
 function renderMethod() {
-  $('#storageSummary').textContent = `${store.races.length} races · ${store.bets.length} paper bets · ${Object.keys(store.results).length} results saved in this browser.`;
+  $('#storageSummary').textContent = `${store.races.length} races · ${store.bets.length} paper bets · ${store.noBets.length} no-bets · ${Object.keys(store.results).length} results saved in this browser.`;
 }
 
 function saveRace(form) {
@@ -579,6 +701,14 @@ function saveMulti(form) {
   store.bets.push(frozenBet(race, 'multi', [{ runner: first, market: firstMarket }, { runner: second, market: secondMarket }], price, stake));
   saveStore(); renderAll(); notice('Pre-race paper multi frozen at your entered combined quote.');
 }
+function saveNoBet(form) {
+  const race = raceById(); if (!race || raceStarted(race)) throw Error('No-bet decisions must be logged before the listed jump time.');
+  const data = new FormData(form);
+  const strategy = String(data.get('strategy') || ''), reason = String(data.get('reason') || '').trim().slice(0, 500);
+  if (!['market', 'prices', 'ground', 'multi'].includes(strategy) || !reason) throw Error('Choose a research method and explain why you passed.');
+  store.noBets.push({ id: newId(), raceId: race.id, venue: race.venue, raceNumber: race.raceNumber, raceStart: race.startTime, createdAt: new Date().toISOString(), strategy, reason });
+  saveStore(); renderAll(); notice('Pre-race no-bet decision logged separately from paper returns.');
+}
 function saveResult(form) {
   const race = raceById(selectedResultRaceId); if (!race) throw Error('Choose a race first.');
   const data = new FormData(form), positions = {};
@@ -596,7 +726,7 @@ function saveResult(form) {
 
 function createResultOnlyRace(raw, fetchedAt) {
   const id = `pe:${raw.race_id}`;
-  if (raceById(id)) return;
+  if (matchProviderRace(raw) || raceById(id)) return;
   const fullField = Array.isArray(raw.runners) ? raw.runners : [];
   const placings = Array.isArray(raw.placings) ? raw.placings : [];
   const runners = fullField.length ? fullField : placings;
@@ -640,7 +770,7 @@ async function loadBoard() {
     $('#feedStatus').textContent = `Checked ${dateTime(fetchedAt)} · ${data.races?.length || 0} priced races${acceptanceRows.length ? ` + ${acceptanceRows.length} acceptance card races` : ''}${remaining == null ? '' : ` · ${remaining} credits left`}`;
     notice(data.acceptance_error ? `Priced races loaded. Full card: ${data.acceptance_error}` : 'Protected race card loaded. Recheck quotes before use.');
   } catch (error) { $('#feedStatus').textContent = error.message; notice(error.message, true); }
-  finally { setBusy(button, false, '↻ Load upcoming'); }
+  finally { setBusy(button, false, '↻ Load card'); }
 }
 async function loadResults(nextPage = false) {
   const button = nextPage ? $('#loadMoreResults') : $('#loadResults');
@@ -661,8 +791,9 @@ async function loadMeeting(race) {
   if (!race?.providerId) return;
   try {
     const data = await gateway('meeting', { date: sydneyDate(race.startTime), venue: race.venue });
-    const matching = (data.track?.meetings || []).find(m => String(m?.venue || '').toLowerCase() === race.venue.toLowerCase());
-    const ground = matching?.current?.track_condition;
+    const meetings = data.track?.meetings || [];
+    const matching = meetings.find(m => String(m?.venue || '').toLowerCase() === race.venue.toLowerCase()) || (meetings.length === 1 ? meetings[0] : null);
+    const ground = matching?.current?.track_condition || matching?.track?.track_condition || matching?.track_condition;
     if (ground) for (const same of store.races.filter(r => meetingKey(r) === meetingKey(race))) same.ground = String(ground).slice(0, 45);
     const info = absorbResults(data.results, data.fetched_at || new Date().toISOString());
     notice(`Meeting checked: ${ground || 'ground unchanged'}; ${info.final} final results. Verify observation time at the official source.`);
@@ -697,10 +828,11 @@ function exportBackup() {
 }
 function validImportedStore(data) {
   if (!data || data.version !== 1 || !Array.isArray(data.races) || !Array.isArray(data.bets) || !data.results || typeof data.results !== 'object' || Array.isArray(data.results)) return false;
-  if (data.races.length > 350 || data.bets.length > 5000 || Object.keys(data.results).length > 500) return false;
+  if (data.races.length > 350 || data.bets.length > 5000 || (data.noBets && (!Array.isArray(data.noBets) || data.noBets.length > 5000)) || Object.keys(data.results).length > 500) return false;
   const idOk = value => typeof value === 'string' && /^[A-Za-z0-9:._-]{1,120}$/.test(value) && !['__proto__', 'constructor', 'prototype'].includes(value);
   if (!data.races.every(r => idOk(r?.id) && typeof r.venue === 'string' && typeof r.raceName === 'string' && !Number.isNaN(Date.parse(r.startTime)) && Array.isArray(r.runners) && r.runners.length <= 40 && r.runners.every(x => idOk(x?.id) && typeof x.name === 'string'))) return false;
   if (!data.bets.every(b => idOk(b?.id) && idOk(b?.raceId) && !Number.isNaN(Date.parse(b.createdAt)) && validPrice(b.odds) && finitePositive(b.stake) && Array.isArray(b.legs) && [1, 2].includes(b.legs.length) && b.legs.every(l => idOk(l?.runnerId) && ['win', 'place', 'top3', 'top4'].includes(l?.market)))) return false;
+  if (data.noBets && !data.noBets.every(row => idOk(row?.id) && idOk(row?.raceId) && !Number.isNaN(Date.parse(row.createdAt)) && ['market', 'prices', 'ground', 'multi'].includes(row.strategy) && typeof row.reason === 'string' && row.reason.length <= 500)) return false;
   if (!Object.entries(data.results).every(([key, r]) => idOk(key) && ['final', 'provisional'].includes(r?.status) && r.positions && typeof r.positions === 'object' && !Array.isArray(r.positions))) return false;
   return true;
 }
@@ -711,7 +843,7 @@ async function importBackup(file) {
   try { parsed = JSON.parse(await file.text()); } catch { throw Error('That file is not valid JSON.'); }
   if (!validImportedStore(parsed)) throw Error('That file is not a supported FormLine workspace backup.');
   if (!confirm(`Replace this browser's ${store.races.length} races and ${store.bets.length} paper bets with the imported backup? Export your current data first if needed.`)) return;
-  store = parsed; settleAll(); selectedMeeting = ''; selectedRaceId = ''; selectedResultRaceId = '';
+  store = parsed; store.noBets ||= []; settleAll(); selectedMeeting = ''; selectedRaceId = ''; selectedResultRaceId = '';
   saveStore(); renderAll(); notice('Backup imported into this browser.');
 }
 
@@ -725,6 +857,20 @@ document.addEventListener('click', event => {
   if (target.dataset.editRace) { const race = raceById(target.dataset.editRace); if (race) editRace(race); return; }
   if (target.dataset.editRunner) { const runner = runnerById(raceById(), target.dataset.editRunner); if (runner) editRunner(runner); return; }
   if (target.dataset.selectRunner) { const form = $('#singleForm'); if (form) { form.elements.runnerId.value = target.dataset.selectRunner; fillSingleQuote(); $('#paperEntry')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return; }
+  if (target.dataset.suggestRunner) {
+    const form = $('#singleForm');
+    if (form) { form.elements.runnerId.value = target.dataset.suggestRunner; form.elements.market.value = target.dataset.suggestMarket; fillSingleQuote(); $('#paperEntry')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    return;
+  }
+  if (target.dataset.pairFirst) {
+    const form = $('#multiForm');
+    if (form) {
+      form.elements.firstId.value = target.dataset.pairFirst; form.elements.secondId.value = target.dataset.pairSecond;
+      form.elements.firstMarket.value = `top${target.dataset.pairTop}`; form.elements.secondMarket.value = `top${target.dataset.pairTop}`;
+      updateMultiPreview(); $('#paperEntry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return;
+  }
   if (target.dataset.resultRace) { selectedResultRaceId = target.dataset.resultRace; renderResults(); return; }
   if (target.dataset.mode) { mode = target.dataset.mode; renderRaceDetail(); return; }
   if (target.dataset.rail) { railTab = target.dataset.rail; renderRail(); return; }
@@ -746,13 +892,14 @@ document.addEventListener('click', event => {
 });
 document.addEventListener('submit', event => {
   const form = event.target;
-  if (!['raceForm', 'runnerForm', 'singleForm', 'multiForm', 'resultForm'].includes(form.id)) return;
+  if (!['raceForm', 'runnerForm', 'singleForm', 'multiForm', 'noBetForm', 'resultForm'].includes(form.id)) return;
   event.preventDefault();
   try {
     if (form.id === 'raceForm') saveRace(form);
     else if (form.id === 'runnerForm') saveRunner(form);
     else if (form.id === 'singleForm') saveSingle(form);
     else if (form.id === 'multiForm') saveMulti(form);
+    else if (form.id === 'noBetForm') saveNoBet(form);
     else saveResult(form);
   } catch (error) { notice(error.message, true); }
 });

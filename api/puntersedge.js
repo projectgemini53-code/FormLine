@@ -37,6 +37,76 @@ function dateInMelbourne(value) {
   return `${part('year')}-${part('month')}-${part('day')}`;
 }
 
+function validPrice(value) {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 1 && n <= 10000 ? n : null;
+}
+
+function quoteExpiry(quote) {
+  if (!quote || quote.stale) return null;
+  const observed = Date.parse(quote.last_update || '');
+  if (!Number.isFinite(observed)) return null;
+  const lifetime = quote.refresh_tier === 'card' ? 30 * 60 * 1000 : 2 * 60 * 1000;
+  const age = Date.now() - observed;
+  return age >= -30000 && age <= lifetime ? observed + lifetime : null;
+}
+
+function normalizePrices(prices, target) {
+  const raw = prices.map(price => validPrice(price) ? 1 / Number(price) : null);
+  if (raw.some(value => value == null) || !Number.isInteger(target) || target < 1) return null;
+  const total = raw.reduce((sum, value) => sum + value, 0);
+  if (!total) return null;
+  const normalized = raw.map(value => Math.min(1, value * target / total));
+  for (let pass = 0; pass < 4; pass++) {
+    const left = target - normalized.reduce((sum, value) => sum + value, 0);
+    const open = normalized.map((value, index) => value < 0.999999 ? index : -1).filter(index => index >= 0);
+    if (left <= 1e-9 || !open.length) break;
+    const openTotal = open.reduce((sum, index) => sum + raw[index], 0);
+    for (const index of open) normalized[index] = Math.min(1, normalized[index] + left * raw[index] / openTotal);
+  }
+  return normalized;
+}
+
+function median(values) {
+  const ordered = values.slice().sort((a, b) => a - b);
+  const middle = Math.floor(ordered.length / 2);
+  return ordered.length % 2 ? ordered[middle] : (ordered[middle - 1] + ordered[middle]) / 2;
+}
+
+function marketConsensus(race, market) {
+  const scratched = new Set((race.scratchings || []).map(item => Number(item?.number)));
+  const active = (Array.isArray(race.runners) ? race.runners : []).filter(row => row && !row.emergency && !row.scratched && !scratched.has(Number(row.number)));
+  const target = market === 'win' ? 1 : Number(race.places_paid);
+  if (active.length < 2 || !Number.isInteger(target) || target < 1 || target > active.length) return null;
+  const keys = new Set(active.flatMap(row => (Array.isArray(row.bookmakers) ? row.bookmakers : []).map(book => book?.key)).filter(Boolean));
+  const observations = active.map(() => []);
+  let completeBooks = 0;
+  let validUntil = Infinity;
+  for (const key of keys) {
+    if (key === 'sportsbet') continue;
+    const quotes = active.map(row => (Array.isArray(row.bookmakers) ? row.bookmakers : []).find(book => book?.key === key));
+    const expiries = quotes.map(quoteExpiry);
+    if (expiries.some(expiry => expiry == null)) continue;
+    const normalized = normalizePrices(quotes.map(quote => quote[market + '_price']), target);
+    if (!normalized) continue;
+    completeBooks++;
+    for (let i = 0; i < active.length; i++) observations[i].push(normalized[i]);
+    validUntil = Math.min(validUntil, ...expiries);
+  }
+  if (completeBooks < 3) return null;
+  const middle = observations.map(median);
+  const scale = target / middle.reduce((sum, value) => sum + value, 0);
+  const probabilities = middle.map(value => Math.min(1, value * scale));
+  const byRunner = new Map();
+  for (let i = 0; i < active.length; i++) {
+    const row = active[i];
+    byRunner.set(String(row.runner_ref || `${row.number}:${row.name || row.runner_name}`), {
+      probability: probabilities[i], books: completeBooks, valid_until: new Date(validUntil).toISOString()
+    });
+  }
+  return byRunner;
+}
+
 function slimRunner(item) {
   return {
     name: item.name ?? item.runner_name, runner_name: item.runner_name,
@@ -55,14 +125,23 @@ function slimRunner(item) {
   };
 }
 
-function slimRace(item) {
+function slimRace(item, expectedActive = 0) {
+  const scratched = new Set((item.scratchings || []).map(row => Number(row?.number)));
+  const pricedActive = (Array.isArray(item.runners) ? item.runners : []).filter(row => row && !row.emergency && !row.scratched && !scratched.has(Number(row.number))).length;
+  const completeField = expectedActive > 0 && pricedActive >= expectedActive;
+  const win = completeField ? marketConsensus(item, 'win') : null;
+  const place = completeField ? marketConsensus(item, 'place') : null;
   return {
     race_id: item.race_id, country: item.country, category: item.category,
     venue: item.venue, race_number: item.race_number, race_name: item.race_name,
     start_time: item.start_time, distance_m: item.distance_m, places_paid: item.places_paid,
     track_condition: item.track_condition, race_class: item.race_class,
     scratchings: item.scratchings,
-    runners: (Array.isArray(item.runners) ? item.runners : []).filter(row => row && typeof row === 'object').map(slimRunner)
+    research_status: completeField ? '' : expectedActive ? 'Priced panel is smaller than the published acceptance field; comparison paused.' : 'The full accepted field could not be matched; comparison paused.',
+    runners: (Array.isArray(item.runners) ? item.runners : []).filter(row => row && typeof row === 'object' && !row.emergency).map(row => {
+      const ref = String(row.runner_ref || `${row.number}:${row.name || row.runner_name}`);
+      return { ...slimRunner(row), research: { win: win?.get(ref) || null, place: place?.get(ref) || null } };
+    })
   };
 }
 
@@ -151,16 +230,27 @@ module.exports = async function handler(request, response) {
       });
       if (!Array.isArray(races)) throw { status: 502, message: 'Race board response has an unexpected shape.' };
       let acceptances = null;
+      let acceptanceCard = null;
       let acceptance_error = null;
       try {
         const card = await provider('/v1/racing/acceptances', { date });
-        if (card && Array.isArray(card.meetings)) acceptances = slimAcceptances(card);
+        if (card && Array.isArray(card.meetings)) {
+          acceptanceCard = card;
+          acceptances = slimAcceptances(card);
+        }
         else acceptance_error = 'The full meeting card had an unexpected shape.';
       } catch (error) {
         acceptance_error = error.message || 'The full meeting card is unavailable.';
       }
+      const acceptedCounts = new Map();
+      const venueRaceKey = (venue, number) => `${String(venue || '').trim().toLowerCase()}|${Number(number)}`;
+      for (const meeting of acceptanceCard?.meetings || []) for (const race of meeting.races || []) {
+        const count = (race.runners || []).filter(row => row && !row.emergency && !row.scratched).length;
+        acceptedCounts.set(String(race.race_id), count);
+        acceptedCounts.set(venueRaceKey(meeting.venue, race.race_number), count);
+      }
       return reply(response, 200, {
-        races: races.filter(item => item?.country === 'AU' && item?.category === 'horse' && dateInMelbourne(item.start_time) === date).map(slimRace),
+        races: races.filter(item => item?.country === 'AU' && item?.category === 'horse' && dateInMelbourne(item.start_time) === date).map(item => slimRace(item, acceptedCounts.get(String(item.race_id)) || acceptedCounts.get(venueRaceKey(item.venue, item.race_number)) || 0)),
         acceptances, acceptance_error, acceptance_date: date, usage, fetched_at: new Date().toISOString()
       });
     }
