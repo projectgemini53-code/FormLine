@@ -67,6 +67,10 @@
       "title": "VRC Cup contenders overview, 1 November",
       "url": "https://www.vrc.com.au/latest-news/quick-look-at-the-2026-lexus-melbourne-cup-contenders/"
     },
+    "trust_hurdle": {
+      "title": "Trustyourinstinct's 2024 two-mile hurdle win, Irish Racing",
+      "url": "https://www.irishracing.com/news/torrens-keeps-it-simple-from-the-front-on-trustyourinstinct/248307"
+    },
     "coffey_cleared": {
       "title": "Coffey cleared for Cup ride, Racing and Sports, 2 November",
       "url": "https://www.racingandsports.com.au/news/racing/news/2026-11-02/coffey-passed-fit-for-cup-ride/724357"
@@ -380,11 +384,12 @@
         {
           "number": 2,
           "horse": "Trustyourinstinct",
-          "case": "Won the Curragh Cup over 2816m and has a recorded 3200m win, with James McDonald booked.",
+          "case": "Won the Curragh Cup over 2816m; his earlier two-mile win was over hurdles. James McDonald is booked for his first 3200m flat test.",
           "risk": "Barrier 18 and 57kg add execution and weight risk.",
           "sources": [
             "vrc_field",
             "vrc_runners",
+            "trust_hurdle",
             "maher",
             "obrien",
             "weather",
@@ -582,7 +587,8 @@
       "watch": "Barrier 18 and 57kg mean he needs position and tempo to work.",
       "sources": [
         "vrc_field",
-        "vrc_runners"
+        "vrc_runners",
+        "trust_hurdle"
       ]
     },
     {
