@@ -10,7 +10,7 @@ let marks = (() => { try { const value=JSON.parse(localStorage.getItem(marksKey)
 function sourceLinks(ids) {
   return [...new Set(ids||[])].map(id => {
     const item=research?.sources?.[id];
-    if(!item || !/^https:\/\/(?:www\.)?(?:vrc\.com\.au|racing\.com|bom\.gov\.au|tab\.co\.nz)\//.test(item.url))return '';
+    if(!item || !/^https:\/\/(?:www\.)?(?:vrc\.com\.au|racing\.com|racingandsports\.com\.au|bom\.gov\.au|tab\.co\.nz)\//.test(item.url))return '';
     return `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.title)} ↗</a>`;
   }).filter(Boolean).join('');
 }

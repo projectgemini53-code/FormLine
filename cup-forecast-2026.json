@@ -1,0 +1,139 @@
+{
+  "as_of": "2026-11-02 19:00 AEDT",
+  "status": "Pre-race editorial forecast for 3 November 2026. Not a calibrated model or a claim of betting value.",
+  "top4": [
+    {
+      "rank": 1,
+      "number": 20,
+      "horse": "Point Of Law",
+      "barrier": 9,
+      "weight_kg": 53,
+      "jockey": "Ethan Brown",
+      "style": "On pace / outside lead",
+      "recent_form": "Stayed on in the approximately 2847m Queen's Vase, won a Newmarket staying race, then won the 2400m Geelong Cup from outside the leader in his first Australian run.",
+      "case": "Gate 9 gives Brown a route to a covered, forward position without a long wide crossing. His 53kg is light for the class and the Geelong Cup showed he could sustain an Australian race tempo.",
+      "risk": "Only five career starts before the Cup, and he still has to prove a full 3200m under Cup pressure. Rain-affected going is a live uncertainty.",
+      "historical_lens": "Recent young, lightly weighted winners such as Rekindling (2017) and Cross Counter (2018) show the profile can work; their wins do not prove this runner will repeat it.",
+      "sources": [
+        "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+        "https://www.vrc.com.au/latest-news/quick-look-at-the-2026-lexus-melbourne-cup-contenders/",
+        "https://www.racing.com/news/2026/11/01/news-preview-ciaron-maher-melbourne-cup-runners-barriers-jockeys",
+        "https://www.racing.com/news/2026/11/02/news-tipping-melbourne-cup-runner-by-runner"
+      ]
+    },
+    {
+      "rank": 2,
+      "number": 12,
+      "horse": "Hopewell Rock",
+      "barrier": 15,
+      "weight_kg": 54.5,
+      "jockey": "Zac Lloyd",
+      "style": "Staying finisher; usual settling spot unclear",
+      "recent_form": "Won at Goodwood over 2816m, beating Small Fry, then narrowly missed in the approximately 2787m Ebor at York; Small Fry subsequently chased Point Of Law home at Geelong.",
+      "case": "His two strong runs at roughly 2800m are a stronger stamina signal than many Cup entrants have. Gate 15 is manageable if Lloyd finds cover, and 54.5kg keeps him below the topweights.",
+      "risk": "First-up since 22 August and making an Australian debut. His exact early Cup position is uncertain, and 3200m remains a new test.",
+      "historical_lens": "The 2023 winner Without A Fight started from effective stall 16 after finding cover; that is a tactical example, not a barrier prediction.",
+      "sources": [
+        "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+        "https://www.vrc.com.au/latest-news/ebor-runner-up-has-cup-hopes/",
+        "https://www.racing.com/news/2026/11/02/news-tipping-melbourne-cup-runner-by-runner"
+      ]
+    },
+    {
+      "rank": 3,
+      "number": 2,
+      "horse": "Trustyourinstinct",
+      "barrier": 18,
+      "weight_kg": 57,
+      "jockey": "James McDonald",
+      "style": "Back / finishing run",
+      "recent_form": "Beat Al Riffa in the Group 2 Curragh Cup over 2816m and was fourth in the Group 1 Irish St Leger at the same distance.",
+      "case": "Proven high-class staying form and a finishing change of pace. McDonald won the 2021 Cup and can seek cover from 18 rather than force a wide forward run.",
+      "risk": "A wide start can leave him with traffic or too much ground to make up. The 57kg handicap and first 3200m flat test both narrow his margin.",
+      "historical_lens": "Verry Elleegant carried 57kg and won from effective stall 18 in 2021 after finding cover; the result disproves a hard barrier rule but does not make 18 favourable.",
+      "sources": [
+        "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+        "https://www.racing.com/news/2026/11/02/news-tipping-melbourne-cup-runner-by-runner",
+        "https://www.vrc.com.au/latest-news/breaking-down-the-barrier-numbers/"
+      ]
+    },
+    {
+      "rank": 4,
+      "number": 24,
+      "horse": "Shockletz",
+      "barrier": 17,
+      "weight_kg": 51,
+      "jockey": "Harry Coffey",
+      "style": "Back / ridden cold recently",
+      "recent_form": "Won the 2500m Archer Stakes at Flemington, then finished strongly in two Cup lead-ups. Harry Coffey was medically cleared on 2 November after a Derby Day fall.",
+      "case": "The lowest weight in the field is a material advantage if her late run extends to 3200m. Ridden cold, she can drop in from 17 instead of spending energy crossing.",
+      "risk": "No proven 3200m performance. Coffey was medically cleared on 2 November, but any later rider change should be checked. A slow pace could leave her too far back.",
+      "historical_lens": "Lightly weighted closers have placed from both inner and outer stalls, including 2024 winner Knight's Choice; each needed a clear run.",
+      "sources": [
+        "https://www.vrc.com.au/latest-news/every-runner-in-the-2026-lexus-melbourne-cup/",
+        "https://www.racing.com/news/2026/11/01/news-preview-ciaron-maher-melbourne-cup-runners-barriers-jockeys",
+        "https://www.racingandsports.com.au/news/racing/news/2026-11-02/coffey-passed-fit-for-cup-ride/724357"
+      ]
+    }
+  ],
+  "next_two": [
+    {
+      "number": 4,
+      "horse": "Middle Earth",
+      "note": "Third in the 2025 Cup and has Mark Zahra, a two-time Cup winner. Gate 1 can save ground, but the rail can trap a horse that wants to build late; he carries 2kg more than last year."
+    },
+    {
+      "number": 11,
+      "horse": "Juja Kibo",
+      "note": "Two strong recent staying wins and a sharp turn of foot. Gate 14 is workable; a truly hard-run two miles is the remaining stamina question."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "balanced",
+      "label": "Balanced pace",
+      "summary": "Point Of Law can use gate 9 to sit just off the leaders; covered runners from mid-field have time to build. The base order stays Point Of Law, Hopewell Rock, Trustyourinstinct, Shockletz."
+    },
+    {
+      "id": "hot",
+      "label": "Fast early pace",
+      "summary": "If Royal Supremacy, Wine Dark Sea, So You Are, Enfjaar and Point Of Law contest the front, the final 800m may favour horses that saved energy. Lift Trustyourinstinct and Shockletz; lower confidence in an exposed Point Of Law trip."
+    },
+    {
+      "id": "slow",
+      "label": "Slow early pace",
+      "summary": "If the leaders get a cheap first half, Point Of Law and So You Are gain tactical advantage. Backmarkers Shockletz and Trustyourinstinct may need to circle the field; Juja Kibo's turn of foot becomes more relevant."
+    },
+    {
+      "id": "soft",
+      "label": "Soft track",
+      "summary": "Wait for an official rating. A rain-affected surface makes Point Of Law's untested ground more important and can make the 3200m a greater stamina test. Do not upgrade any runner solely from a weather forecast."
+    }
+  ],
+  "style_signals": {
+    "1": "Can control a slow pace; adaptable",
+    "2": "Back / late finishing run",
+    "3": "Back in 2024 Cup win",
+    "4": "Midfield in 2025 Cup; last in recent Cox Plate",
+    "5": "Back half in 2025 Cup",
+    "6": "Led at Goodwood; tracked speed at Caulfield",
+    "7": "Leader / on pace",
+    "8": "Led at Newbury; forward at Caulfield",
+    "9": "Last on fence at Caulfield",
+    "10": "Off pace in 2025 Cup",
+    "11": "Off the pace in latest Moonee Valley Gold Cup",
+    "12": "Stayed on over 2816m; settling spot unclear",
+    "13": "Back in recent Herbert Power; mid-field in 2025 Cup",
+    "14": "Made a mid-race move at Caulfield; usual spot unclear",
+    "15": "Finished late at Caulfield; usual spot unclear",
+    "16": "On pace in Bendigo Cup",
+    "17": "On pace in 2023 Cup",
+    "18": "Settling spot unclear",
+    "19": "Settling spot unclear",
+    "20": "On pace / outside leader at Geelong",
+    "21": "Settling spot unclear",
+    "22": "On pace in The Bart Cummings; finished late in MV Cup",
+    "23": "Finished strongly at shorter trips; usual spot unclear",
+    "24": "Back / ridden cold in last two lead-ups"
+  }
+}

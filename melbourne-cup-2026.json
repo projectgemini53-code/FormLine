@@ -2,7 +2,7 @@
   "event": "Melbourne Cup Day",
   "venue": "Flemington",
   "date": "2026-11-03",
-  "prepared_at": "2026-11-02 09:02 AEDT",
+  "prepared_at": "2 November 2026, 7:00pm AEDT",
   "status": "Dated research snapshot; no live odds or automatic news feed",
   "track_snapshot": "PuntersEdge acceptances reported Good 4, rail out 3m, and showers from a 2 November early-morning source update. Monday rain may change the rating. Check the VRC race-day report.",
   "method_note": "Watchlists are editorial form cases and not calibrated probabilities or verified betting edges. We did not assign a value bet without an accepted current price. Stable comments are interested opinions. Check official scratchings, rider declarations and the track before the jump.",
@@ -66,6 +66,10 @@
     "vrc_contenders": {
       "title": "VRC Cup contenders overview, 1 November",
       "url": "https://www.vrc.com.au/latest-news/quick-look-at-the-2026-lexus-melbourne-cup-contenders/"
+    },
+    "coffey_cleared": {
+      "title": "Coffey cleared for Cup ride, Racing and Sports, 2 November",
+      "url": "https://www.racingandsports.com.au/news/racing/news/2026-11-02/coffey-passed-fit-for-cup-ride/724357"
     }
   },
   "races": [
@@ -574,7 +578,7 @@
       "jockey": "James McDonald",
       "trainer": "Joseph O'Brien",
       "last10": "x76x721214",
-      "case": "Curragh Cup winner with a turn of foot and a prior 3200m win; James McDonald is a notable booking.",
+      "case": "Curragh Cup winner over 2816m with a late turn of foot; James McDonald is a notable booking. His earlier two-mile win was over hurdles, not on the flat.",
       "watch": "Barrier 18 and 57kg mean he needs position and tempo to work.",
       "sources": [
         "vrc_field",
@@ -910,7 +914,7 @@
       "trainer": "Ciaron Maher",
       "last10": "1x34864162",
       "case": "Archer Stakes winner at Flemington and down to 51kg after a strong preparation.",
-      "watch": "She has never run at 3200m; Harry Coffey’s fitness and the final rider need checking.",
+      "watch": "She has never run at 3200m. Harry Coffey was medically cleared on 2 November; recheck any race-day rider change.",
       "sources": [
         "vrc_field",
         "vrc_runners",
@@ -923,16 +927,16 @@
     {
       "id": "rider-shockletz",
       "kind": "Rider watch",
-      "date": "2026-11-01",
-      "headline": "Shockletz rider remains a race-day check",
-      "detail": "Harry Coffey underwent treatment after a Derby Day fall. Racing.com reported that the Maher stable would give him time to prove fitness; another rider may be required. The horse itself was not reported scratched.",
-      "impact": "Confirm the declared rider and final 51kg allocation before relying on a map or price.",
+      "date": "2026-11-02",
+      "headline": "Harry Coffey medically cleared to ride Shockletz",
+      "detail": "Racing and Sports reported at 5:24pm AEDT that Coffey had been cleared by his surgeon and Racing Victoria chief medical officer after his Derby Day fall. Earlier reports of doubt are superseded.",
+      "impact": "The declared rider remains Harry Coffey at 51kg. Recheck official race-day declarations and any later medical change.",
       "horses": [
         "Shockletz"
       ],
       "sources": [
-        "coffey",
-        "maher"
+        "coffey_cleared",
+        "coffey"
       ]
     },
     {
@@ -986,16 +990,16 @@
     {
       "id": "vet-field",
       "kind": "Field status",
-      "date": "2026-10-31",
-      "headline": "Final 24 followed veterinary checks",
-      "detail": "The VRC published the final 24 after inspections. Racing Victoria had earlier ruled Stinger Glass out on specialist veterinary advice; that horse is not in this Cup field.",
-      "impact": "Use the final field, then verify any late scratching or rider change on Tuesday.",
+      "date": "2026-11-02",
+      "headline": "All 24 acceptors passed final veterinary checks",
+      "detail": "Racing and Sports reported that Racing Victoria advised all 24 Cup acceptors had passed their final Monday inspections. Stinger Glass and Defiantly were withdrawn earlier and are not in the final field.",
+      "impact": "The published 24-runner field remains the comparison set at this timestamp; race-day scratchings can still move effective starting stalls.",
       "horses": [
         "Stinger Glass"
       ],
       "sources": [
-        "vrc_field",
-        "stinger"
+        "coffey_cleared",
+        "vrc_field"
       ]
     },
     {

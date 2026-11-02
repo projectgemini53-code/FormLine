@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#112826">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="FormLine's personal horse racing research board, paper journal and education tools.">
+  <title>Research workspace | FormLine</title>
+  <link rel="icon" type="image/png" href="logo-green.png">
+  <link rel="apple-touch-icon" href="logo-green.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="research-tools.css">
+  <script src="research-tools.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#toolMain">Skip to workspace</a>
+  <div class="tool-app">
+    <aside class="tool-sidebar" id="toolSidebar" aria-label="Workspace navigation">
+      <a class="tool-brand" href="index.html" aria-label="FormLine Melbourne Cup research"><img src="logo-green.png" alt="" width="42" height="42"><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></a>
+      <p class="sidebar-caption">PERSONAL WORKSPACE</p>
+      <nav class="side-nav" aria-label="Research tools">
+        <button type="button" data-view="races" class="active"><span aria-hidden="true">◫</span> Race board</button>
+        <button type="button" data-view="journal"><span aria-hidden="true">▤</span> Paper journal</button>
+        <button type="button" data-view="results"><span aria-hidden="true">≡</span> Results</button>
+        <button type="button" data-view="performance"><span aria-hidden="true">◷</span> Performance</button>
+        <button type="button" data-view="strategies"><span aria-hidden="true">◎</span> Strategies</button>
+        <button type="button" data-view="education"><span aria-hidden="true">?</span> Education</button>
+        <button type="button" data-view="method"><span aria-hidden="true">◇</span> Method &amp; data</button>
+      </nav>
+      <div class="sidebar-bottom"><a href="index.html">← Melbourne Cup research</a><a href="cup-analysis.html">Cup history &amp; forecast ↗</a><span>Personal paper tracking only.<br>No real bets are placed.</span></div>
+    </aside>
+    <button class="nav-scrim" id="navScrim" type="button" aria-label="Close navigation" hidden></button>
+
+    <div class="tool-body">
+      <header class="tool-topbar">
+        <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-controls="toolSidebar" aria-expanded="false" aria-label="Open navigation">☰</button>
+        <div class="topbar-title"><small>FORMLINE / RESEARCH WORKSPACE</small><strong id="currentViewTitle">Race board</strong></div>
+        <div class="topbar-actions"><span class="local-chip"><span aria-hidden="true"></span> BROWSER STORAGE</span><button class="button button-quiet rail-toggle" id="railToggle" type="button" aria-controls="paperRail" aria-expanded="false">▤ Paper bets <span id="railCount">0</span></button></div>
+      </header>
+      <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
+      <div class="tool-layout">
+        <main id="toolMain" tabindex="-1">
+          <section class="view" id="view-races">
+            <div class="page-heading"><p class="eyebrow">01 / PERSONAL RACE BOARD</p><h1>Research a race, then record the price.</h1><p>Build a card manually or load the protected feed on demand when the site owner has configured it. Freeze a paper selection before the jump; saved quotes and results can become stale.</p></div>
+            <div class="source-banner"><div><strong>No automatic updates</strong><p>Check the official card, current going, scratchings, paid places and actual offered quote before recording a selection. The site does not independently verify manual figures.</p></div><span>ON-DEMAND ONLY</span></div>
+            <div class="feed-card"><div><p class="eyebrow">OPTIONAL OWNER-ONLY FEED</p><h2>Load an Australian race card</h2><p>Requires the site owner to configure the private PuntersEdge gateway. Choose today or one of the next three days, enter your private FormLine access code, and load on demand. This page never polls in the background. Quotes can change before you act.</p></div><div class="feed-controls"><label for="feedDate">Meeting date</label><input id="feedDate" type="date"><label for="feedCode">FormLine access code</label><input id="feedCode" type="password" autocomplete="off" placeholder="Access code"><button id="loadBoard" type="button" class="button button-primary">↻ Load card</button><span id="feedStatus" role="status">Connection not checked</span></div></div>
+            <details class="editor-card" id="raceEditor"><summary><span>＋</span> Add or edit a race</summary>
+              <form id="raceForm" class="editor-form"><input type="hidden" name="raceId">
+                <div class="field-grid">
+                  <label>Meeting / venue <input name="venue" required maxlength="90" placeholder="e.g. Flemington"></label>
+                  <label>Race number <input name="raceNumber" type="number" required min="1" max="30" inputmode="numeric"></label>
+                  <label>Race name <input name="raceName" required maxlength="140" placeholder="Published race name"></label>
+                  <label>Jump time <input name="startTime" type="datetime-local" required></label>
+                  <label>Distance (m) <input name="distance" type="number" min="1" max="10000" step="1" inputmode="numeric"></label>
+                  <label>Paid places <select name="paidPlaces" required><option value="2">2 places</option><option value="3" selected>3 places</option><option value="4">4 places</option></select></label>
+                  <label>Reported ground <input name="ground" maxlength="45" placeholder="e.g. Good 4"></label>
+                  <label>Race class / conditions <input name="raceClass" maxlength="100" placeholder="e.g. Group 1 handicap"></label>
+                  <label class="field-wide">Source URL <input name="sourceUrl" type="url" placeholder="https://…" maxlength="500"></label>
+                  <label class="field-wide">Track / race notes <textarea name="notes" maxlength="2000" rows="3" placeholder="Include observation time and anything to verify before the jump."></textarea></label>
+                </div>
+                <div class="form-actions"><button class="button button-primary" type="submit">Save race</button><button class="button button-quiet" id="cancelRaceEdit" type="button">Cancel</button></div>
+              </form>
+            </details>
+            <div class="board-layout"><aside class="meeting-panel"><div class="panel-title"><span>MEETINGS</span><b id="meetingCount">0</b></div><div id="meetingList" class="meeting-list"></div></aside><div class="race-workspace"><div id="raceTabs" class="race-tabs" role="tablist" aria-label="Races at selected meeting"></div><div id="raceDetail" class="race-detail"></div></div></div>
+          </section>
+
+          <section class="view" id="view-journal" hidden><div class="page-heading"><p class="eyebrow">02 / FORWARD TEST</p><h1>Paper journal</h1><p>Selections are frozen with the race details, entered quote and recorded time. Only records made before the entered jump time count as forward paper tests.</p></div><div id="journalSummary" class="metric-grid"></div><div id="journalList" class="journal-list"></div></section>
+
+          <section class="view" id="view-results" hidden><div class="page-heading"><p class="eyebrow">03 / FINAL PLACINGS</p><h1>Record what happened.</h1><p>Enter official final positions from a source you trust. Provisional results remain visible but will not settle paper bets. Dead heats, deductions and scratchings need manual review.</p></div><div class="results-toolbar"><div><strong>Protected results feed</strong><p>Manual request; one page at a time. A configured access code and site owner API setup are required.</p></div><label>Look back <select id="resultLookback"><option value="24">Past day</option><option value="168">Past 7 days</option></select></label><button class="button button-primary" id="loadResults" type="button">↻ Load results</button><button class="button button-quiet" id="loadMoreResults" type="button" hidden>Next page</button></div><div class="results-layout"><div id="resultRaceList" class="result-race-list"></div><div id="resultEditor" class="result-editor"></div></div></section>
+
+          <section class="view" id="view-performance" hidden><div class="page-heading"><p class="eyebrow">04 / PAPER PERFORMANCE</p><h1>Count every decision.</h1><p>Performance includes only your settled paper bets at your recorded odds. Small samples and manually entered data cannot establish a profitable strategy.</p></div><div id="performanceMetrics" class="metric-grid"></div><div id="performanceBreakdown"></div></section>
+
+          <section class="view" id="view-strategies" hidden><div class="page-heading"><p class="eyebrow">05 / RESEARCH PLAYBOOK</p><h1>Strategies and their limits.</h1><p>Choose a method to see its inputs, working rule and evidence requirement. This manual workspace does not produce automated betting recommendations.</p></div><div id="strategyTabs" class="strategy-tabs" role="tablist" aria-label="Research strategies"></div><article id="strategyPanel" class="strategy-panel" role="tabpanel" tabindex="0"></article></section>
+
+          <section class="view" id="view-education" hidden><div class="page-heading"><p class="eyebrow">06 / LEARNING CENTRE</p><h1>Know what the card is saying.</h1><p>Short explanations of betting prices, race conditions, testing and Australian racing terms.</p></div><div class="education-tabs" role="tablist" aria-label="Learning topics"><button type="button" data-education="bets" role="tab" aria-selected="true">Betting basics</button><button type="button" data-education="racing" role="tab" aria-selected="false">Races &amp; form</button><button type="button" data-education="testing" role="tab" aria-selected="false">Strategies &amp; testing</button><button type="button" data-education="glossary" role="tab" aria-selected="false">A–Z glossary</button></div><div id="educationContent" role="tabpanel" tabindex="0"></div></section>
+
+          <section class="view" id="view-method" hidden><div class="page-heading"><p class="eyebrow">07 / METHOD &amp; DATA</p><h1>How this workspace works.</h1><p>The personal workspace runs in your browser. If the optional protected feed is configured, its PuntersEdge key remains on the server; no bookmaker account is connected. The private feed is for the site owner’s personal use under the provider’s <a href="https://puntersedge.online/terms" target="_blank" rel="noopener noreferrer">Free-plan licence</a>; do not share the access code or its prices with other people.</p></div><div class="method-grid"><article><span>01</span><h2>Enter the card</h2><p>Add a race and its runners manually, or request the protected feed. Save the reported ground and observation time. A stored quote is a research snapshot, never a guaranteed current offer.</p></article><article><span>02</span><h2>Freeze a paper selection</h2><p>Before the listed jump time, record a win/place choice or a two-runner Top 3/Top 4 combination. The combined multi quote must be entered from the bookmaker; the app never multiplies leg prices.</p></article><article><span>03</span><h2>Enter final results</h2><p>After the race, load or enter official positions and mark the result final. Straightforward outcomes settle automatically. Use the special-outcome control for dead heats, deductions or unclear terms.</p></article><article><span>04</span><h2>Read the limits</h2><p>Everything is stored in this browser on this device. Clearing browser data loses it. Export a backup below. These tools do not backtest historical odds or estimate a fair winning chance.</p></article></div><div class="data-card"><div><h2>Your data</h2><p id="storageSummary">Loading local records…</p><p>Exports contain your entered research and paper bets. Import replaces this browser’s current workspace after confirmation.</p></div><div class="data-actions"><button class="button button-primary" type="button" id="exportData">Export backup</button><label class="button button-quiet import-label">Import backup<input id="importData" type="file" accept="application/json,.json" hidden></label></div></div><div class="source-card"><h2>Further reading</h2><p><a href="https://www.racingnsw.com.au/guide-to-racing/beginners-guide-to/beginners-guide-to-racing/" target="_blank" rel="noopener noreferrer">Racing NSW beginners’ guide</a> · <a href="https://www.vrc.com.au/track-and-weather-conditions/" target="_blank" rel="noopener noreferrer">VRC track report</a> · <a href="https://helpcentre.sportsbet.com.au/hc/en-us/articles/360051090871-Racing-Bet-Glossary" target="_blank" rel="noopener noreferrer">Sportsbet bet glossary</a></p></div></section>
+        </main>
+        <button class="rail-scrim" id="railScrim" type="button" aria-label="Close paper bets" hidden></button>
+        <aside class="paper-rail" id="paperRail" aria-label="Paper bet summary"><div class="rail-heading"><div><small>YOUR RESEARCH</small><strong>Paper bets</strong></div><button type="button" id="railClose" class="icon-button" aria-label="Close paper bets">×</button></div><div class="rail-tabs" role="tablist" aria-label="Paper bet status"><button type="button" data-rail="pending" role="tab" aria-selected="true">Pending</button><button type="button" data-rail="settled" role="tab" aria-selected="false">Won / lost</button></div><div id="railContent" class="rail-content"></div><div class="rail-foot">Paper tracking only · no wager is placed</div></aside>
+      </div>
+    </div>
+  </div>
+  <footer class="small-print">18+ only. Gambling can be addictive. If gambling is affecting you or someone you know, seek support through <a href="https://www.gamblinghelponline.org.au/" target="_blank" rel="noopener noreferrer">Gambling Help Online</a>.</footer>
+</body>
+</html>
