@@ -2,7 +2,7 @@
 
 Source-linked Melbourne Cup research and a personal Australian racing paper-test workspace. The public site has three parts:
 
-- **Race research:** the dated ten-race Flemington card, 24 Cup runner dossiers, saved favourites/finish tags, a main and second line-up with Good/Soft and pace scenarios, and dated Inside track reports.
+- **Race research:** a main-page Flemington/Randwick switch with ten race panels for each meeting; the Flemington Cup's 24 runner dossiers, saved favourites/finish tags, main and second line-up with Good/Soft and pace scenarios; and a separate, source-backed Randwick main pick plus two alternatives per race. Started Randwick races are labelled as archived pre-race source views. Both meetings have dated track and Inside track reports.
 - **Cup history and forecast:** every top-four finisher in the 2011–2025 Melbourne Cups (60 runners), with effective starting gate, listed kilograms, jockey, observed race position, lead-up form, race narrative and sources; an explained, provisional 2026 top four and pace scenarios.
 - **Research tools:** the 3 November 2026 Flemington and Randwick race schedules with selected, cited original-draw examples; a gate-and-early-map panel for every race; a searchable All horses explorer with gate/weight/runner-style/form/status filters; a win/place/each-way/same-race-multi return calculator; manual or protected on-demand card/results/form/ground lookups; owner-only win/place price watchlists and dependent Top 3/4 pair ideas; win/place and two-runner Top 3/4 paper bets; a paper journal with pre-race no-bet decisions; final-result settlement; a performance view; five strategy guides; and an A–Z glossary. Research records stay in the browser and can be exported/imported as a backup.
 

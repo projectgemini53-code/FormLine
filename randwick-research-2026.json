@@ -1,0 +1,121 @@
+{
+  "venue": "Royal Randwick",
+  "date": "2026-11-03",
+  "prepared_at": "2026-11-03T12:23:00+11:00",
+  "track_observed_at": "2026-11-03T11:54:00+11:00",
+  "track_source_url": "https://mdata.racingnsw.com.au/FreeFields/Scratchings.aspx?Key=2026Nov03%2CNSW%2CRoyal+Randwick",
+  "current_track_url": "https://mdata.racingnsw.com.au/FreeFields/Scratchings.aspx?Key=2026Nov03%2CNSW%2CRoyal+Randwick",
+  "status": "Dated race-day editorial research. Some races may have started by the time this card is viewed; for those races these are retrospective summaries of preview opinions, not predictions recorded before the jump. Check official results, scratchings, ground and market terms before drawing conclusions.",
+  "track_snapshot": {
+    "rating": "Good 4",
+    "rail": "+2m entire",
+    "weather": "Overcast",
+    "observed_at": "2026-11-03T11:54:00+11:00",
+    "source": "racing_nsw_scratchings"
+  },
+  "method_note": "Source-backed editorial order, not a calibrated model or a tested betting edge. Cases and risks are paraphrased from named pre-race previews and checked against Racing NSW acceptances and scratchings. Barriers are original draws, not necessarily effective stalls after withdrawals. No bookmaker prices are stored here.",
+  "sources": {
+    "racing_nsw_preview": {"title": "Racing NSW · Ray Hickson's Big Dance Day preview", "url": "https://www.racingnsw.com.au/news/latest-racing-news/randwick-preview-tips-for-big-dance-day-tuesday-3rd-november/"},
+    "racing_nsw_acceptances": {"title": "Racing NSW · Royal Randwick final acceptances", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov03%2CNSW%2CRoyal+Randwick"},
+    "racing_nsw_scratchings": {"title": "Racing NSW · Royal Randwick scratchings", "url": "https://mdata.racingnsw.com.au/FreeFields/Scratchings.aspx?Key=2026Nov03%2CNSW%2CRoyal+Randwick"},
+    "racehub_preview": {"title": "RaceHub · Randwick raceday preview", "url": "https://racehub.com.au/race-preview/randwick-2026-11-03-preview"},
+    "bets_preview": {"title": "Bets.com.au · Randwick feature preview", "url": "https://www.bets.com.au/horse-racing/race-courses/randwick-betting-tips-20261102-0006/"}
+  },
+  "races": [
+    {
+      "number": 1, "name": "Midway Handicap", "time": "11:45 am", "start_time": "2026-11-03T11:45:00+11:00", "distance_m": 1800, "grade": "Benchmark 72", "active_runners": null, "ground": "Good 4",
+      "question": "Can Cabbucio finish strongly again at the same track and trip if the tempo is steadier?",
+      "watchlist": [
+        {"number": 10, "horse": "Cabbucio", "barrier": 2, "case": "Close Randwick 1800 m third last start; drawn to find cover with an apprentice claim.", "risk": "That prior run had a strong tempo, and the effective carried weight rises from it.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 6, "horse": "La Morra", "case": "Won decisively over 1600 m at Kembla after racing near the lead; could control a calmer tempo.", "risk": "Steps up in class and another 200 m.", "sources": ["racing_nsw_preview", "racehub_preview"]},
+        {"number": 4, "horse": "All Star", "case": "Earlier Randwick mile second supplies a useful local form line.", "risk": "Did not finish as strongly as Cabbucio in their last shared race and carries more weight.", "sources": ["racing_nsw_preview", "racehub_preview"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview"]
+    },
+    {
+      "number": 2, "name": "TAB Highway Handicap", "time": "12:25 pm", "start_time": "2026-11-03T12:25:00+11:00", "distance_m": 1000, "grade": "Class 3", "active_runners": null, "ground": "Good 4",
+      "question": "Will the expected early speed give Flirtation a run at the leaders late?",
+      "watchlist": [
+        {"number": 16, "horse": "Flirtation", "barrier": 5, "case": "Three-start profile includes a wet-track win; gate 5 can let her settle behind the likely fast pace.", "risk": "Resumes after a break and has limited exposed form.", "sources": ["racing_nsw_preview", "racing_nsw_acceptances"]},
+        {"number": 14, "horse": "What A Scandal", "barrier": 1, "case": "Wide-margin first-up Muswellbrook win and an inside draw suit a horse expected to race forward.", "risk": "Rises to a stronger Highway field; the rail can be a trap if pace gathers outside.", "sources": ["racing_nsw_preview", "racing_nsw_acceptances"]},
+        {"number": 8, "horse": "Irish Jig", "case": "Had limited room at key stages at Tamworth and drops substantially in weight.", "risk": "Needs a clear path through a crowded sprint field.", "sources": ["racing_nsw_preview"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings"]
+    },
+    {
+      "number": 3, "name": "Alinta Energy Handicap", "time": "1:05 pm", "start_time": "2026-11-03T13:05:00+11:00", "distance_m": 1300, "grade": "Benchmark 64", "active_runners": null, "ground": "Good 4",
+      "question": "Does the rise from 1100 m to 1300 m help Hellenic Belle finish over the top?",
+      "watchlist": [
+        {"number": 11, "horse": "Hellenic Belle", "barrier": 5, "case": "Fast-finishing Rosehill second when resuming; drops from stronger company and draws handily.", "risk": "The added 200 m still has to be proved this preparation.", "sources": ["racing_nsw_preview", "racing_nsw_acceptances"]},
+        {"number": 5, "horse": "Graffiti Tycoon", "barrier": 17, "case": "Won first-up at Kembla and has form at this distance; Nash Rawiller rides.", "risk": "Gate 17 and 61 kg could demand early work or a wide trip.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 1, "horse": "Cruizingthestars", "case": "A previous Highway win and a drop from tougher open grade put the last run in context.", "risk": "Top weight remains a concern even with the apprentice claim.", "sources": ["racing_nsw_preview", "racehub_preview"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview"]
+    },
+    {
+      "number": 4, "name": "Toyota Forklifts Handicap", "time": "1:40 pm", "start_time": "2026-11-03T13:40:00+11:00", "distance_m": 1500, "grade": "Benchmark 88", "active_runners": null, "ground": "Good 4",
+      "question": "Can Man Of Worth improve second-up with 100 m more distance and a low draw?",
+      "watchlist": [
+        {"number": 6, "horse": "Man Of Worth", "barrier": 2, "case": "Third on resumption at Randwick; 1500 m and gate 2 offer a plausible second-up improvement path.", "risk": "He weakened late last time and is a short-price type in many previews; price must be checked separately.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 1, "horse": "Gallant Star", "case": "The longer trip should suit better than the sharp Kosciuszko run; has a Randwick mile placing.", "risk": "Carries 60.5 kg before the apprentice claim and needs a rebound.", "sources": ["racing_nsw_preview", "racing_nsw_acceptances"]},
+        {"number": 8, "horse": "Charleroi", "case": "Wyong winner returns after a freshen-up with a low weight and inside gate.", "risk": "The jump from provincial benchmark grade to this BM88 is substantial.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview"]
+    },
+    {
+      "number": 5, "name": "Big Dance", "time": "2:20 pm", "start_time": "2026-11-03T14:20:00+11:00", "distance_m": 1600, "grade": "Listed quality", "active_runners": null, "ground": "Good 4",
+      "question": "Will a genuine mile pace bring Churchill’s Choice into range, or favour a forward runner?",
+      "watchlist": [
+        {"number": 11, "horse": "Churchill’s Choice", "barrier": 7, "case": "Won a Hawkesbury Cup at a mile with a strong finish; third-up and 53 kg suit a late run.", "risk": "She can lose contact in the middle stages and needs a genuine pace plus a clear route.", "sources": ["racing_nsw_preview", "bets_preview", "racing_nsw_acceptances"]},
+        {"number": 2, "horse": "Formal Display", "barrier": 2, "case": "Won the Alan Brown from near the front and has a Randwick 1600 m win; gate 2 supports a low-effort position.", "risk": "May face more early pressure than at Rosehill and may not control the tempo.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 3, "horse": "Magnatear", "barrier": 8, "case": "Two solid runs back and a near-pace style make him a credible tactical alternative.", "risk": "Has to improve enough to turn recent placings into a win in a deep field.", "sources": ["racing_nsw_preview", "racing_nsw_acceptances"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview", "bets_preview"]
+    },
+    {
+      "number": 6, "name": "Barn Dance", "time": "3:30 pm", "start_time": "2026-11-03T15:30:00+11:00", "distance_m": 1300, "grade": "Handicap", "active_runners": null, "ground": "Good 4",
+      "question": "Can Lord Remlap get a more efficient trip from gate 3 than in the Kosciuszko?",
+      "watchlist": [
+        {"number": 6, "horse": "Lord Remlap", "barrier": 3, "case": "The Kosciuszko run involved a wide, rearward trip; gate 3 and 54 kg suggest a cleaner route here.", "risk": "He still needs to settle and finish better than he did in that stronger race.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 9, "horse": "Off The Press", "case": "Recent Queensland placings and an earlier third behind subsequent stakes performers support his consistency.", "risk": "Yet to show that form produces a win in this field.", "sources": ["racing_nsw_preview"]},
+        {"number": 12, "horse": "Warrior For Peace", "case": "Won after a break at Scone despite 63 kg and a wide draw; now drops markedly in weight.", "risk": "His get-back style may need room and a suitable pace at 1300 m.", "sources": ["racing_nsw_preview", "bets_preview"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview", "bets_preview"]
+    },
+    {
+      "number": 7, "name": "Little Dance", "time": "4:10 pm", "start_time": "2026-11-03T16:10:00+11:00", "distance_m": 1600, "grade": "Quality", "active_runners": null, "ground": "Good 4",
+      "question": "Can the class runner overcome gate 22 and 62 kg, or will a better-drawn rival get the first run?",
+      "watchlist": [
+        {"number": 1, "horse": "Estadio Mestalla", "barrier": 22, "case": "Recent placings behind Skyhook and Formal Display make him the class reference.", "risk": "Gate 22 and 62 kg demand an efficient early decision; his last Randwick finish was below expectations.", "sources": ["racing_nsw_preview", "racing_nsw_acceptances"]},
+        {"number": 4, "horse": "Fukubana", "barrier": 1, "case": "Four straight top-two finishes and gate 1 create a possible economical route at the mile.", "risk": "May need room at the right time if buried inside.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 2, "horse": "I’mintowin", "case": "Two strong placings after a long break and a later trial suggest fitness may improve; draws more tractably than the topweight.", "risk": "Faded late over a mile last start and must prove he finishes it strongly today.", "sources": ["racing_nsw_preview", "racehub_preview", "bets_preview"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview", "bets_preview"]
+    },
+    {
+      "number": 8, "name": "Asahi Super Dry Choisir Handicap", "time": "4:50 pm", "start_time": "2026-11-03T16:50:00+11:00", "distance_m": 1100, "grade": "Benchmark 100", "active_runners": null, "ground": "Good 4",
+      "question": "Will the sprint favour Kerguelen’s late finish or Wanaruah’s more tactical speed?",
+      "watchlist": [
+        {"number": 6, "horse": "Kerguelen", "barrier": 1, "case": "Strong closing third at Warwick Farm on resumption; the extra 100 m and gate 1 can help if a gap appears.", "risk": "A back-half runner can become boxed in from the rail in an 1100 m race.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 2, "horse": "Wanaruah", "case": "Recent Randwick 1200 m win and prior 1100 m win here show both course and trip suitability.", "risk": "Rises in benchmark and carries more weight even after the claim.", "sources": ["racing_nsw_preview", "racehub_preview"]},
+        {"number": 7, "horse": "Signor Tortoni", "case": "Placed behind Wanaruah before being tested in stronger Group company.", "risk": "Needs to settle better than in his latest Randwick run.", "sources": ["racing_nsw_preview", "racehub_preview"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview"]
+    },
+    {
+      "number": 9, "name": "Quayclean Handicap", "time": "5:30 pm", "start_time": "2026-11-03T17:30:00+11:00", "distance_m": 1000, "grade": "Benchmark 84", "active_runners": null, "ground": "Good 4",
+      "question": "Can Bruce I Am use gate 1 without getting held up if the leaders contest the pace?",
+      "watchlist": [
+        {"number": 12, "horse": "Bruce I Am", "barrier": 1, "case": "Won at Warwick Farm after resuming and carries just 52.5 kg; gate 1 may yield a soft run behind speed.", "risk": "A closer at 1000 m needs the gaps; this is a class rise.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]},
+        {"number": 4, "horse": "Compensation", "case": "Three-win first campaign and enough early pace to lead if the crossing cost is modest.", "risk": "Has not raced for months and may face pressure from another leader.", "sources": ["racing_nsw_preview", "racehub_preview"]},
+        {"number": 9, "horse": "Maybe Moet", "case": "Won first run for the new stable and receives a sizeable weight drop.", "risk": "Returns to 1000 m and must repeat that new-stable performance.", "sources": ["racing_nsw_preview"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview"]
+    },
+    {
+      "number": 10, "name": "The Agency Real Estate Handicap", "time": "6:05 pm", "start_time": "2026-11-03T18:05:00+11:00", "distance_m": 1200, "grade": "Benchmark 84", "active_runners": null, "ground": "Good 4",
+      "question": "Is Enamorada’s class enough at 1200 m first-up if she settles in the back half?",
+      "watchlist": [
+        {"number": 8, "horse": "Enamorada", "barrier": 9, "case": "Strong Randwick win over Golden Eagle runners Mr Miller and Night Agent is the leading class line; Nash Rawiller rides.", "risk": "Resumes after a lengthy break and shortens to 1200 m, so the early position matters.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances", "bets_preview"]},
+        {"number": 5, "horse": "Il Passero", "case": "Worked home late behind Wanaruah and faces a less deep assignment.", "risk": "Needs to improve on the bare second-up result.", "sources": ["racing_nsw_preview"]},
+        {"number": 3, "horse": "Sweethearted", "case": "Won first-up at Caulfield and has prior form around Golden Straand.", "risk": "Carries 60 kg into a stronger benchmark race.", "sources": ["racing_nsw_preview", "racehub_preview", "racing_nsw_acceptances"]}
+      ], "sources": ["racing_nsw_preview", "racing_nsw_acceptances", "racing_nsw_scratchings", "racehub_preview", "bets_preview"]
+    }
+  ],
+  "news": [
+    {"kind": "track", "date": "2026-11-03T11:54:00+11:00", "headline": "Randwick remained Good 4 with the rail +2 m", "detail": "Official scratchings sheet lists overcast weather, Good 4 and rail +2 m entire at its 11:54 am publication.", "impact": "Recheck any later downgrade or lane pattern before treating a draw as helpful.", "horses": [], "sources": ["racing_nsw_scratchings"]},
+    {"kind": "scratching", "date": "2026-11-03T11:54:00+11:00", "headline": "Benevac out of R9; Bruce I Am remains active", "detail": "Racing NSW lists Benevac among R9 scratchings. The official preview's current R9 selection is Bruce I Am.", "impact": "Do not include Benevac in a live R9 prediction or combination.", "horses": ["Benevac", "Bruce I Am"], "sources": ["racing_nsw_scratchings", "racing_nsw_preview"]},
+    {"kind": "scratching", "date": "2026-11-03T11:54:00+11:00", "headline": "I’ve Bean Tryin’ out of the Little Dance", "detail": "The R7 runner is scratched on the official sheet, although older previews may still list it among the dangers.", "impact": "Use an active alternative such as Fukubana or I’mintowin in the editorial watchlist.", "horses": ["I’ve Bean Tryin’", "Fukubana", "I’mintowin"], "sources": ["racing_nsw_scratchings", "racing_nsw_preview"]}
+  ]
+}
