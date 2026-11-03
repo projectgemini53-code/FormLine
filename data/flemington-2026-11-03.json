@@ -4,6 +4,15 @@
   "prepared_at": "2026-11-02T19:55:00+11:00",
   "source_url": "https://www.vrc.com.au/race-days-and-events/2026-2027/lexus-melbourne-cup-day/",
   "source_note": "Dated editorial seed from FormLine public research, not a live or complete race-day field. R1–R6 and R8–R10 include three watchlist runners only; R7 has the 24 declared Cup entrants. Flemington was Soft 5 with rail out 3m at 7:32am AEDT on 3 Nov; recheck scratchings, riders, ground and prices before each race. No licensed odds included.",
+  "gate_snapshot": {
+    "checked_at": "2026-11-03T11:03:00+11:00",
+    "scope": "Selected editorial examples only; these are original drawn barriers, not a complete field or live starting-stall feed.",
+    "caveat": "Scratchings can change effective stall numbers. Recheck the final field, scratchings and track conditions before using a gate in race analysis. A low gate is not automatically favourable in Flemington straight races.",
+    "source_urls": [
+      "https://www.vrc.com.au/latest-news/breaking-down-the-barrier-numbers/",
+      "https://dxp-cdn.racing.com/api/public/content/victorian-track-maps-without-jumps-maps-updated-aug-18-v2-628909.pdf?download=true&v=e0920d62"
+    ]
+  },
   "races": [
     {
       "number": 1,
@@ -15,6 +24,10 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Amelia's Affair", "barrier": 1, "source_url": "https://clintonmcdonaldracing.com.au/race-detail/437977?horseId=742739" },
+        { "name": "Royal Press", "barrier": 9, "source_url": "https://clintonmcdonaldracing.com.au/race-detail/437977?horseId=742739" }
+      ],
       "runners": [
         {
           "number": 1,
@@ -76,6 +89,9 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Yauson", "barrier": 21, "source_url": "https://www.racingbase.com.au/latest/tips/flemington/flemington-racing-tips-3-nov-2026-can-so-you-are-win-five/" }
+      ],
       "runners": [
         {
           "number": 7,
@@ -140,6 +156,9 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Mister Whiskers", "barrier": 2, "source_url": "https://www.racingbase.com.au/latest/tips/bets-of-the-day/bets-of-the-day-tuesday-3-november/" }
+      ],
       "runners": [
         {
           "number": 2,
@@ -201,6 +220,10 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Parcae", "barrier": 5, "source_url": "https://www.racingbase.com.au/latest/tips/flemington/flemington-racing-tips-3-nov-2026-can-so-you-are-win-five/" },
+        { "name": "Ole Go", "barrier": 13, "source_url": "https://punty.ai/tips/flemington-2026-11-03" }
+      ],
       "runners": [
         {
           "number": 11,
@@ -262,6 +285,9 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Tempesti", "barrier": 6, "source_url": "https://punty.ai/tips/flemington-2026-11-03" }
+      ],
       "runners": [
         {
           "number": 4,
@@ -323,6 +349,9 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Darkbonee", "barrier": 9, "source_url": "https://wilderacing.com.au/racing-detail/26307070269/119426/A/" }
+      ],
       "runners": [
         {
           "number": 5,
@@ -837,6 +866,9 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Ranarsson", "barrier": 9, "source_url": "https://blog.hollywoodbets.net/horse-racing/winning-form-tips/australian-racing-tips-tuesday-03-november-2026/" }
+      ],
       "runners": [
         {
           "number": 5,
@@ -898,6 +930,9 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Shadhavar", "barrier": 2, "run_style": "Leader", "source_url": "https://www.kruzey.com.au/horse-racing-tips/flemington-tips-03-nov-2026/" }
+      ],
       "runners": [
         {
           "number": 2,
@@ -959,6 +994,9 @@
       "field_scope": "editorial_watchlist_only",
       "runners_complete": false,
       "source_url": "https://www.racing.com/form/2026-11-03/flemington/",
+      "gate_examples": [
+        { "name": "Buccleuch", "barrier": 4, "run_style": "Midfield", "source_url": "https://www.kruzey.com.au/horse-racing-tips/flemington-tips-03-nov-2026/" }
+      ],
       "runners": [
         {
           "number": 1,

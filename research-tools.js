@@ -154,6 +154,12 @@ function normalizedAcceptanceRaces(card, fetchedAt) {
   }
   return races;
 }
+function selectedGateExamples(raw) {
+  return (Array.isArray(raw?.gate_examples) ? raw.gate_examples : []).filter(row => row && row.name && Number.isInteger(Number(row.barrier)) && Number(row.barrier) > 0 && Number(row.barrier) <= 40).slice(0, 6).map(row => ({
+    name: String(row.name).slice(0, 100), barrier: Number(row.barrier),
+    runStyle: String(row.run_style || '').slice(0, 45), sourceUrl: safeUrl(row.source_url)
+  }));
+}
 async function seedTodayCards() {
   const status = $('#dayBoardStatus');
   if (sydneyDate(new Date()) !== '2026-11-03') {
@@ -175,15 +181,25 @@ async function seedTodayCards() {
     for (const raw of card.races) {
       const raceNumber = Number(raw.number), time = new Date(raw.start_time);
       if (!Number.isInteger(raceNumber) || raceNumber < 1 || raceNumber > 30 || Number.isNaN(time.getTime()) || !Array.isArray(raw.runners || [])) continue;
+      const gateExamples = selectedGateExamples(raw);
+      const sourcedGateFor = horse => gateExamples.find(row => row.name.toLowerCase() === String(horse.name || '').toLowerCase());
       const existing = store.races.find(race => race.venue?.toLowerCase() === card.venue.toLowerCase() && race.raceNumber === raceNumber && sydneyDate(race.startTime) === card.date);
       if (existing) {
         if (existing.source === 'public') {
           if (!existing.ground) existing.ground = String(raw.ground || '').slice(0, 45);
+          if (!existing.sourceUrl || card.venue === 'Randwick' && existing.sourceUrl.includes('racehub.com.au/')) existing.sourceUrl = safeUrl(raw.source_url || card.source_url);
+          if (String(existing.notes || '').startsWith('Public race schedule only') || String(existing.notes || '').startsWith('Dated editorial seed')) existing.notes = String(card.source_note || card.status || existing.notes).slice(0, 1000);
           existing.trackObservedAt = String(card.track_snapshot?.observed_at || '');
           existing.trackSourceUrl = safeUrl(card.track_snapshot?.source_url);
+          existing.gateExamples = gateExamples;
+          existing.gateSourceUrl = safeUrl(card.gate_snapshot?.source_url || card.gate_snapshot?.source_urls?.[0] || raw.gate_source_url);
+          existing.gateScratchingsUrl = safeUrl(card.gate_snapshot?.scratchings_url);
+          existing.gateSnapshotAt = String(card.gate_snapshot?.published_at || card.gate_snapshot?.checked_at || '');
           for (const horse of existing.runners || []) {
             const seed = (raw.runners || []).find(row => Number(row.number) === horse.number && String(row.name || '').toLowerCase() === horse.name.toLowerCase());
+            const gateExample = sourcedGateFor(horse);
             if (seed && horse.barrier === 0 && seed.barrier == null) horse.barrier = null;
+            if (horse.barrier == null && gateExample) horse.barrier = gateExample.barrier;
             if (seed && horse.weight === 0 && (seed.weight_kg ?? seed.weight) == null) horse.weight = null;
             if (seed && !horse.runStyle) horse.runStyle = String(seed.run_style || '').slice(0, 45);
             if (seed && !horse.styleNote) horse.styleNote = String(seed.style_note || '').slice(0, 180);
@@ -196,7 +212,7 @@ async function seedTodayCards() {
       const raceId = `public:${card.date.replaceAll('-', '')}:${card.venue}:${raceNumber}`;
       const runners = (raw.runners || []).filter(row => row && Number.isInteger(Number(row.number)) && Number(row.number) > 0 && (row.name || row.runner_name)).slice(0, 40).map(row => ({
         id: `${raceId}:${Number(row.number)}`, providerRef: '', number: Number(row.number), name: String(row.name || row.runner_name).slice(0, 100),
-        barrier: number(row.barrier), weight: number(row.weight_kg ?? row.weight), jockey: String(row.jockey || '').slice(0, 100),
+        barrier: number(row.barrier ?? sourcedGateFor(row)?.barrier), weight: number(row.weight_kg ?? row.weight), jockey: String(row.jockey || '').slice(0, 100),
         trainer: String(row.trainer || '').slice(0, 100), runStyle: String(row.run_style || '').slice(0, 45), styleNote: String(row.style_note || '').slice(0, 180), form: String(row.form || '').slice(0, 80),
         sourceUrls: (Array.isArray(row.source_urls) ? row.source_urls : []).map(safeUrl).filter(Boolean).slice(0, 5),
         historyScore: '', historyNotes: '', conditionNotes: '', editorialNote: String(row.editorial_note || '').slice(0, 1000),
@@ -209,6 +225,8 @@ async function seedTodayCards() {
         startTime: time.toISOString(), distance: number(raw.distance_m), paidPlaces: null,
         ground: String(raw.ground || '').slice(0, 45), raceClass: String(raw.grade || '').slice(0, 100),
         trackObservedAt: String(card.track_snapshot?.observed_at || ''), trackSourceUrl: safeUrl(card.track_snapshot?.source_url),
+        gateExamples, gateSourceUrl: safeUrl(card.gate_snapshot?.source_url || card.gate_snapshot?.source_urls?.[0] || raw.gate_source_url),
+        gateScratchingsUrl: safeUrl(card.gate_snapshot?.scratchings_url), gateSnapshotAt: String(card.gate_snapshot?.published_at || card.gate_snapshot?.checked_at || ''),
         fieldComplete: raw.runners_complete === true, fieldScope: String(raw.field_scope || 'schedule_only'),
         notes: String(card.source_note || card.status || 'Dated public research card; recheck official race-day details.').slice(0, 1000),
         fetchedAt: String(card.prepared_at || ''), runners
@@ -243,6 +261,7 @@ function mergeFeedRace(next) {
   const paired = (old, fresh, keepQuote) => ({
     ...old, ...fresh,
     id: old.id, providerRef: fresh.providerRef || old.providerRef,
+    barrier: fresh.barrier ?? old.barrier,
     runStyle: fresh.runStyle || old.runStyle || '', historyScore: fresh.historyScore || old.historyScore || '',
     historyNotes: fresh.historyNotes || old.historyNotes || '', conditionNotes: fresh.conditionNotes || old.conditionNotes || '',
     ...(keepQuote ? {
@@ -270,6 +289,10 @@ function mergeFeedRace(next) {
   next.researchStatus = hasNewQuotes ? (next.researchStatus || '') : (prior.researchStatus || '');
   next.fieldComplete = Boolean(next.fieldComplete || prior.fieldComplete);
   next.fieldScope ||= prior.fieldScope || '';
+  next.gateExamples ||= prior.gateExamples || [];
+  next.gateSourceUrl ||= prior.gateSourceUrl || '';
+  next.gateScratchingsUrl ||= prior.gateScratchingsUrl || '';
+  next.gateSnapshotAt ||= prior.gateSnapshotAt || '';
   store.races[index] = next;
 }
 function matchProviderRace(raw) {
@@ -379,15 +402,25 @@ function runnerSourceLabel(runner) {
   if (!runner.quoteAt) return source;
   return `${source} · ${dateTime(runner.quoteAt)}${runner.source === 'provider' && !quoteFresh(runner) ? ' · STALE' : ''}`;
 }
+function gateAssessmentHtml(race, runner) {
+  const evidence = String(runner.gateMapEvidence || '').trim();
+  const fit = number(runner.gateMapFit);
+  if (fit == null || !evidence) return '';
+  const adjustment = window.FormLineGate?.mapAdjustment(race, runner) || { applied: false, points: 0 };
+  const note = adjustment.applied
+    ? `${adjustment.points >= 0 ? '+' : ''}${adjustment.points.toFixed(2)} ranking point; odds-derived chance unchanged.`
+    : 'Context only until a complete field and confirmed gate are saved.';
+  return `<p class="runner-editorial"><strong>Gate-map assessment:</strong> ${esc(fit > 0 ? `+${fit}` : fit)} · ${esc(evidence)} ${esc(note)}</p>`;
+}
 function renderRunnerCard(runner, race) {
   const open = runner.id === expandedRunnerId;
   const facts = [runner.barrier != null ? `Gate ${runner.barrier}` : '', runner.weight != null ? `${runner.weight}kg` : '', runner.runStyle || '', runner.form ? `Form ${runner.form}` : ''].filter(Boolean);
-  return `<div class="runner-card ${open ? 'open' : ''} ${runner.scratched ? 'scratch' : ''}"><button class="runner-summary" type="button" data-expand-runner="${esc(runner.id)}" aria-expanded="${open}"><span class="saddle">${esc(runner.number ?? '—')}</span><span><strong>${esc(runner.name)}${runner.scratched ? ' · SCRATCHED' : ''}</strong><small>${esc(facts.join(' · ') || 'Runner details pending')}</small></span><span class="runner-prices"><span>WIN<b>${esc(odds(runner.winOdds))}</b></span><span>PLACE<b>${esc(odds(runner.placeOdds))}</b></span></span></button>${open ? `<div class="runner-body"><div class="runner-meta"><span>Jockey: ${esc(runner.jockey || '—')}</span><span>Trainer: ${esc(runner.trainer || '—')}</span><span>Record: ${esc(runner.historyScore || '—')}</span><span>Runner type: ${esc(runner.runStyle || 'Unknown')}</span></div>${runner.styleNote ? `<p class="runner-editorial"><strong>Run-style evidence:</strong> ${esc(runner.styleNote)}</p>` : ''}${runner.editorialNote ? `<p class="runner-editorial"><strong>Research note:</strong> ${esc(runner.editorialNote)}</p>` : ''}<p><strong>Past runs:</strong> ${esc(runner.historyNotes || 'No history entered or loaded.')}</p><p><strong>Ground notes:</strong> ${esc(runner.conditionNotes || 'No ground record entered or loaded.')}</p><p class="quote-note">${esc(runnerSourceLabel(runner))}. Top 3: ${esc(odds(runner.top3Odds))}; Top 4: ${esc(odds(runner.top4Odds))}. Confirm any quote with the bookmaker.</p><div class="runner-tools"><button class="button button-quiet" type="button" data-edit-runner="${esc(runner.id)}">Edit runner</button>${!runner.scratched && !raceStarted(race) ? `<button class="button button-primary" type="button" data-select-runner="${esc(runner.id)}">Use in paper bet</button>` : ''}${race.providerId ? `<button class="button button-quiet" type="button" data-load-form="${esc(race.id)}">Load recent form</button>` : ''}</div></div>` : ''}</div>`;
+  return `<div class="runner-card ${open ? 'open' : ''} ${runner.scratched ? 'scratch' : ''}"><button class="runner-summary" type="button" data-expand-runner="${esc(runner.id)}" aria-expanded="${open}"><span class="saddle">${esc(runner.number ?? '—')}</span><span><strong>${esc(runner.name)}${runner.scratched ? ' · SCRATCHED' : ''}</strong><small>${esc(facts.join(' · ') || 'Runner details pending')}</small></span><span class="runner-prices"><span>WIN<b>${esc(odds(runner.winOdds))}</b></span><span>PLACE<b>${esc(odds(runner.placeOdds))}</b></span></span></button>${open ? `<div class="runner-body"><div class="runner-meta"><span>Jockey: ${esc(runner.jockey || '—')}</span><span>Trainer: ${esc(runner.trainer || '—')}</span><span>Record: ${esc(runner.historyScore || '—')}</span><span>Runner type: ${esc(runner.runStyle || 'Unknown')}</span></div>${runner.styleNote ? `<p class="runner-editorial"><strong>Run-style evidence:</strong> ${esc(runner.styleNote)}</p>` : ''}${gateAssessmentHtml(race, runner)}${runner.editorialNote ? `<p class="runner-editorial"><strong>Research note:</strong> ${esc(runner.editorialNote)}</p>` : ''}<p><strong>Past runs:</strong> ${esc(runner.historyNotes || 'No history entered or loaded.')}</p><p><strong>Ground notes:</strong> ${esc(runner.conditionNotes || 'No ground record entered or loaded.')}</p><p class="quote-note">${esc(runnerSourceLabel(runner))}. Top 3: ${esc(odds(runner.top3Odds))}; Top 4: ${esc(odds(runner.top4Odds))}. Confirm any quote with the bookmaker.</p><div class="runner-tools"><button class="button button-quiet" type="button" data-edit-runner="${esc(runner.id)}">Edit runner</button>${!runner.scratched && !raceStarted(race) ? `<button class="button button-primary" type="button" data-select-runner="${esc(runner.id)}">Use in paper bet</button>` : ''}${race.providerId ? `<button class="button button-quiet" type="button" data-load-form="${esc(race.id)}">Load recent form</button>` : ''}</div></div>` : ''}</div>`;
 }
-function allHorseCard(runner) {
+function allHorseCard(runner, race) {
   const facts = [runner.barrier != null ? `Gate ${runner.barrier}` : 'Gate unconfirmed', runner.weight != null ? `${runner.weight}kg` : 'Weight unconfirmed', runner.jockey || 'Rider unconfirmed'].join(' · ');
   const quote = runner.winOdds || runner.placeOdds ? `<div class="all-horse-prices">${runner.winOdds ? `<span>WIN <strong>${esc(odds(runner.winOdds))}</strong></span>` : ''}${runner.placeOdds ? `<span>PLACE <strong>${esc(odds(runner.placeOdds))}</strong></span>` : ''}<small>${quoteFresh(runner) ? 'Saved quote · check current price' : 'Stale quote · recheck'}</small></div>` : '<p class="all-horse-no-price">No saved odds · enter the actual price in a paper selection</p>';
-  const notes = [runner.styleNote ? `<p><strong>Run-style evidence:</strong> ${esc(runner.styleNote)}</p>` : '', runner.historyNotes ? `<p><strong>Past runs:</strong> ${esc(runner.historyNotes)}</p>` : '', runner.conditionNotes ? `<p><strong>Ground:</strong> ${esc(runner.conditionNotes)}</p>` : ''].filter(Boolean).join('');
+  const notes = [runner.styleNote ? `<p><strong>Run-style evidence:</strong> ${esc(runner.styleNote)}</p>` : '', gateAssessmentHtml(race, runner), runner.historyNotes ? `<p><strong>Past runs:</strong> ${esc(runner.historyNotes)}</p>` : '', runner.conditionNotes ? `<p><strong>Ground:</strong> ${esc(runner.conditionNotes)}</p>` : ''].filter(Boolean).join('');
   const sourceLinks = (Array.isArray(runner.sourceUrls) ? runner.sourceUrls : []).map(safeUrl).filter(Boolean).slice(0, 5).map(url => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(sourceTitle(url))} ↗</a>`).join('');
   return `<article class="all-horse-card ${runner.scratched ? 'is-scratched' : ''}"><div class="all-horse-top"><span class="all-horse-no">${esc(runner.number ?? '—')}</span><div><h4>${esc(runner.name)}</h4><p>${esc(facts)}</p></div>${runner.scratched ? '<span class="all-horse-flag">SCRATCHED</span>' : ''}</div><div class="all-horse-chips"><span>FORM <strong>${esc(runner.form || '—')}</strong></span><span>TRAINER <strong>${esc(runner.trainer || '—')}</strong></span>${runner.runStyle ? `<span>TYPE <strong>${esc(runner.runStyle)}</strong></span>` : ''}${runner.historyScore ? `<span>1–2–3 <strong>${esc(runner.historyScore)}</strong></span>` : ''}</div>${runner.editorialNote ? `<p class="all-horse-note">${esc(runner.editorialNote)}</p>` : ''}${quote}${notes || sourceLinks ? `<details class="all-horse-detail"><summary>Run style, form and sources</summary>${notes}${sourceLinks ? `<div class="all-horse-sources">${sourceLinks}</div>` : ''}</details>` : ''}</article>`;
 }
@@ -419,7 +452,7 @@ function renderAllHorseGrid() {
   });
   rows.sort((a, b) => sort === 'gate' ? (a.barrier ?? 99) - (b.barrier ?? 99) || a.number - b.number : sort === 'weight' ? (a.weight ?? 99) - (b.weight ?? 99) || a.number - b.number : sort === 'name' ? a.name.localeCompare(b.name) : a.number - b.number);
   $('#allHorseCount').textContent = `${rows.length} of ${race.runners.length} card entries shown${race.fieldComplete ? ' · dated declared field' : ' · partial card'}`;
-  $('#allHorseGrid').innerHTML = rows.length ? rows.map(allHorseCard).join('') : empty('No horses match', 'Try a wider gate, weight, status or form filter.');
+  $('#allHorseGrid').innerHTML = rows.length ? rows.map(runner => allHorseCard(runner, race)).join('') : empty('No horses match', 'Try a wider gate, weight, status or form filter.');
 }
 function mountAllHorsePanel(race) {
   const field = $('#raceDetail .runner-list')?.closest('.race-section');
@@ -439,7 +472,7 @@ function mountAllHorsePanel(race) {
   }
 }
 function runnerEditorHtml() {
-  return `<details class="editor-card" id="runnerEditor"><summary><span>＋</span> Add or edit a runner</summary><form id="runnerForm" class="editor-form"><input type="hidden" name="runnerId"><div class="field-grid"><label>Number <input name="number" type="number" min="1" max="99" required></label><label>Horse <input name="name" maxlength="100" required></label><label>Barrier <input name="barrier" type="number" min="1" max="40"></label><label>Weight (kg) <input name="weight" type="number" min="30" max="80" step="0.5"></label><label>Jockey <input name="jockey" maxlength="100"></label><label>Trainer <input name="trainer" maxlength="100"></label><label>Runner type <select name="runStyle"><option value="">Unknown</option><option>Leader</option><option>On pace</option><option>Midfield</option><option>Backmarker</option><option>Versatile</option></select></label><label>Form string <input name="form" maxlength="80" placeholder="e.g. 1-324"></label><label>1st–2nd–3rd record <input name="historyScore" maxlength="35" placeholder="e.g. 4-3-0"></label><label>Quote observed (your device time) <input name="quoteAt" type="datetime-local"></label><label>Win odds <input name="winOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Place odds <input name="placeOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 3 leg odds <input name="top3Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 4 leg odds <input name="top4Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label class="field-wide">Past run history <textarea name="historyNotes" rows="3" maxlength="2000" placeholder="Date, distance, ground and finishing place for each run."></textarea></label><label class="field-wide">Ground / condition notes <textarea name="conditionNotes" rows="2" maxlength="1500" placeholder="How has this horse gone on similar ground?"></textarea></label><label class="result-flag field-wide"><input name="scratched" type="checkbox"> Scratched / withdrawn</label></div><p class="field-help">Runner style, form and prices are research notes. They do not create a probability forecast.</p><div class="form-actions"><button class="button button-primary" type="submit">Save runner</button><button class="button button-quiet" type="button" id="cancelRunnerEdit">Cancel</button></div></form></details>`;
+  return `<details class="editor-card" id="runnerEditor"><summary><span>＋</span> Add or edit a runner</summary><form id="runnerForm" class="editor-form"><input type="hidden" name="runnerId"><div class="field-grid"><label>Number <input name="number" type="number" min="1" max="99" required></label><label>Horse <input name="name" maxlength="100" required></label><label>Barrier <input name="barrier" type="number" min="1" max="40"></label><label>Weight (kg) <input name="weight" type="number" min="30" max="80" step="0.5"></label><label>Jockey <input name="jockey" maxlength="100"></label><label>Trainer <input name="trainer" maxlength="100"></label><label>Runner type <select name="runStyle"><option value="">Unknown</option><option>Leader</option><option>On pace</option><option>Midfield</option><option>Backmarker</option><option>Versatile</option></select></label><label>Gate-map fit <select name="gateMapFit"><option value="">No assessment</option><option value="1">Strong route fit (+1)</option><option value="0.5">Mild route fit (+0.5)</option><option value="0">Neutral (0)</option><option value="-0.5">Mild route concern (−0.5)</option><option value="-1">Strong route concern (−1)</option></select></label><label>Form string <input name="form" maxlength="80" placeholder="e.g. 1-324"></label><label>1st–2nd–3rd record <input name="historyScore" maxlength="35" placeholder="e.g. 4-3-0"></label><label>Quote observed (your device time) <input name="quoteAt" type="datetime-local"></label><label>Win odds <input name="winOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Place odds <input name="placeOdds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 3 leg odds <input name="top3Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label>Top 4 leg odds <input name="top4Odds" type="number" min="1.01" step="0.01" inputmode="decimal"></label><label class="field-wide">Gate-map reason / source <textarea name="gateMapEvidence" rows="2" maxlength="500" placeholder="State the likely early route, nearby speed and where the draw came from. Do not infer an inside advantage from the gate alone."></textarea></label><label class="field-wide">Past run history <textarea name="historyNotes" rows="3" maxlength="2000" placeholder="Date, distance, ground and finishing place for each run."></textarea></label><label class="field-wide">Ground / condition notes <textarea name="conditionNotes" rows="2" maxlength="1500" placeholder="How has this horse gone on similar ground?"></textarea></label><label class="result-flag field-wide"><input name="scratched" type="checkbox"> Scratched / withdrawn</label></div><p class="field-help">A gate-map fit adds at most 0.25 ranking point to a complete-field price watchlist. Record a specific reason; this does not change the estimated chance or quote.</p><div class="form-actions"><button class="button button-primary" type="submit">Save runner</button><button class="button button-quiet" type="button" id="cancelRunnerEdit">Cancel</button></div></form></details>`;
 }
 function marketOptions(race) { return (race.runners || []).filter(r => !r.scratched).map(r => `<option value="${esc(r.id)}">${esc(r.number ?? '—')}. ${esc(r.name)}</option>`).join(''); }
 const pairCache = new Map();
@@ -458,9 +491,12 @@ function marketShortlist(race, market) {
   return active.map(runner => {
     const estimate = compared ? currentEstimate(runner, market) : null;
     const price = market === 'win' ? runner.winOdds : runner.placeOdds;
+    const gateMap = window.FormLineGate?.mapAdjustment(race, runner) || { points: 0, applied: false };
     return quoteFresh(runner) && validPrice(price)
-      ? { runner, price, chance: estimate?.chance ?? null, books: estimate?.books ?? 0, gap: estimate ? estimate.chance * price - 1 : null } : null;
-  }).filter(Boolean).sort((a, b) => compared ? b.gap - a.gap : a.price - b.price).slice(0, 3);
+      ? { runner, price, chance: estimate?.chance ?? null, books: estimate?.books ?? 0, gap: estimate ? estimate.chance * price - 1 : null, gateMap } : null;
+  }).filter(Boolean).sort((a, b) => compared
+    ? (b.gap * 100 + b.gateMap.points) - (a.gap * 100 + a.gateMap.points)
+    : a.price - b.price).slice(0, 3);
 }
 function pairFinishProbability(weights, first, second, top) {
   if (first === second || weights.length < top || weights.length > 30) return null;
@@ -494,23 +530,24 @@ function pairShortlist(race, top) {
   const total = rawWeights.reduce((sum, value) => sum + value, 0);
   const weights = rawWeights.map(value => value / total);
   const basis = compared ? 'other books' : 'Sportsbet only';
-  const key = `${race.id}|${race.fetchedAt}|${top}|${basis}|${active.map((runner, index) => `${runner.id}:${weights[index].toFixed(8)}`).join('|')}`;
+  const gatePoints = active.map(runner => window.FormLineGate?.mapAdjustment(race, runner).points || 0);
+  const key = `${race.id}|${race.fetchedAt}|${top}|${basis}|${active.map((runner, index) => `${runner.id}:${weights[index].toFixed(8)}:${gatePoints[index]}`).join('|')}`;
   if (pairCache.has(key)) return pairCache.get(key);
   const candidates = active.map((runner, index) => ({ runner, index, weight: weights[index] })).sort((a, b) => b.weight - a.weight).slice(0, 8);
   const pairs = [];
   for (let i = 0; i < candidates.length; i++) for (let j = i + 1; j < candidates.length; j++) {
     const first = candidates[i], second = candidates[j];
     const chance = pairFinishProbability(weights, first.index, second.index, top);
-    if (chance != null) pairs.push({ first: first.runner, second: second.runner, chance, basis });
+    if (chance != null) pairs.push({ first: first.runner, second: second.runner, chance, basis, gatePoints: gatePoints[first.index] + gatePoints[second.index] });
   }
-  pairs.sort((a, b) => b.chance - a.chance);
+  pairs.sort((a, b) => (b.chance * 100 + b.gatePoints) - (a.chance * 100 + a.gatePoints));
   const result = pairs.slice(0, 3);
   pairCache.set(key, result);
   return result;
 }
 function shortlistHtml(race) {
   if (raceStarted(race)) return '';
-  const intro = `<div class="shortlist-head"><div><p class="eyebrow">OWNER-ONLY MODEL WATCHLIST</p><h3>Price and placing research</h3><p>Comparison estimates use at least three other complete, fresh bookmaker books after removing each book's margin. They are unvalidated and do not prove a betting edge. Confirm the current Sportsbet quote yourself.</p></div><span>RESEARCH SIGNALS</span></div>`;
+  const intro = `<div class="shortlist-head"><div><p class="eyebrow">OWNER-ONLY MODEL WATCHLIST</p><h3>Price and placing research</h3><p>Comparison estimates use at least three other complete, fresh bookmaker books after removing each book's margin. A recorded gate-map fit can break close ranks by at most 0.25 point per horse when the field is complete. It never changes the estimated chance or quote. These signals are unvalidated; confirm the current Sportsbet quote yourself.</p></div><span>RESEARCH SIGNALS</span></div>`;
   if (race.source !== 'provider') return `<section class="analysis-board race-section">${intro}${empty('No market comparison', 'A manually entered quote cannot supply a full multi-book market estimate. Load the protected feed on demand.')}</section>`;
   const coverageNote = race.researchStatus ? `<p class="shortlist-coverage">${esc(race.researchStatus)} Single-book ranks below are descriptive only.</p>` : '';
   const groups = ['win', 'place'].map(market => {
@@ -518,17 +555,18 @@ function shortlistHtml(race) {
     return `<div class="shortlist-group"><div class="shortlist-group-title"><strong>${market === 'win' ? 'Win price watchlist' : 'Likely place / price watchlist'}</strong><small>${market === 'place' ? `${race.paidPlaces || 'Unknown'} paid places · check terms` : 'Fixed win market'}</small></div>${rows.length ? rows.map((item, index) => {
       const context = [item.runner.form ? `Form ${item.runner.form}` : '', item.runner.barrier != null ? `gate ${item.runner.barrier}` : '', item.runner.weight != null ? `${item.runner.weight}kg` : '', item.runner.jockey ? `jockey ${item.runner.jockey}` : ''].filter(Boolean).join(' · ');
       const compared = item.gap != null;
+      const gateNote = compared && item.gateMap.applied ? ` Recorded gate-map fit ${item.gateMap.points >= 0 ? '+' : ''}${item.gateMap.points.toFixed(2)} ranking point; estimated chance unchanged.` : '';
       const reason = compared
         ? `Sportsbet ${odds(item.price)} implies ${percent(1 / item.price)}; ${item.books} other complete books estimate ${percent(item.chance)} after margin adjustment. Indicative gap ${item.gap >= 0 ? '+' : ''}${percent(item.gap)}. ${context || 'No extra form detail'} is context only, not part of this estimate.`
         : `Current Sportsbet ${market} quote ${odds(item.price)} ranks this runner near the front of this saved market. No three-book consensus or value estimate is available. ${context || 'No extra form detail'} is context only.`;
-      return `<button type="button" class="shortlist-pick ${compared && item.gap >= .05 ? 'candidate' : 'watch'}" data-suggest-runner="${esc(item.runner.id)}" data-suggest-market="${market}"><span class="shortlist-rank">${index + 1}</span><span class="shortlist-main"><strong>${esc(item.runner.number ?? '—')}. ${esc(item.runner.name)}</strong><small>${compared ? item.gap >= .05 ? 'Paper candidate' : 'Watch only · below 5% filter' : 'Single-book rank · no value claim'} · ${market.toUpperCase()} ${esc(odds(item.price))}</small><em>${esc(reason)}</em></span><span class="shortlist-gap">${compared ? `${item.gap >= 0 ? '+' : ''}${esc(percent(item.gap))}` : 'RANK'}</span></button>`;
+      return `<button type="button" class="shortlist-pick ${compared && item.gap >= .05 ? 'candidate' : 'watch'}" data-suggest-runner="${esc(item.runner.id)}" data-suggest-market="${market}"><span class="shortlist-rank">${index + 1}</span><span class="shortlist-main"><strong>${esc(item.runner.number ?? '—')}. ${esc(item.runner.name)}</strong><small>${compared ? item.gap >= .05 ? 'Paper candidate' : 'Watch only · below 5% filter' : 'Single-book rank · no value claim'} · ${market.toUpperCase()} ${esc(odds(item.price))}</small><em>${esc(reason + gateNote)}</em></span><span class="shortlist-gap">${compared ? `${item.gap >= 0 ? '+' : ''}${esc(percent(item.gap))}` : 'RANK'}</span></button>`;
     }).join('') : `<p class="shortlist-empty">${market === 'place' && !race.paidPlaces ? 'Paid-place terms are unknown.' : 'No current Sportsbet quote. Refresh closer to the jump.'}</p>`}</div>`;
   }).join('');
   const pairGroups = mode === 'sportsbet' ? [3, 4].map(top => {
     const rows = pairShortlist(race, top);
-    return `<div class="shortlist-group pair-group"><div class="shortlist-group-title"><strong>Two horses both Top ${top}</strong><small>Same-race ranking estimate</small></div>${rows.length ? rows.map((pair, index) => `<button type="button" class="shortlist-pick pair-pick" data-pair-first="${esc(pair.first.id)}" data-pair-second="${esc(pair.second.id)}" data-pair-top="${top}"><span class="shortlist-rank">${index + 1}</span><span class="shortlist-main"><strong>${esc(pair.first.name)} + ${esc(pair.second.name)}</strong><small>Both Top ${top} · ${pair.basis === 'Sportsbet only' ? 'rough single-book' : 'comparison-book'} joint chance ${esc(percent(pair.chance))}${pair.basis === 'Sportsbet only' ? '' : ` · indicative fair price ${esc(odds(1 / pair.chance))}`}</small><em>Calculated together in a Plackett–Luce race ranking from ${pair.basis === 'Sportsbet only' ? 'one bookmaker’s win prices, with no independent value estimate' : 'other bookmakers’ margin-adjusted win prices'}. Outcomes are dependent. Enter the actual combined quote in the paper multi form.</em></span><span class="shortlist-gap">${esc(percent(pair.chance))}</span></button>`).join('') : `<p class="shortlist-empty">A current full-field win market is needed; large fields above 30 are not ranked. You can still record a manually priced paper multi.</p>`}</div>`;
+    return `<div class="shortlist-group pair-group"><div class="shortlist-group-title"><strong>Two horses both Top ${top}</strong><small>Same-race ranking estimate</small></div>${rows.length ? rows.map((pair, index) => `<button type="button" class="shortlist-pick pair-pick" data-pair-first="${esc(pair.first.id)}" data-pair-second="${esc(pair.second.id)}" data-pair-top="${top}"><span class="shortlist-rank">${index + 1}</span><span class="shortlist-main"><strong>${esc(pair.first.name)} + ${esc(pair.second.name)}</strong><small>Both Top ${top} · ${pair.basis === 'Sportsbet only' ? 'rough single-book' : 'comparison-book'} joint chance ${esc(percent(pair.chance))}${pair.basis === 'Sportsbet only' ? '' : ` · indicative fair price ${esc(odds(1 / pair.chance))}`}</small><em>Calculated together in a Plackett–Luce race ranking from ${pair.basis === 'Sportsbet only' ? 'one bookmaker’s win prices, with no independent value estimate' : 'other bookmakers’ margin-adjusted win prices'}. Outcomes are dependent.${pair.gatePoints ? ` Pair rank also has ${pair.gatePoints > 0 ? '+' : ''}${pair.gatePoints.toFixed(2)} recorded gate-map point; joint chance unchanged.` : ''} Enter the actual combined quote in the paper multi form.</em></span><span class="shortlist-gap">${esc(percent(pair.chance))}</span></button>`).join('') : `<p class="shortlist-empty">A current full-field win market is needed; large fields above 30 are not ranked. You can still record a manually priced paper multi.</p>`}</div>`;
   }).join('') : '';
-  return `<section class="analysis-board race-section" id="modelWatchlist">${intro}${coverageNote}<div class="shortlist-grid">${groups}</div>${pairGroups ? `<div class="pair-watchlists"><h4>Same Race Multi pair ideas</h4><p>These are likely finishing combinations from a ranking model, not positive-value bets. They do not calculate a bookmaker combined price.</p><div class="shortlist-grid">${pairGroups}</div></div>` : ''}<p class="shortlist-foot">The 5% paper flag was chosen for research; it has not been shown to be profitable. Single-book ranks have no independent value estimate. Form, gate, ground, weight and jockey need separate analysis. Quotes expire, and no selection is sent to a bookmaker.</p></section>`;
+  return `<section class="analysis-board race-section" id="modelWatchlist">${intro}${coverageNote}<div class="shortlist-grid">${groups}</div>${pairGroups ? `<div class="pair-watchlists"><h4>Same Race Multi pair ideas</h4><p>These are likely finishing combinations from a ranking model, not positive-value bets. They do not calculate a bookmaker combined price.</p><div class="shortlist-grid">${pairGroups}</div></div>` : ''}<p class="shortlist-foot">The 5% paper flag was chosen for research; it has not been shown to be profitable. Single-book ranks have no independent value estimate. Gate-map points are a small, unvalidated ranking tiebreak only when a full field and specific map reason are saved. Form, ground, weight and jockey need separate analysis. Quotes expire, and no selection is sent to a bookmaker.</p></section>`;
 }
 function bettingHtml(race) {
   const active = !raceStarted(race), activeRunners = race.runners.filter(r => !r.scratched);
@@ -539,7 +577,7 @@ function bettingHtml(race) {
 }
 function noBetHtml(race) {
   if (raceStarted(race)) return '';
-  return `<section class="race-section no-bet-panel"><h3>Log a decision to pass</h3><p>Record a no-bet before the jump as part of the forward test. It stays separate from paper bets and ROI.</p><form id="noBetForm" class="no-bet-form"><label>Research method<select name="strategy"><option value="market">Market gap</option><option value="prices">Price shopping</option><option value="ground">Ground &amp; form</option><option value="multi">Two horses Top 3/4</option></select></label><label>Why pass?<input name="reason" maxlength="500" required placeholder="e.g. No three-book consensus or price too short"></label><button class="button button-quiet" type="submit">Log no bet</button></form></section>`;
+  return `<section class="race-section no-bet-panel"><h3>Log a decision to pass</h3><p>Record a no-bet before the jump as part of the forward test. It stays separate from paper bets and ROI.</p><form id="noBetForm" class="no-bet-form"><label>Research method<select name="strategy"><option value="market">Market gap</option><option value="prices">Price shopping</option><option value="ground">Ground &amp; form</option><option value="gate">Gate &amp; early map</option><option value="multi">Two horses Top 3/4</option></select></label><label>Why pass?<input name="reason" maxlength="500" required placeholder="e.g. No three-book consensus or price too short"></label><button class="button button-quiet" type="submit">Log no bet</button></form></section>`;
 }
 function renderRaceDetail() {
   const race = raceById();
@@ -547,7 +585,8 @@ function renderRaceDetail() {
   const source = safeUrl(race.sourceUrl);
   const facts = [`R${race.raceNumber ?? '—'}`, race.distance ? `${race.distance}m` : '', race.ground || 'Ground not entered', race.paidPlaces ? `${race.paidPlaces} places paid` : 'Paid places unknown', race.raceClass || '', raceStarted(race) ? 'Started' : 'Upcoming'].filter(Boolean);
   const trackObservation = race.trackObservedAt && race.trackSourceUrl ? `<div class="track-observation"><strong>Ground snapshot:</strong> ${esc(race.ground || 'unknown')} at ${esc(dateTime(race.trackObservedAt))}. This is a morning report, not a live feed. <a href="${esc(race.trackSourceUrl)}" target="_blank" rel="noopener noreferrer">Check source ↗</a></div>` : '';
-  $('#raceDetail').innerHTML = `<div class="race-title-row"><div><p class="eyebrow">${esc(race.venue)} · ${esc(dateTime(race.startTime))}</p><h2>${esc(race.raceName)}</h2><p>${race.source === 'provider' ? `PuntersEdge card checked ${esc(dateTime(race.fetchedAt))}` : race.source === 'result-only' ? 'Result-only card' : race.source === 'public' ? `Public research snapshot · ${esc(dateTime(race.fetchedAt))}` : 'Your manually entered card'}</p></div><div class="race-actions"><button class="button button-quiet" type="button" data-edit-race="${esc(race.id)}">Edit race</button>${race.providerId ? `<button class="button button-quiet" type="button" data-load-meeting="${esc(race.id)}">Check meeting</button>` : ''}</div></div><div class="fact-list">${facts.map(f => `<span>${esc(f)}</span>`).join('')}</div>${trackObservation}${race.notes ? `<div class="race-note">${esc(race.notes)}</div>` : ''}${source ? `<a class="race-source" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Open card source ↗</a>` : ''}<section class="race-section"><h3>${race.fieldComplete ? 'Declared field' : race.source === 'public' ? 'Public research list' : 'Field'} <span class="subtle">${race.runners.length} runners</span></h3><p>Tap a horse for jockey, weight, form, ground history and price details. A blank runner style means it has not been established.</p><div class="runner-list">${race.runners.length ? race.runners.slice().sort((a, b) => Number(a.number || 0) - Number(b.number || 0)).map(r => renderRunnerCard(r, race)).join('') : empty('No runners entered', 'Use Add or edit a runner below to build this field.')}</div></section>${runnerEditorHtml()}${shortlistHtml(race)}${bettingHtml(race)}${noBetHtml(race)}<section class="race-section"><h3>Earlier races here</h3><p>Final results saved for the same meeting can help you compare how the track played. One result alone does not prove a bias.</p>${renderEarlierResults(race)}</section>`;
+  const gateLens = window.FormLineGate?.render(race) || '';
+  $('#raceDetail').innerHTML = `<div class="race-title-row"><div><p class="eyebrow">${esc(race.venue)} · ${esc(dateTime(race.startTime))}</p><h2>${esc(race.raceName)}</h2><p>${race.source === 'provider' ? `PuntersEdge card checked ${esc(dateTime(race.fetchedAt))}` : race.source === 'result-only' ? 'Result-only card' : race.source === 'public' ? `Public research snapshot · ${esc(dateTime(race.fetchedAt))}` : 'Your manually entered card'}</p></div><div class="race-actions"><button class="button button-quiet" type="button" data-edit-race="${esc(race.id)}">Edit race</button>${race.providerId ? `<button class="button button-quiet" type="button" data-load-meeting="${esc(race.id)}">Check meeting</button>` : ''}</div></div><div class="fact-list">${facts.map(f => `<span>${esc(f)}</span>`).join('')}</div>${trackObservation}${gateLens}${race.notes ? `<div class="race-note">${esc(race.notes)}</div>` : ''}${source ? `<a class="race-source" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Open card source ↗</a>` : ''}<section class="race-section"><h3>${race.fieldComplete ? 'Declared field' : race.source === 'public' ? 'Public research list' : 'Field'} <span class="subtle">${race.runners.length} runners</span></h3><p>Tap a horse for jockey, weight, form, ground history and price details. A blank runner style means it has not been established.</p><div class="runner-list">${race.runners.length ? race.runners.slice().sort((a, b) => Number(a.number || 0) - Number(b.number || 0)).map(r => renderRunnerCard(r, race)).join('') : empty('No runners entered', 'Use Add or edit a runner below to build this field.')}</div></section>${runnerEditorHtml()}${shortlistHtml(race)}${bettingHtml(race)}${noBetHtml(race)}<section class="race-section"><h3>Earlier races here</h3><p>Final results saved for the same meeting can help you compare how the track played. One result alone does not prove a bias.</p>${renderEarlierResults(race)}</section>`;
   mountAllHorsePanel(race);
   if (!raceStarted(race)) fillSingleQuote();
   if ($('#multiForm')) { $('#multiForm').elements.secondId.value = race.runners.filter(r => !r.scratched)[1]?.id || ''; updateMultiPreview(); }
@@ -653,6 +692,10 @@ const strategies = [
     ['INPUTS', 'Reported ground and recent runs', 'Use the race-day track rating, its observed time, and past runs with known finishing places.'],
     ['DISPLAY', '1st–2nd–3rd count', 'A record such as 4–3–0 means four wins, three seconds and no thirds in the stated sample. Check the sample size.'],
     ['TEST', 'Compare later races', 'Record the ground feature before each race, then see whether it improves predictions beyond the market baseline on untouched later races.'] ], caution: 'One good run on Soft ground is not a reliable Soft-ground probability. These notes do not adjust prices or rank horses automatically.' },
+  { id: 'gate', name: 'Gate & early map', status: 'Small ranking factor', lead: 'Use the drawn barrier to study the first part of the race with distance, course layout and likely early position.', steps: [
+    ['INPUTS', 'Draw, distance and pace', 'Check the original draw, scratchings, rail, course layout, likely early leaders and whether the runner can settle with cover. Flemington straight sprints have no first bend.'],
+    ['RULE', 'Record a specific route fit', 'On a complete field, save a gate-map assessment from −1 to +1 and explain the likely route. Its capped effect is at most 0.25 ranking point in short races, 0.15 to a mile and about 0.08 at longer trips.'],
+    ['TEST', 'Check the incremental signal', 'Freeze the map note before the jump and compare later rankings with a market-only baseline. Keep the market chance and actual odds unchanged.'] ], caution: 'Inside is not automatically best, and a wide draw is not automatically bad. Partial public cards show selected gate examples for context only. This tiebreak has not been validated as a profitable rule.' },
   { id: 'multi', name: 'Two horses Top 3/4', status: 'Paper test', lead: 'Record a same-race combination where two different horses must each finish in their chosen Top 3 or Top 4 market.', steps: [
     ['INPUTS', 'Two distinct runners', 'Each leg may be Top 3 or Top 4. Check field size and the bookmaker’s exact market terms.'],
     ['RULE', 'Use the actual combined quote', 'The outcomes share one race and are dependent. Do not multiply leg prices to invent the multi quote.'],
@@ -675,7 +718,8 @@ const lessons = {
   racing: { title: 'What “Good 4” means', lead: 'Australian turf ratings describe the surface. Good 4 sits in the Good 3–4 band; Soft 5–7 is rain affected, and Heavy 8–10 is wetter. A rating can change during a meeting.', rows: [
     ['Ground or going', 'The reported state of the surface. Note when the report was observed, and retain each past run’s exact rating.'],
     ['Form string and 1st–2nd–3rd record', 'A form string compresses prior finishes. A score such as 4–3–0 means four wins, three seconds and no thirds in the specified sample, not necessarily a career tally.'],
-    ['Barrier, jockey and weight', 'Barrier is the allocated gate; the jockey rides the horse; allocated weight is the load carried. None is automatic proof of an advantage.'],
+    ['Barrier, jockey and weight', 'Barrier is the allocated gate; the jockey rides the horse; allocated weight is the load carried. The drawn barrier can differ from the effective stall after scratchings. None is automatic proof of an advantage.'],
+    ['Gate and course layout', 'In a short race there may be less time to find cover before a bend, so inspect early speed and the starting point. Flemington straight sprints have no first bend and require a lane-and-pace reading instead.'],
     ['Runner type', 'Leader, on pace, midfield and backmarker describe likely settling positions. A horse can race differently when the pace or draw changes.'],
     ['Maiden and benchmark', 'A maiden is yet to win. Benchmark handicaps use a published rating in eligibility and weight conditions; check the official race terms.'],
     ['Interim and final results', 'Interim placings may change after protest or review. Only official final positions should settle a paper record.'] ] },
@@ -689,6 +733,7 @@ const lessons = {
 };
 const glossary = [
   ['Barrier', 'Race & form', 'The starting gate allocated to a runner; also called the draw.', 'draw gate'],
+  ['Barrier bias', 'Race & form', 'A measured tendency for draws or lanes to perform differently at a specific start or on a specific day. A single result cannot establish it.', 'gate bias draw bias'],
   ['Benchmark', 'Race & form', 'A handicap rating used to define eligibility and weights. BM64 is a benchmark 64 race.', 'bm rating'],
   ['Blinkers', 'Race & form', 'Headgear that limits a horse’s side vision. A gear change is context, not proof of improvement.', 'gear'],
   ['Class', 'Race & form', 'A race’s eligibility or quality band. Check the exact published conditions.', 'grade'],
@@ -696,11 +741,14 @@ const glossary = [
   ['Dam', 'Race & form', 'A horse’s mother.', 'mother pedigree'],
   ['Dead heat', 'Race & form', 'A tied finishing position declared by officials; settlement can differ from a normal finish.', 'tie'],
   ['Distance', 'Race & form', 'The race length, usually shown in metres in Australia.', 'trip metres'],
+  ['Drawn barrier', 'Race & form', 'The published draw number before any scratchings. It can differ from the stall a runner actually starts from.', 'original gate draw'],
+  ['Effective stall', 'Race & form', 'The physical starting-stall position after the field is adjusted for scratchings, where applicable.', 'effective gate starting stall'],
   ['Filly', 'Race & form', 'A female horse aged three or younger.', 'young female'],
   ['First up', 'Race & form', 'A horse’s first race after a spell or break.', '1st up fresh'],
   ['Form', 'Race & form', 'Past performances shown as a short string. A zero commonly means tenth or worse; x can mark a spell.', 'last starts'],
   ['Gelding', 'Race & form', 'A castrated male horse.', 'male horse'],
   ['Going', 'Race & form', 'The racing surface condition, such as Good, Soft or Heavy; also called ground.', 'ground track condition'],
+  ['Gate-map fit', 'Race & form', 'A reasoned assessment of whether a runner’s draw suits its likely early route; this workspace uses it only as a small optional ranking tiebreak.', 'barrier pace map'],
   ['Good 4', 'Race & form', 'A turf rating in the Good band. Track ratings can change during a meeting.', 'good track'],
   ['Group race', 'Race & form', 'A high-class black-type race. Group 1 is highest, then Groups 2 and 3.', 'g1 g2 g3'],
   ['Handicap', 'Race & form', 'A race where runners can carry different allocated weights intended to balance chances.', 'weight'],
@@ -774,7 +822,8 @@ function saveRace(form) {
     raceName: String(data.get('raceName') || '').trim().slice(0, 140), startTime: startTime.toISOString(),
     distance: finitePositive(data.get('distance')), paidPlaces: Number(data.get('paidPlaces')),
     ground: String(data.get('ground') || '').trim().slice(0, 45), raceClass: String(data.get('raceClass') || '').trim().slice(0, 100),
-    sourceUrl: safeUrl(data.get('sourceUrl')), notes: String(data.get('notes') || '').trim().slice(0, 2000)
+    sourceUrl: safeUrl(data.get('sourceUrl')), notes: String(data.get('notes') || '').trim().slice(0, 2000),
+    fieldComplete: data.get('fieldComplete') === 'on'
   });
   if (!race.venue || !race.raceName || !Number.isInteger(race.raceNumber) || race.raceNumber < 1 || race.raceNumber > 30) throw Error('Enter a venue, race name and valid race number.');
   if (!existing) store.races.push(race);
@@ -785,6 +834,7 @@ function editRace(race) {
   const form = $('#raceForm');
   form.elements.raceId.value = race.id;
   for (const [name, value] of Object.entries({ venue: race.venue, raceNumber: race.raceNumber, raceName: race.raceName, startTime: datetimeLocal(race.startTime), distance: race.distance, paidPlaces: race.paidPlaces || 3, ground: race.ground, raceClass: race.raceClass, sourceUrl: race.sourceUrl, notes: race.notes })) form.elements[name].value = value ?? '';
+  form.elements.fieldComplete.checked = Boolean(race.fieldComplete);
   $('#raceEditor').open = true; $('#raceEditor').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function saveRunner(form) {
@@ -795,7 +845,8 @@ function saveRunner(form) {
     number: Number(data.get('number')), name: String(data.get('name') || '').trim().slice(0, 100),
     barrier: finitePositive(data.get('barrier')), weight: finitePositive(data.get('weight')),
     jockey: String(data.get('jockey') || '').trim().slice(0, 100), trainer: String(data.get('trainer') || '').trim().slice(0, 100),
-    runStyle: String(data.get('runStyle') || ''), form: String(data.get('form') || '').trim().slice(0, 80),
+    runStyle: String(data.get('runStyle') || ''), gateMapFit: number(data.get('gateMapFit')),
+    gateMapEvidence: String(data.get('gateMapEvidence') || '').trim().slice(0, 500), form: String(data.get('form') || '').trim().slice(0, 80),
     historyScore: String(data.get('historyScore') || '').trim().slice(0, 35), historyNotes: String(data.get('historyNotes') || '').trim().slice(0, 2000),
     conditionNotes: String(data.get('conditionNotes') || '').trim().slice(0, 1500), scratched: data.get('scratched') === 'on',
     winOdds: validPrice(data.get('winOdds')), placeOdds: validPrice(data.get('placeOdds')),
@@ -812,7 +863,7 @@ function editRunner(runner) {
   renderRaceDetail();
   const form = $('#runnerForm');
   form.elements.runnerId.value = runner.id;
-  for (const [name, value] of Object.entries({ number: runner.number, name: runner.name, barrier: runner.barrier, weight: runner.weight, jockey: runner.jockey, trainer: runner.trainer, runStyle: runner.runStyle, form: runner.form, historyScore: runner.historyScore, quoteAt: datetimeLocal(runner.quoteAt), winOdds: runner.winOdds, placeOdds: runner.placeOdds, top3Odds: runner.top3Odds, top4Odds: runner.top4Odds, historyNotes: runner.historyNotes, conditionNotes: runner.conditionNotes })) form.elements[name].value = value ?? '';
+  for (const [name, value] of Object.entries({ number: runner.number, name: runner.name, barrier: runner.barrier, weight: runner.weight, jockey: runner.jockey, trainer: runner.trainer, runStyle: runner.runStyle, gateMapFit: runner.gateMapFit, gateMapEvidence: runner.gateMapEvidence, form: runner.form, historyScore: runner.historyScore, quoteAt: datetimeLocal(runner.quoteAt), winOdds: runner.winOdds, placeOdds: runner.placeOdds, top3Odds: runner.top3Odds, top4Odds: runner.top4Odds, historyNotes: runner.historyNotes, conditionNotes: runner.conditionNotes })) form.elements[name].value = value ?? '';
   form.elements.scratched.checked = Boolean(runner.scratched);
   $('#runnerEditor').open = true; $('#runnerEditor').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -853,7 +904,7 @@ function saveNoBet(form) {
   const race = raceById(); if (!race || raceStarted(race)) throw Error('No-bet decisions must be logged before the listed jump time.');
   const data = new FormData(form);
   const strategy = String(data.get('strategy') || ''), reason = String(data.get('reason') || '').trim().slice(0, 500);
-  if (!['market', 'prices', 'ground', 'multi'].includes(strategy) || !reason) throw Error('Choose a research method and explain why you passed.');
+  if (!['market', 'prices', 'ground', 'gate', 'multi'].includes(strategy) || !reason) throw Error('Choose a research method and explain why you passed.');
   store.noBets.push({ id: newId(), raceId: race.id, venue: race.venue, raceNumber: race.raceNumber, raceStart: race.startTime, createdAt: new Date().toISOString(), strategy, reason });
   saveStore(); renderAll(); notice('Pre-race no-bet decision logged separately from paper returns.');
 }
