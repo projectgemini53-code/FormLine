@@ -1,0 +1,66 @@
+{
+  "as_of": "2026-11-05",
+  "expires": "2026-11-12",
+  "source_note": "Dated public race-program summary prepared 5 November 2026 AEDT. Flemington cards are from Victoria Racing Club; Rosehill times and race names are from the published Racing and Sports card, with the meeting confirmed by Racing NSW. Other NSW and VIC entries are meeting dates only. Recheck final fields, scratchings and times at the linked source. Preview links point to third-party articles for further reading. FormLine does not reproduce their selections or analysis; original in-app analysis requires access to licensed race data.",
+  "meetings": [
+    {
+      "date": "2026-11-05", "venue": "Flemington", "state": "VIC", "feature": "Crown Oaks Day", "schedule_status": "Published nine-race VRC program; check late changes.",
+      "source_url": "https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/",
+      "races": [
+        {"number":1,"name":"TCL Trophy","start_time":"2026-11-05T13:00:00+11:00","distance_m":1700,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":2,"name":"Sharp EIT Subzero Handicap","start_time":"2026-11-05T13:35:00+11:00","distance_m":1400,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":3,"name":"Channel 9 Chester Manifold Stakes","start_time":"2026-11-05T14:10:00+11:00","distance_m":1600,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":4,"name":"Inglis Bracelet QC","start_time":"2026-11-05T14:45:00+11:00","distance_m":1600,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":5,"name":"Sigma Trophy","start_time":"2026-11-05T15:20:00+11:00","distance_m":1800,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":6,"name":"Melbourne Cup Carnival Country Final","start_time":"2026-11-05T15:55:00+11:00","distance_m":1600,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":7,"name":"Crown Red Roses Stakes","start_time":"2026-11-05T16:30:00+11:00","distance_m":1100,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":8,"name":"Crown Oaks","start_time":"2026-11-05T17:10:00+11:00","distance_m":2500,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"},
+        {"number":9,"name":"G.H.Mumm Century Stakes","start_time":"2026-11-05T17:50:00+11:00","distance_m":1000,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/crown-oaks-day/","preview_url":"https://racehub.com.au/race-preview/flemington-2026-11-05-preview"}
+      ]
+    },
+    {"date":"2026-11-05","venue":"Gosford","state":"NSW","feature":"Provincial meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-05","venue":"Sapphire Coast","state":"NSW","feature":"Country meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-06","venue":"Kempsey","state":"NSW","feature":"Kempsey Cup","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/race-time-information/","races":[]},
+    {"date":"2026-11-06","venue":"Albury","state":"NSW","feature":"Country meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {
+      "date": "2026-11-07", "venue": "Flemington", "state": "VIC", "feature": "TAB Champions Stakes Day", "schedule_status": "Published nine-race VRC program; check late changes.",
+      "source_url": "https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/",
+      "races": [
+        {"number":1,"name":"Inglis Banner","start_time":"2026-11-07T12:40:00+11:00","distance_m":1000,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"},
+        {"number":2,"name":"Ronald McDonald House VIC/TAS Mile","start_time":"2026-11-07T13:15:00+11:00","distance_m":1600,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"},
+        {"number":3,"name":"Queen Elizabeth Stakes","start_time":"2026-11-07T13:50:00+11:00","distance_m":2600,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"},
+        {"number":4,"name":"FISHER Stakes","start_time":"2026-11-07T14:30:00+11:00","distance_m":1200,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"},
+        {"number":5,"name":"TAB ONE POOL Matriarch Stakes","start_time":"2026-11-07T15:10:00+11:00","distance_m":2000,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"},
+        {"number":6,"name":"VRC Champions Sprint","start_time":"2026-11-07T15:50:00+11:00","distance_m":1200,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/","preview_url":"https://racehub.com.au/race-preview/early-look-2026-11-07"},
+        {"number":7,"name":"VRC Champions Mile","start_time":"2026-11-07T16:30:00+11:00","distance_m":1600,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/","preview_url":"https://racehub.com.au/race-preview/early-look-2026-11-07"},
+        {"number":8,"name":"TAB Champions Stakes","start_time":"2026-11-07T17:10:00+11:00","distance_m":2000,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/","preview_url":"https://racehub.com.au/race-preview/early-look-2026-11-07"},
+        {"number":9,"name":"HKJC World Pool Grand Handicap","start_time":"2026-11-07T17:50:00+11:00","distance_m":1100,"source_url":"https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"}
+      ]
+    },
+    {
+      "date": "2026-11-07", "venue": "Rosehill Gardens", "state": "NSW", "feature": "Five Diamonds and Golden Gift", "schedule_status": "Published ten-race card; check Racing NSW final fields and scratchings.",
+      "source_url": "https://www.racingnsw.com.au/race-time-information/",
+      "races": [
+        {"number":1,"name":"TAB Highway Handicap","start_time":"2026-11-07T12:25:00+11:00","distance_m":1200,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07"},
+        {"number":2,"name":"Midway Handicap","start_time":"2026-11-07T13:00:00+11:00","distance_m":1300,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07"},
+        {"number":3,"name":"Ranvet Handicap","start_time":"2026-11-07T13:35:00+11:00","distance_m":2400,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07"},
+        {"number":4,"name":"Vale Rob Burnet Handicap","start_time":"2026-11-07T14:10:00+11:00","distance_m":1800,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07"},
+        {"number":5,"name":"Singapore Pools Handicap","start_time":"2026-11-07T14:50:00+11:00","distance_m":1400,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07"},
+        {"number":6,"name":"Golden Gift","start_time":"2026-11-07T15:30:00+11:00","distance_m":1100,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07","preview_url":"https://racehub.com.au/race-preview/early-look-2026-11-07"},
+        {"number":7,"name":"Toyota Forklifts Hot Danish Stakes","start_time":"2026-11-07T16:10:00+11:00","distance_m":1400,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07","preview_url":"https://racehub.com.au/race-preview/early-look-2026-11-07"},
+        {"number":8,"name":"Five Diamonds","start_time":"2026-11-07T16:50:00+11:00","distance_m":1800,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07","preview_url":"https://racehub.com.au/race-preview/early-look-2026-11-07"},
+        {"number":9,"name":"Grant Burge Handicap","start_time":"2026-11-07T17:25:00+11:00","distance_m":1100,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07"},
+        {"number":10,"name":"Kia Ora Bloodlines To Headlines Handicap","start_time":"2026-11-07T18:05:00+11:00","distance_m":1200,"source_url":"https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07"}
+      ]
+    },
+    {"date":"2026-11-07","venue":"Hawkesbury","state":"NSW","feature":"Ladies Day Cup","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/race-time-information/","races":[]},
+    {"date":"2026-11-07","venue":"Goulburn","state":"NSW","feature":"Country meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-08","venue":"Armidale","state":"NSW","feature":"Country meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-08","venue":"Warren","state":"NSW","feature":"Warren Cotton Cup","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-09","venue":"Scone","state":"NSW","feature":"Country meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-09","venue":"Lismore","state":"NSW","feature":"Country meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-10","venue":"Gosford","state":"NSW","feature":"Provincial meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-10","venue":"Queanbeyan","state":"NSW","feature":"Country meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]},
+    {"date":"2026-11-11","venue":"Warwick Farm","state":"NSW","feature":"Metropolitan meeting","schedule_status":"Meeting date confirmed; race card omitted until independently verified.","source_url":"https://www.racingnsw.com.au/wp-content/uploads/2026-27-Race-Dates.pdf","races":[]}
+  ]
+}

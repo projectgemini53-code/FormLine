@@ -7,44 +7,45 @@
   <meta name="theme-color" content="#112826">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Source-linked Flemington and Randwick race research for 3 November 2026.">
-  <title>Race Day Research | FormLine</title>
+  <meta name="description" content="Upcoming Australian thoroughbred race cards and on-demand personal form research.">
+  <title>Upcoming Races | FormLine</title>
   <link rel="icon" type="image/png" href="logo-green.png">
   <link rel="apple-touch-icon" href="logo-green.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="lineup.css">
-  <script src="app.js" defer></script>
-  <script src="lineup.js" defer></script>
+  <link rel="stylesheet" href="today.css">
+  <script>if (['flemington','randwick'].includes(new URLSearchParams(location.search).get('meeting')?.toLowerCase())) location.replace(`cup-day-2026.html${location.search}${location.hash}`);</script>
+  <script src="race-predictions.js" defer></script>
+  <script src="today.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#race-panel">Skip to research</a>
+  <a class="skip-link" href="#upcoming">Skip to upcoming races</a>
   <header class="site-header">
     <div class="header-inner">
       <button type="button" id="menuToggle" class="menu-toggle" aria-controls="appSidebar" aria-expanded="false" aria-label="Open navigation">☰</button>
-      <div class="brand" aria-label="FormLine racing research"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></div>
-      <nav class="desktop-nav" aria-label="Sections"><a href="#research">Race research</a><a href="cup-analysis.html">Cup history &amp; forecast</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="#news">Inside track</a></nav>
-      <span class="header-tag" id="header-meeting">FLEMINGTON <span aria-hidden="true">/</span> 3 NOV 2026</span>
+      <a class="brand" href="/" aria-label="FormLine home"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></a>
+      <nav class="desktop-nav" aria-label="Sections"><a href="#upcoming">Upcoming races</a><a href="#analysis">Race analysis</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="cup-day-2026.html">Cup Day archive</a></nav>
+      <span class="header-tag" id="todayTag">AUSTRALIAN RACING</span>
     </div>
   </header>
   <aside id="appSidebar" class="mobile-sidebar" aria-label="Mobile navigation">
     <div class="brand"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></div>
-    <nav aria-label="Mobile sections"><a href="#research">Race research</a><a href="cup-analysis.html">Cup history &amp; forecast</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="#news">Inside track</a><a href="#install">Install app</a><a id="mobile-track-link" href="https://www.vrc.com.au/track-and-weather-conditions/" target="_blank" rel="noopener noreferrer">Official track report ↗</a></nav>
-    <p>Public research snapshot · no bets placed</p>
+    <nav aria-label="Mobile sections"><a href="#upcoming">Upcoming races</a><a href="#analysis">Race analysis</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="cup-day-2026.html">Cup Day archive</a><a href="cup-analysis.html">Cup history &amp; forecast</a></nav>
+    <p>Public schedule · private analysis on request · no bets placed</p>
   </aside>
   <button type="button" id="menuScrim" class="menu-scrim" aria-label="Close navigation" tabindex="-1"></button>
   <main class="shell">
-    <section class="hero" aria-labelledby="page-title"><div><p class="eyebrow" id="hero-meeting">MELBOURNE CUP DAY · 10-RACE RESEARCH</p><h1 id="page-title">Read the form.<br><span>Question the price.</span></h1><p class="hero-copy" id="hero-copy">Flemington, Tuesday 3 November. Explore each race, then examine the full 24-runner Cup dossier and the public reports that could change the picture.</p></div><div class="hero-badge"><span>10</span><small>RACES<br>RESEARCHED</small></div></section>
-    <section class="meeting-switch" aria-label="Choose a race meeting"><div><p class="eyebrow">TUESDAY 3 NOVEMBER 2026</p><h2>Choose your meeting</h2><p>Switch the race card, research notes and track snapshot.</p></div><div class="meeting-switch-buttons" role="group" aria-label="Race meeting"><button type="button" data-meeting="flemington" aria-pressed="true"><strong>Flemington</strong><small>Melbourne Cup Day · 10 races</small></button><button type="button" data-meeting="randwick" aria-pressed="false"><strong>Randwick</strong><small>Big Dance Day · 10 races</small></button></div></section>
-    <section class="status" aria-label="Research status"><div><span class="status-dot"></span><strong>Research snapshot</strong><span id="snapshot-date">Loading…</span></div><p>Public sources and editorial form notes. No live odds or automatic news updates.</p></section>
-    <section class="conditions" aria-labelledby="conditions-title"><div><p class="eyebrow">MORNING TRACK SNAPSHOT</p><h2 id="conditions-title">Check the going before the jump</h2><p id="track-snapshot">Loading track report…</p><small id="track-time"></small></div><div><a class="outline-link" id="track-source-link" href="https://www.racingqueensland.com.au/racing/profiles/track/thoroughbred/flem" target="_blank" rel="noopener noreferrer">Source for morning rating ↗</a> <a class="outline-link" id="track-latest-link" href="https://www.vrc.com.au/track-and-weather-conditions/" target="_blank" rel="noopener noreferrer">Current VRC track report ↗</a></div></section>
-    <section class="cup-feature" id="cup-feature" aria-labelledby="cup-feature-title"><div><p class="eyebrow">NEW · FIFTEEN MELBOURNE CUPS COMPARED</p><h2 id="cup-feature-title">From 60 past top-four finishers to a provisional 2026 order</h2><p>See the gate, published weight, jockey, Cup running position and lead-up form for every top-four runner from 2011 to 2025. Then inspect four 2026 selections, alternatives and pace scenarios.</p></div><a class="cup-feature-link" href="cup-analysis.html">Open Cup history &amp; forecast <span aria-hidden="true">↗</span></a></section>
-    <section class="calculator-feature" aria-labelledby="calculator-feature-title"><div><p class="eyebrow">PAPER BETTING TOOL</p><h2 id="calculator-feature-title">Calculate the return before you record a selection.</h2><p>Win, place, each-way and same-race multi calculations using the actual decimal quote you enter.</p></div><a class="cup-feature-link" href="research-tools.html#calculator">Open betting calculator <span aria-hidden="true">↗</span></a></section>
-    <section id="research" class="research" aria-labelledby="research-title"><div class="section-heading"><div><p class="eyebrow">THE RACE CARD</p><h2 id="research-title">Flemington races</h2></div><p id="research-summary">Watchlists are form cases. Confirm final odds before any betting decision.</p></div><div id="race-tabs" class="race-tabs" role="tablist" aria-label="Flemington race research"></div><div class="content-grid"><article id="race-panel" class="race-panel" role="tabpanel" tabindex="0" aria-live="polite"><div class="loading">Loading race research…</div></article><aside class="race-index" aria-labelledby="index-title"><p class="eyebrow">AT A GLANCE</p><h2 id="index-title">Flemington · 10 races</h2><div id="race-index-list"></div></aside></div></section>
-    <section id="news" class="news-section" aria-labelledby="news-title"><div class="section-heading"><div><p class="eyebrow">PUBLIC REPORTS · SOURCE-LINKED</p><h2 id="news-title">Inside track</h2></div><p>Critical rider, stable, field and ground details. Dated reports, not private tips.</p></div><div id="news-list" class="news-grid"><div class="loading">Loading source-linked reports…</div></div></section>
-    <section id="install" class="install-panel" aria-labelledby="install-title"><div><p class="eyebrow">PHONE APP MODE</p><h2 id="install-title">Launch without a browser tab</h2><p>On iPhone, open this site in Safari, tap Share, then <strong>Add to Home Screen</strong>. On Android, use the browser menu’s <strong>Install app</strong> or <strong>Add to Home screen</strong>. Open the saved FormLine icon for standalone mode.</p></div><button id="installBtn" type="button" hidden>Install FormLine</button></section>
-    <section class="method" aria-labelledby="method-title"><div><p class="eyebrow">HOW TO USE THIS</p><h2 id="method-title">Evidence first. Price second.</h2></div><div id="method-copy"></div></section>
+    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>Read the reasons.</span></h1><p class="hero-copy">Choose a day, meeting and race. The public card shows verified schedule facts. Private form analysis and two-horse placement ideas run on demand when a complete current field is available.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
+    <section id="upcoming" class="today-board" aria-labelledby="upcoming-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / RACE FINDER</p><h2 id="upcoming-title">Today and the week ahead</h2></div><p id="scheduleStatus" role="status">Loading the published schedule…</p></div>
+      <div id="dateTabs" class="date-tabs" role="group" aria-label="Meeting date"></div>
+      <div class="today-board-layout"><aside class="meeting-picker" aria-labelledby="meetingTitle"><div class="picker-head"><h3 id="meetingTitle">Meetings</h3><span id="meetingCount">—</span></div><div id="meetingList" class="meeting-list"><p class="loading">Checking upcoming meetings…</p></div><div class="source-note" id="scheduleSource"></div></aside><div class="race-picker"><div class="picker-head"><div><p class="eyebrow" id="selectedMeetingDate">CHOOSE A MEETING</p><h3 id="selectedMeetingTitle">Race card</h3></div><a id="meetingSourceLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Official card ↗</a></div><div id="raceList" class="today-race-list"><p class="loading">Select a meeting to see its races.</p></div></div></div>
+    </section>
+    <section id="analysis" class="today-analysis" aria-labelledby="analysis-title"><div class="section-heading"><div><p class="eyebrow">02 / ON-DEMAND RESEARCH</p><h2 id="analysis-title">Race analysis</h2></div><p>A race is analysed only when you select it.</p></div><div id="analysisPanel" class="analysis-panel" aria-live="polite"><div class="empty-state"><strong>Choose a race above</strong><p>Selections and placement ideas will appear here when a complete, current field is available.</p></div></div></section>
+    <section class="private-feed" aria-labelledby="private-title"><div><p class="eyebrow">PERSONAL DATA FEED</p><h2 id="private-title">Load the current field</h2><p>Enter your FormLine access code to use the protected PuntersEdge feed. A card is requested only when you choose a date or race. The code stays in this browser session, and provider data is shown only to you.</p><p class="feed-limit">The feed covers today and the next three days; later acceptances may not exist yet. If the gateway is not configured, the public schedule and archived research remain available.</p></div><form id="feedForm" class="feed-form"><label for="feedCode">FormLine access code</label><input id="feedCode" type="password" autocomplete="off" placeholder="Private code"><button type="submit">Load full card for selected day</button><small id="feedStatus" role="status">No private request made</small></form></section>
+    <section class="calculator-feature"><div><p class="eyebrow">PAPER BETTING TOOL</p><h2>Check the actual bookmaker quote.</h2><p>The same-race multi ideas show proposed legs, not a combined price or a proven betting edge.</p></div><a class="cup-feature-link" href="research-tools.html#calculator">Open betting calculator ↗</a></section>
+    <section class="archive-link"><div><p class="eyebrow">PAST RESEARCH</p><h2>3 November Cup Day archive</h2><p>Review the Melbourne Cup and Randwick race notes, historical comparisons, and saved runner tags.</p></div><div><a class="outline-link" href="cup-day-2026.html">Open race archive ↗</a><a class="outline-link" href="cup-analysis.html">Cup history ↗</a></div></section>
   </main>
-  <footer class="site-footer"><div class="footer-inner"><strong>FORMLINE</strong><span id="footer-meeting">Flemington · 3 November 2026</span><span>Public research only · No bets placed</span></div></footer>
+  <footer class="site-footer"><div class="footer-inner"><strong>FORMLINE</strong><span>Australian thoroughbred race research</span><span>Research only · No bets placed</span></div></footer>
 </body>
 </html>
