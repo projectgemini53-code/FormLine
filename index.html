@@ -7,16 +7,15 @@
   <meta name="theme-color" content="#112826">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Upcoming Australian thoroughbred race cards and on-demand personal form research.">
+  <meta name="description" content="Upcoming Australian thoroughbred schedules and public Queensland runner lists.">
   <title>Upcoming Races | FormLine</title>
   <link rel="icon" type="image/png" href="logo-green.png">
   <link rel="apple-touch-icon" href="logo-green.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="today.css">
+  <link rel="stylesheet" href="today.css?v=12">
   <script>if (['flemington','randwick'].includes(new URLSearchParams(location.search).get('meeting')?.toLowerCase())) location.replace(`cup-day-2026.html${location.search}${location.hash}`);</script>
-  <script src="race-predictions.js" defer></script>
-  <script src="today.js" defer></script>
+  <script src="today.js?v=12" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#upcoming">Skip to upcoming races</a>
@@ -31,19 +30,19 @@
   <aside id="appSidebar" class="mobile-sidebar" aria-label="Mobile navigation">
     <div class="brand"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></div>
     <nav aria-label="Mobile sections"><a href="#upcoming">Upcoming races</a><a href="#analysis">Race analysis</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="cup-day-2026.html">Cup Day archive</a><a href="cup-analysis.html">Cup history &amp; forecast</a></nav>
-    <p>Public schedule · private analysis on request · no bets placed</p>
+    <p>Public Queensland fields · dated NSW/VIC schedule · no bets placed</p>
   </aside>
   <button type="button" id="menuScrim" class="menu-scrim" aria-label="Close navigation" tabindex="-1"></button>
   <main class="shell">
-    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>Read the reasons.</span></h1><p class="hero-copy">Choose a day, meeting and race. The public card shows verified schedule facts. Private form analysis and two-horse placement ideas run on demand when a complete current field is available.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
+    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>See the field.</span></h1><p class="hero-copy">Choose a day, meeting and race. Queensland programs and runner lists load from public open data. NSW and Victorian cards show dated schedule details and links to official sources.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
     <section id="upcoming" class="today-board" aria-labelledby="upcoming-title">
       <div class="section-heading"><div><p class="eyebrow">01 / RACE FINDER</p><h2 id="upcoming-title">Today and the week ahead</h2></div><p id="scheduleStatus" role="status">Loading the published schedule…</p></div>
       <div id="dateTabs" class="date-tabs" role="group" aria-label="Meeting date"></div>
       <div class="today-board-layout"><aside class="meeting-picker" aria-labelledby="meetingTitle"><div class="picker-head"><h3 id="meetingTitle">Meetings</h3><span id="meetingCount">—</span></div><div id="meetingList" class="meeting-list"><p class="loading">Checking upcoming meetings…</p></div><div class="source-note" id="scheduleSource"></div></aside><div class="race-picker"><div class="picker-head"><div><p class="eyebrow" id="selectedMeetingDate">CHOOSE A MEETING</p><h3 id="selectedMeetingTitle">Race card</h3></div><a id="meetingSourceLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Official card ↗</a></div><div id="raceList" class="today-race-list"><p class="loading">Select a meeting to see its races.</p></div></div></div>
     </section>
-    <section id="analysis" class="today-analysis" aria-labelledby="analysis-title"><div class="section-heading"><div><p class="eyebrow">02 / ON-DEMAND RESEARCH</p><h2 id="analysis-title">Race analysis</h2></div><p>A race is analysed only when you select it.</p></div><div id="analysisPanel" class="analysis-panel" aria-live="polite"><div class="empty-state"><strong>Choose a race above</strong><p>Selections and placement ideas will appear here when a complete, current field is available.</p></div></div></section>
-    <section class="private-feed" aria-labelledby="private-title"><div><p class="eyebrow">PERSONAL DATA FEED</p><h2 id="private-title">Load the current field</h2><p>Enter your FormLine access code to use the protected PuntersEdge feed. A card is requested only when you choose a date or race. The code stays in this browser session, and provider data is shown only to you.</p><p class="feed-limit">The feed covers today and the next three days; later acceptances may not exist yet. If the gateway is not configured, the public schedule and archived research remain available.</p></div><form id="feedForm" class="feed-form"><label for="feedCode">FormLine access code</label><input id="feedCode" type="password" autocomplete="off" placeholder="Private code"><button type="submit">Load full card for selected day</button><small id="feedStatus" role="status">No private request made</small></form></section>
-    <section class="calculator-feature"><div><p class="eyebrow">PAPER BETTING TOOL</p><h2>Check the actual bookmaker quote.</h2><p>The same-race multi ideas show proposed legs, not a combined price or a proven betting edge.</p></div><a class="cup-feature-link" href="research-tools.html#calculator">Open betting calculator ↗</a></section>
+    <section id="analysis" class="today-analysis" aria-labelledby="analysis-title"><div class="section-heading"><div><p class="eyebrow">02 / PUBLIC FIELD</p><h2 id="analysis-title">Race details</h2></div><p>Select a race to see available details.</p></div><div id="analysisPanel" class="analysis-panel" aria-live="polite"><div class="empty-state"><strong>Choose a race above</strong><p>Current Queensland runners will appear here where the public feed has published a field.</p></div></div></section>
+    <section class="coverage-panel" aria-labelledby="coverage-title"><div><p class="eyebrow">DATA COVERAGE</p><h2 id="coverage-title">Current fields without a code</h2><p>Racing Queensland open data supplies meeting programs and listed horses, weights, jockeys and trainers. It does not supply barriers, recent form, live odds or final placings. NSW and Victorian entries on this page are dated schedules. We will choose a statistical model after securing the history and market data needed to test it.</p></div><a class="outline-link" href="https://www.racingqueensland.com.au/about/reports-and-data/open-data" target="_blank" rel="noopener noreferrer">About the public feed ↗</a></section>
+    <section class="calculator-feature"><div><p class="eyebrow">PAPER BETTING TOOL</p><h2>Check the actual bookmaker quote.</h2><p>Use the calculator to record a hypothetical return from a quote you enter. It does not place bets or estimate fair odds.</p></div><a class="cup-feature-link" href="research-tools.html#calculator">Open betting calculator ↗</a></section>
     <section class="archive-link"><div><p class="eyebrow">PAST RESEARCH</p><h2>3 November Cup Day archive</h2><p>Review the Melbourne Cup and Randwick race notes, historical comparisons, and saved runner tags.</p></div><div><a class="outline-link" href="cup-day-2026.html">Open race archive ↗</a><a class="outline-link" href="cup-analysis.html">Cup history ↗</a></div></section>
   </main>
   <footer class="site-footer"><div class="footer-inner"><strong>FORMLINE</strong><span>Australian thoroughbred race research</span><span>Research only · No bets placed</span></div></footer>

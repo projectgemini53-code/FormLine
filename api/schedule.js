@@ -19,6 +19,16 @@ function plusDays(date, days) {
   return value.toISOString().slice(0, 10);
 }
 
+function validMeetingSelection(query, today) {
+  const meetingId = String(query?.meeting_id || '');
+  const date = String(query?.date || '');
+  const validDate = /^20\d{2}-\d{2}-\d{2}$/.test(date) &&
+    !Number.isNaN(Date.parse(`${date}T00:00:00Z`)) &&
+    new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) === date;
+  if (!/^\d{1,9}$/.test(meetingId) || !validDate || date < today || date > plusDays(today, 7)) return null;
+  return { meetingId, date };
+}
+
 function decodeXml(value = '') {
   return String(value).replace(/&#(x[0-9a-f]+|\d+);|&(amp|lt|gt|quot|apos);/gi, (match, numeric, named) => {
     if (numeric) {
@@ -39,6 +49,11 @@ function records(xml, name) {
   return [...xml.matchAll(pattern)].map(match => ({
     id: match[1].match(/\bId="(\d+)"/i)?.[1] || '', body: match[2]
   })).filter(row => row.id);
+}
+
+function firstRecord(xml, name) {
+  const match = xml.match(new RegExp(`<${name}\\b([^>]*)>([\\s\\S]*?)<\\/${name}>`, 'i'));
+  return match ? { id: match[1].match(/\bId="(\d+)"/i)?.[1] || '', body: match[2] } : null;
 }
 
 function raceStart(date, time) {
@@ -89,11 +104,11 @@ module.exports = async function handler(request, response) {
       return response.status(200).json({ as_of: new Date().toISOString(), expires: end, source_note, meetings });
     }
     if (action === 'card') {
-      const meetingId = String(request.query?.meeting_id || '');
-      const date = String(request.query?.date || '');
-      if (!/^\d{1,9}$/.test(meetingId) || !/^20\d{2}-\d{2}-\d{2}$/.test(date) || date < today || date > plusDays(today, 7)) {
+      const selection = validMeetingSelection(request.query, today);
+      if (!selection) {
         return response.status(400).json({ error: 'Choose a Queensland meeting in the next seven days.' });
       }
+      const { meetingId, date } = selection;
       const [details, card] = await Promise.all([
         readService('GetMeetingDetails', { MeetingId: meetingId }),
         readService('GetRacesForMeeting', { MeetingId: meetingId })
@@ -121,6 +136,52 @@ module.exports = async function handler(request, response) {
         weather: field(details.xml, 'Weather'),
         schedule_status: raceCount && races.length < raceCount ? `${races.length} of ${raceCount} races currently listed; check again after fields publish.` : 'Current Queensland open-data race program; check for late changes.',
         source_note, races
+      });
+    }
+    if (action === 'runners') {
+      response.setHeader('Cache-Control', 'public, s-maxage=120, stale-while-revalidate=300');
+      const selection = validMeetingSelection(request.query, today);
+      const raceId = String(request.query?.race_id || '');
+      if (!selection || !/^\d{1,9}$/.test(raceId)) {
+        return response.status(400).json({ error: 'Choose a Queensland race in the next seven days.' });
+      }
+      const { meetingId, date } = selection;
+      const [details, card] = await Promise.all([
+        readService('GetMeetingDetails', { MeetingId: meetingId }),
+        readService('GetRacesForMeeting', { MeetingId: meetingId })
+      ]);
+      const meeting = records(details.xml, 'Meeting')[0];
+      if (meeting?.id !== meetingId || field(meeting.body, 'MeetingDate') !== date ||
+          field(meeting.body, 'IsBarrierTrial').toLowerCase() === 'true') {
+        return response.status(400).json({ error: 'The selected date does not match this Queensland thoroughbred meeting.' });
+      }
+      const race = records(card.xml, 'Race').find(row => row.id === raceId && Number(field(row.body, 'RaceNumber')) > 0);
+      if (!race) return response.status(404).json({ error: 'This race is not in the selected Queensland meeting.' });
+      const { xml, url } = await readService('GetHorsesForRace', { RaceId: raceId });
+      const runners = records(xml, 'Horse').map(({ id, body }) => {
+        const jockey = firstRecord(body, 'Jockey');
+        const trainer = firstRecord(body, 'Trainer');
+        const weight = Number(field(body, 'Weight'));
+        return {
+          horse_id: id,
+          number: null,
+          name: field(body, 'HorseName'),
+          weight_kg: Number.isFinite(weight) && weight > 0 ? weight : null,
+          jockey: jockey ? field(jockey.body, 'FullName') : '',
+          jockey_id: jockey?.id || '',
+          trainer: trainer ? field(trainer.body, 'FullName') : '',
+          trainer_id: trainer?.id || ''
+        };
+      }).filter(runner => runner.name);
+      return response.status(200).json({
+        as_of: new Date().toISOString(), date, state: 'QLD', meeting_id: meetingId,
+        venue: field(meeting.body, 'TrackName'), race_id: raceId,
+        race_number: Number(field(race.body, 'RaceNumber')) || null,
+        race_name: field(race.body, 'RaceName'),
+        track_rating: field(race.body, 'TrackRating'),
+        source_url: url,
+        source_note: 'Racing Queensland open-data horse list. Names, riding weights, jockeys and trainers only; barriers, form, scratchings, odds and results are not supplied by this endpoint. Confirm the final field before using it.',
+        runners
       });
     }
     return response.status(400).json({ error: 'Unknown schedule action.' });
