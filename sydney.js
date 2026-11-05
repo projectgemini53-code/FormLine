@@ -42,7 +42,7 @@
   }
 
   function renderMeetings() {
-    $('#peMeetingTabs').innerHTML = state.meetings.length ? state.meetings.map((meeting, index) => `<button type="button" data-pe-meeting="${index}" aria-pressed="${index === state.meetingIndex}"><strong>${esc(meeting.venue)}</strong><small>${meeting.races?.length || 0} race${meeting.races?.length === 1 ? '' : 's'} · ${esc(meeting.track?.track_condition || 'Ground TBC')}</small></button>`).join('') : '<p class="pe-empty">No Sydney metropolitan meeting is in this acceptance card. Try another date.</p>';
+    $('#peMeetingTabs').innerHTML = state.meetings.length ? state.meetings.map((meeting, index) => `<button type="button" data-pe-meeting="${index}" aria-pressed="${index === state.meetingIndex}"><strong>${esc(meeting.venue)}</strong><small>${meeting.races?.length || 0} race${meeting.races?.length === 1 ? '' : 's'} · ${esc(meeting.track?.track_condition || 'Ground TBC')}</small></button>`).join('') : `<p class="pe-empty">${state.date ? 'No Sydney metropolitan meeting is in this acceptance card. Try another date.' : 'Load a card to see available Sydney meetings.'}</p>`;
   }
   function renderRaces() {
     const meeting = selectedMeeting();
