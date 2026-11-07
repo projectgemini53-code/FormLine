@@ -55,6 +55,53 @@
 .editorial-news a:focus-visible,.editorial-sources a:focus-visible{outline:3px solid #75ac4f;outline-offset:2px}
 @media(max-width:900px){.editorial-picks{grid-template-columns:1fr}}
 @media(max-width:700px){.editorial-intro{display:block}.editorial-time{display:block;margin-top:10px;white-space:normal}.editorial-picks{padding:12px}.editorial-research>.analysis-state{margin:12px 12px 0}.editorial-conditions{padding:12px 12px 0}.editorial-news,.editorial-sources{margin:0 12px}.editorial-pick{padding:15px}}
+
+.all-horses{margin:19px 0;padding:18px;border:1px solid #c8dfce;border-radius:10px;background:#fbfdf9}
+.all-horses-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.all-horses-head .eyebrow{margin:0 0 4px;color:#3c8057}
+.all-horses-head h4{margin:0;font-size:19px;letter-spacing:-.035em}
+.all-horses-head h4 span{font-size:11px;font-weight:600;letter-spacing:0;color:#62786a}
+.all-horses-head button{flex:none;border:1px solid #2a7852;background:#277956;color:#fff;border-radius:7px;padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer}
+.all-horses-head button span{font-size:15px;margin-left:4px}
+.all-horses-context{margin:9px 0 0;color:#607668;font-size:11px;line-height:1.5}
+#allHorsesBody[hidden]{display:none}
+.all-horses-toolbar{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0 8px;padding:12px;border-radius:8px;background:#eef5ec}
+.all-horses-toolbar label{display:grid;gap:5px;min-width:145px;color:#4e6d58;font-size:10px;font-weight:800}
+.all-horses-toolbar label:first-child{flex:1;min-width:180px}
+.all-horses-toolbar input,.all-horses-toolbar select{width:100%;min-height:36px;border:1px solid #bfd4c3;border-radius:6px;background:#fff;padding:7px 9px;color:var(--ink);font:inherit;font-size:12px;font-weight:500}
+.all-horses-count{margin:5px 0 10px;color:#617567;font-size:11px}
+.all-horses-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.all-horse-card{display:flex;gap:10px;min-width:0;padding:13px;background:#fff;border:1px solid #dce9db;border-radius:8px}
+.all-horse-card.scratched{background:#f4f5f2;opacity:.72}
+.all-horse-number{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:7px;background:#e5f0e5;color:#2b784f;font-size:11px;font-weight:900}
+.all-horse-detail{flex:1;min-width:0}
+.all-horse-name{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.all-horse-name h5{margin:0;font-size:12px;line-height:1.4}
+.all-horse-detail p{margin:3px 0 0;color:#667b6b;font-size:10px;line-height:1.45}
+.all-horse-detail small{display:block;margin-top:7px;color:#536d5a;font-size:10px;line-height:1.4}
+.all-horse-detail small strong{letter-spacing:.04em;color:#285c3e}
+.all-horse-detail a{display:inline-block;margin-top:6px;color:#23734b;font-size:10px;font-weight:800}
+.all-horse-facts{display:grid;align-content:start;gap:4px;flex:none;text-align:right;color:#56715d;font-size:10px;white-space:nowrap}
+.all-horse-facts strong{color:#2b754d}
+.horse-scratched,.horse-emergency{padding:3px 5px;border-radius:4px;background:#fae5db;color:#94513b;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+.horse-emergency{background:#fff1cf;color:#806121}
+.horse-promoted{padding:3px 5px;border-radius:4px;background:#e5f1e5;color:#276e47;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+.all-horses-empty{grid-column:1/-1;padding:20px;text-align:center;color:#647968;font-size:12px}
+.all-horses-source{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:13px;padding-top:12px;border-top:1px solid #e2ede1;color:#687b6c;font-size:10px;line-height:1.5}
+.all-horses-source a{color:#23734b;font-weight:800}
+.race-result{margin:14px 18px;padding:16px;border:1px solid #9bc1a3;border-radius:8px;background:#fff}
+.race-result-head{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.race-result-head .eyebrow{margin:0 0 3px;color:#2c794e}
+.race-result h4{margin:0;font-size:16px;letter-spacing:-.02em}
+.race-result-head a{color:#23734b;font-size:10px;font-weight:800}
+.race-result ol{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;list-style:none;margin:13px 0 8px;padding:0}
+.race-result li{display:flex;align-items:center;gap:7px;padding:8px;background:#edf5ea;border-radius:6px;min-width:0;font-size:11px}
+.race-result li span{display:grid;place-items:center;flex:none;width:23px;height:23px;background:#d5e8d4;border-radius:5px;color:#2c754d;font-weight:900}
+.race-result li strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.race-result>p{margin:0;color:#667b6a;font-size:10px}
+.all-horses button:focus-visible,.all-horses input:focus-visible,.all-horses select:focus-visible,.all-horse-detail a:focus-visible,.race-result a:focus-visible{outline:3px solid #75ac4f;outline-offset:2px}
+@media(max-width:850px){.all-horses-list{grid-template-columns:1fr}.race-result ol{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.all-horses{padding:13px}.all-horses-head{align-items:start}.all-horses-head h4 span{display:block;margin-top:2px}.all-horses-toolbar{display:grid;grid-template-columns:1fr 1fr}.all-horses-toolbar label:first-child{grid-column:1/-1}.all-horse-card{padding:11px}.race-result{margin:13px 12px}.race-result-head{display:block}.race-result-head a{display:inline-block;margin-top:7px}}
 .editorial-intro .editorial-method{margin-top:8px;font-size:10px;color:#52735a}
 .editorial-weather{margin:13px 18px 0;border:1px solid #a9c7b3;border-left:4px solid #23835d;border-radius:7px;background:#f0f8f0;padding:12px 14px}
 .editorial-weather-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}

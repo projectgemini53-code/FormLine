@@ -1,8 +1,7 @@
 'use strict';
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const state = {date:'',meeting:'',race:'',publicMeetings:[],savedMeetings:[],editorial:null,qldCards:new Set(),qldDetails:new Map(),runnerCache:new Map(),loadingRace:'',raceError:'',requestId:0};
-try { sessionStorage.removeItem('formline_access_code_session'); } catch { /* Storage may be disabled. */ }
+const state = {date:'',meeting:'',race:'',publicMeetings:[],savedMeetings:[],editorial:null,publicFields:null,fieldOpen:false,fieldQuery:'',fieldSort:'number',fieldGateRange:'all',qldCards:new Set(),qldDetails:new Map(),runnerCache:new Map(),loadingRace:'',raceError:'',requestId:0};
 function dateKey(value){const parts=new Intl.DateTimeFormat('en-AU',{timeZone:'Australia/Sydney',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(value);const get=type=>parts.find(part=>part.type===type)?.value;return `${get('year')}-${get('month')}-${get('day')}`;}
 function dayAt(offset){return dateKey(new Date(Date.now()+offset*86400000));}
 function dateLabel(key,options={}){return new Intl.DateTimeFormat('en-AU',{timeZone:'Australia/Sydney',weekday:options.weekday||'short',day:'numeric',month:'short'}).format(new Date(`${key}T12:00:00+11:00`));}
@@ -44,6 +43,68 @@ function renderBoard(){renderDates();renderMeetings();renderRaces();}
 function infoPanel(race,meeting,body){const started=race.start_time&&Date.parse(race.start_time)<=Date.now(),source=meeting.meeting_id?'https://www.racingqueensland.com.au/racing/full-calendar':race.source_url||meeting.source_url,details=state.qldDetails.get(meetingId(meeting));return `<div class="analysis-top"><div><p class="eyebrow">${esc(meeting.venue)} · R${race.number} · ${esc(dateLabel(meeting.date))}</p><h3>${esc(race.name||`Race ${race.number}`)}</h3><p>${esc(timeLabel(race.start_time))} AEDT · ${started?'Scheduled jump has passed':'Upcoming'}</p></div>${officialLink(source)}</div><div class="analysis-facts">${race.distance_m?`<span>${esc(race.distance_m)}m</span>`:''}${race.race_class?`<span>${esc(race.race_class)}</span>`:''}${race.track_rating||details?.track_rating?`<span>Track ${esc(race.track_rating||details.track_rating)}</span>`:''}${details?.rail_position?`<span>Rail ${esc(details.rail_position)}</span>`:''}<span>${esc(meeting.state||'Saved')}</span></div>${body}`;}
 function researchLens(race){const distance=Number(race.distance_m);if(Number.isFinite(distance)&&distance<=1200)return 'For a shorter race, inspect early pace, the actual barrier draw, rail position and whether a runner can find cover.';if(Number.isFinite(distance)&&distance>=2000)return 'For a staying race, inspect recent runs over a similar distance, carried weight, fitness and track suitability.';return 'Compare recent runs near this distance and class, likely early position and the current track rating.';}
 function fieldHtml(runners,asOf,label){if(!Array.isArray(runners)||!runners.length)return '<p class="analysis-state warning">No horses are currently listed for this race. Acceptances may still be pending.</p>';return `<div class="field-heading"><div><p class="eyebrow">${esc(label)}</p><h4>${runners.length} horses listed</h4></div>${asOf?`<span>Checked ${esc(timeLabel(asOf))} AEDT</span>`:''}</div><div class="public-runner-list">${runners.map(runner=>`<article class="public-runner"><div class="runner-number">${runner.number?`#${esc(runner.number)}`:'—'}</div><div><h5>${esc(runner.name||runner.runner_name)}</h5><p>${runner.jockey?`Jockey: ${esc(runner.jockey)}`:'Jockey TBC'}${runner.trainer?` · Trainer: ${esc(runner.trainer)}`:''}</p></div><strong>${runner.weight_kg||runner.weight?`${esc(runner.weight_kg||runner.weight)}kg`:'Weight TBC'}</strong></article>`).join('')}</div>`;}
+function publicFieldMeeting(meeting){
+  if(state.publicFields?.date!==meeting.date)return null;
+  const venue=String(meeting.venue||'').trim().toLowerCase().replace(/ gardens$/,'');
+  return (state.publicFields.meetings||[]).find(row=>String(row.venue||'').trim().toLowerCase().replace(/ gardens$/,'')===venue)||null;
+}
+function publicFieldFor(race,meeting){
+  return publicFieldMeeting(meeting)?.races?.find(row=>Number(row.number)===Number(race.number))||null;
+}
+function publicFieldRunners(runners){
+  const query=state.fieldQuery.trim().toLowerCase();
+  const filtered=runners.filter(runner=>{
+    const barrier=Number(runner.barrier);
+    const gateMatches=state.fieldGateRange==='all'||(state.fieldGateRange==='low'&&barrier>=1&&barrier<=4)||(state.fieldGateRange==='mid'&&barrier>=5&&barrier<=8)||(state.fieldGateRange==='wide'&&barrier>=9)||(state.fieldGateRange==='unknown'&&(!Number.isFinite(barrier)||barrier<=0));
+    const text=[runner.number,runner.name,runner.jockey,runner.trainer,runner.last10].join(' ').toLowerCase();
+    return gateMatches&&(!query||text.includes(query));
+  });
+  filtered.sort((a,b)=>{
+    const gateA=Number(a.barrier),gateB=Number(b.barrier);
+    if(state.fieldSort==='barrier-asc'||state.fieldSort==='barrier-desc'){
+      const knownA=Number.isFinite(gateA)&&gateA>0,knownB=Number.isFinite(gateB)&&gateB>0;
+      if(knownA!==knownB)return knownA?-1:1;
+      if(knownA&&gateA!==gateB)return state.fieldSort==='barrier-asc'?gateA-gateB:gateB-gateA;
+    }
+    return Number(a.number||999)-Number(b.number||999);
+  });
+  return filtered;
+}
+function publicFieldListHtml(field){
+  const all=Array.isArray(field.runners)?field.runners:[];
+  const runners=publicFieldRunners(all);
+  const cards=runners.map(runner=>{
+    const scratched=runner.scratched===true;
+    const barrier=Number(runner.barrier);
+    const barrierText=Number.isFinite(barrier)&&barrier>0?`Gate ${barrier}`:'Gate TBC';
+    const weight=Number(runner.weight_kg);
+    const weightText=Number.isFinite(weight)&&weight>0?`${weight} kg`:'Weight TBC';
+    const formUrl=safeUrl(runner.horse_form_url);
+    return `<article class="all-horse-card${scratched?' scratched':''}"><span class="all-horse-number">${runner.number?`#${esc(runner.number)}`:'—'}</span><div class="all-horse-detail"><div class="all-horse-name"><h5>${esc(runner.name||'Unnamed runner')}</h5>${scratched?'<span class="horse-scratched">Scratched</span>':runner.promoted_emergency===true?'<span class="horse-promoted">Promoted emergency</span>':runner.emergency===true?'<span class="horse-emergency">Emergency</span>':''}</div><p>${esc(runner.jockey||'Jockey TBC')} <span aria-hidden="true">·</span> ${esc(runner.trainer||'Trainer TBC')}</p>${runner.last10?`<small>Published form figures: <strong>${esc(runner.last10)}</strong></small>`:''}${formUrl?`<a href="${esc(formUrl)}" target="_blank" rel="noopener noreferrer">Official full form ↗</a>`:''}</div><div class="all-horse-facts"><strong>${esc(barrierText)}</strong><span>${esc(weightText)}</span></div></article>`;
+  }).join('');
+  return {count:runners.length,html:cards||'<p class="all-horses-empty">No horses match those filters.</p>'};
+}
+function independentFieldHtml(race,meeting){
+  const field=publicFieldFor(race,meeting);
+  if(!field||!Array.isArray(field.runners)||!field.runners.length)return '';
+  const active=field.runners.filter(runner=>runner.scratched!==true).length;
+  const source=safeUrl(field.source_url||meeting.source_url);
+  const snapshot=state.publicFields?.retrieved_at||state.publicFields?.source_as_of||'';
+  const fieldMeeting=publicFieldMeeting(meeting);
+  const scratchingNote=fieldMeeting?.scratching_status||'';
+  const scratchingsUrl=safeUrl(fieldMeeting?.scratchings_url);
+  const list=publicFieldListHtml(field);
+  return `<section class="all-horses" aria-label="Public field for race ${esc(race.number)}"><div class="all-horses-head"><div><p class="eyebrow">PUBLIC FIELD SNAPSHOT</p><h4>All horses <span>${active} listed${active!==field.runners.length?` · ${field.runners.length-active} scratched`:''}</span></h4></div><button type="button" id="toggleAllHorses" aria-expanded="${state.fieldOpen}" aria-controls="allHorsesBody">${state.fieldOpen?'Hide':'Show'} all horses <span aria-hidden="true">${state.fieldOpen?'−':'+'}</span></button></div><p class="all-horses-context">Independent public racecard facts${snapshot?` · collected ${esc(editorialAsOf(snapshot))}`:''}. ${scratchingNote?`${esc(scratchingNote)} `:''}Check the official card for subsequent changes.</p><div id="allHorsesBody"${state.fieldOpen?'':' hidden'}><div class="all-horses-toolbar"><label>Find a horse<input id="fieldSearch" type="search" value="${esc(state.fieldQuery)}" placeholder="Name, rider or trainer" autocomplete="off"></label><label>Barrier range<select id="fieldGateFilter"><option value="all"${state.fieldGateRange==='all'?' selected':''}>All gates</option><option value="low"${state.fieldGateRange==='low'?' selected':''}>1–4</option><option value="mid"${state.fieldGateRange==='mid'?' selected':''}>5–8</option><option value="wide"${state.fieldGateRange==='wide'?' selected':''}>9+</option><option value="unknown"${state.fieldGateRange==='unknown'?' selected':''}>Not published</option></select></label><label>Sort<select id="fieldSort"><option value="number"${state.fieldSort==='number'?' selected':''}>Runner number</option><option value="barrier-asc"${state.fieldSort==='barrier-asc'?' selected':''}>Gate: inside first</option><option value="barrier-desc"${state.fieldSort==='barrier-desc'?' selected':''}>Gate: outside first</option></select></label></div><p id="fieldCount" class="all-horses-count" role="status">Showing ${list.count} of ${field.runners.length} horses</p><div id="allHorsesList" class="all-horses-list">${list.html}</div><div class="all-horses-source"><div>${source?officialLink(source,'Open official race form ↗'):'Check the official meeting for complete form.'}${scratchingsUrl?` ${officialLink(scratchingsUrl,'Official scratchings ↗')}`:''}</div><span>Form figures are published results codes, not a FormLine rating.</span></div></div></section>`;
+}
+function refreshPublicFieldList(){
+  const race=selectedRace(),meeting=selectedMeeting();
+  if(!race||!meeting)return;
+  const field=publicFieldFor(race,meeting);
+  if(!field||!$('#allHorsesList'))return;
+  const list=publicFieldListHtml(field);
+  $('#allHorsesList').innerHTML=list.html;
+  $('#fieldCount').textContent=`Showing ${list.count} of ${field.runners.length} horses`;
+}
 function renderTips(meeting){
   const section=$('#publicTips');
   const venue=String(meeting?.venue||'').trim().toLowerCase();
@@ -68,6 +129,7 @@ function renderAnalysis(){
     return;
   }
   const cached=race.race_id?state.runnerCache.get(String(race.race_id)):null;
+  const independentField=independentFieldHtml(race,meeting);
   const field=meeting.meeting_id
     ? cached?fieldHtml(cached.runners,cached.as_of,'PUBLIC QUEENSLAND FIELD'):'<p class="analysis-state">Choose Refresh public field to load the current runner list.</p>'
     :race.savedRace?fieldHtml(race.savedRace.runners,null,'SAVED IN THIS BROWSER'):'';
@@ -75,24 +137,27 @@ function renderAnalysis(){
   const coverage=meeting.meeting_id
     ?'Racing Queensland open data provides horses, weights, jockeys and trainers. The endpoints connected here do not include barriers, historical form, live odds or final placings.'
     :race.savedRace?'This card is saved only in this browser. Review it against the official field before making any decision.'
+    :independentField?'This race has a dated public field snapshot with runner details and a source link. It is not a live field or odds feed.'
     :editorial?'This NSW/Victorian card includes a dated, source-linked editorial assessment. A public live runner and odds feed is not connected.'
     :'This is a dated NSW/Victorian schedule entry. A public, reusable live runner feed for this state is not connected.';
   const pending='<div class="prediction-card model-pending"><p class="eyebrow">MODEL DECISION PENDING</p><h4>Research checklist</h4><p>'+esc(researchLens(race))+'</p><p>FormLine is not generating picks or two-horse placement combinations from a partial field. Those need a selected, tested probability model and licensed point-in-time form and odds data.</p></div>';
-  const personalLink=/randwick|rosehill|canterbury|warwick farm|flemington/i.test(meeting.venue)?`<p class="analysis-foot"><a href="#sydney" data-pe-date="${esc(meeting.date)}" data-pe-venue="${esc(meeting.venue)}" data-pe-race="${esc(race.number)}">Open all-runner form · 3 credits ↗</a></p>`:'';
   const error=state.raceError?`<p class="analysis-state warning">${esc(state.raceError)}</p>`:'';
   const preview=race.preview_url?`<p class="analysis-foot">${officialLink(race.preview_url,'External race preview ↗')}</p>`:'';
-  $('#analysisPanel').innerHTML=infoPanel(race,meeting,`${error}<p class="analysis-state">${esc(coverage)}</p>${field}${editorial||pending}${meeting.meeting_id?'<div class="analysis-actions"><button type="button" class="secondary" id="refreshRace">Refresh public field</button></div>':''}${personalLink}${preview}<p class="analysis-foot">Verify scratchings, current ground, rider changes and results at the official source. No bets are placed here.</p>`);
+  $('#analysisPanel').innerHTML=infoPanel(race,meeting,`${error}<p class="analysis-state">${esc(coverage)}</p>${independentField}${field}${editorial||pending}${meeting.meeting_id?'<div class="analysis-actions"><button type="button" class="secondary" id="refreshRace">Refresh public field</button></div>':''}${preview}<p class="analysis-foot">Verify scratchings, current ground, rider changes and results at the official source. No bets are placed here.</p>`);
 }
 async function loadQueenslandCard(meeting,autoOpen=false){if(!meeting?.meeting_id||state.qldCards.has(meetingId(meeting)))return;const url=new URL('/api/schedule',location.href);url.searchParams.set('action','card');url.searchParams.set('meeting_id',String(meeting.meeting_id));url.searchParams.set('date',meeting.date);const response=await fetch(url,{cache:'no-store'}),data=await response.json();if(!response.ok)throw Error(data.error||`Queensland race program returned HTTP ${response.status}.`);const original=state.publicMeetings.find(row=>meetingId(row)===meetingId(meeting)&&row.meeting_id);if(!original)return;original.races=normalisePublic([{...original,races:data.races}])[0]?.races||[];state.qldDetails.set(meetingId(meeting),data);state.qldCards.add(meetingId(meeting));renderBoard();if(autoOpen&&state.meeting===meetingId(meeting)&&original.races.length&&!state.race)selectRace(raceId(original.races[0],original),false);}
 async function loadQueenslandRunners(force=false){const meeting=selectedMeeting(),race=selectedRace();if(!meeting?.meeting_id||!race?.race_id)return;const id=String(race.race_id),requestId=++state.requestId;if(!force&&state.runnerCache.has(id)){renderAnalysis();return;}state.loadingRace=state.race;state.raceError='';renderAnalysis();try{const url=new URL('/api/schedule',location.href);url.searchParams.set('action','runners');url.searchParams.set('race_id',id);url.searchParams.set('meeting_id',String(meeting.meeting_id));url.searchParams.set('date',meeting.date);const response=await fetch(url,{cache:'no-store'}),data=await response.json();if(!response.ok)throw Error(data.error||`Queensland runner feed returned HTTP ${response.status}.`);if(requestId!==state.requestId)return;state.runnerCache.set(id,data);}catch(error){if(requestId===state.requestId)state.raceError=error.message;}finally{if(requestId===state.requestId){state.loadingRace='';renderAnalysis();}}}
-function selectDate(date){if(!inRange(date))return;state.requestId++;state.date=date;state.meeting='';state.race='';state.raceError='';const first=mergedMeetings().find(row=>row.meeting_id&&row.race_count)||mergedMeetings()[0];if(first)state.meeting=meetingId(first);renderBoard();renderAnalysis();if(first?.meeting_id)loadQueenslandCard(first,true).catch(error=>{$('#raceList').insertAdjacentHTML('beforeend',`<p class="analysis-state warning">${esc(error.message)}</p>`);});}
-function selectMeeting(id){if(!mergedMeetings().some(row=>meetingId(row)===id))return;state.requestId++;state.meeting=id;state.race='';state.raceError='';renderBoard();renderAnalysis();const meeting=selectedMeeting();if(meeting?.meeting_id)loadQueenslandCard(meeting).catch(error=>{$('#raceList').insertAdjacentHTML('beforeend',`<p class="analysis-state warning">${esc(error.message)}</p>`);});}
-function selectRace(id,scroll=true){const meeting=selectedMeeting();if(!meeting?.races.some(row=>raceId(row,meeting)===id))return;state.requestId++;state.race=id;state.raceError='';renderBoard();renderAnalysis();if(selectedRace()?.race_id&&meeting.meeting_id)loadQueenslandRunners();if(scroll)$('#analysis').scrollIntoView({behavior:'smooth',block:'start'});}
+function resetFieldControls(){state.fieldQuery='';state.fieldGateRange='all';state.fieldSort='number';state.fieldOpen=false;}
+function selectDate(date){if(!inRange(date))return;state.requestId++;state.date=date;state.meeting='';state.race='';state.raceError='';resetFieldControls();const first=mergedMeetings().find(row=>row.meeting_id&&row.race_count)||mergedMeetings()[0];if(first)state.meeting=meetingId(first);renderBoard();renderAnalysis();if(first?.meeting_id)loadQueenslandCard(first,true).catch(error=>{$('#raceList').insertAdjacentHTML('beforeend',`<p class="analysis-state warning">${esc(error.message)}</p>`);});}
+function selectMeeting(id){if(!mergedMeetings().some(row=>meetingId(row)===id))return;state.requestId++;state.meeting=id;state.race='';state.raceError='';resetFieldControls();renderBoard();renderAnalysis();const meeting=selectedMeeting();if(meeting?.meeting_id)loadQueenslandCard(meeting).catch(error=>{$('#raceList').insertAdjacentHTML('beforeend',`<p class="analysis-state warning">${esc(error.message)}</p>`);});}
+function selectRace(id,scroll=true){const meeting=selectedMeeting();if(!meeting?.races.some(row=>raceId(row,meeting)===id))return;state.requestId++;state.race=id;state.raceError='';resetFieldControls();renderBoard();renderAnalysis();if(selectedRace()?.race_id&&meeting.meeting_id)loadQueenslandRunners();if(scroll)$('#analysis').scrollIntoView({behavior:'smooth',block:'start'});}
 $('#menuToggle').addEventListener('click',()=>{const open=!document.body.classList.contains('menu-open');document.body.classList.toggle('menu-open',open);$('#menuToggle').setAttribute('aria-expanded',String(open));$('#appSidebar').inert=!open;});
 $('#menuScrim').addEventListener('click',()=>{document.body.classList.remove('menu-open');$('#menuToggle').setAttribute('aria-expanded','false');$('#appSidebar').inert=true;});
 $('#appSidebar nav').addEventListener('click',()=>{document.body.classList.remove('menu-open');$('#menuToggle').setAttribute('aria-expanded','false');$('#appSidebar').inert=true;});
 $('#appSidebar').inert=matchMedia('(max-width:700px)').matches;matchMedia('(max-width:700px)').addEventListener('change',event=>{$('#appSidebar').inert=event.matches;document.body.classList.remove('menu-open');$('#menuToggle').setAttribute('aria-expanded','false');});
-document.addEventListener('click',event=>{const date=event.target.closest('[data-date]');if(date){selectDate(date.dataset.date);return;}const meeting=event.target.closest('[data-meeting-id]');if(meeting){selectMeeting(meeting.dataset.meetingId);return;}const race=event.target.closest('[data-race-id]');if(race){selectRace(race.dataset.raceId);return;}if(event.target.id==='refreshRace'){loadQueenslandRunners(true);return;}if(event.target.id==='loadQldCard'){const row=selectedMeeting();if(row)loadQueenslandCard(row).catch(error=>{$('#raceList').insertAdjacentHTML('beforeend',`<p class="analysis-state warning">${esc(error.message)}</p>`);});}});
+document.addEventListener('click',event=>{const date=event.target.closest('[data-date]');if(date){selectDate(date.dataset.date);return;}const meeting=event.target.closest('[data-meeting-id]');if(meeting){selectMeeting(meeting.dataset.meetingId);return;}const race=event.target.closest('[data-race-id]');if(race){selectRace(race.dataset.raceId);return;}if(event.target.id==='toggleAllHorses'){state.fieldOpen=!state.fieldOpen;event.target.setAttribute('aria-expanded',String(state.fieldOpen));event.target.innerHTML=`${state.fieldOpen?'Hide':'Show'} all horses <span aria-hidden="true">${state.fieldOpen?'−':'+'}</span>`;$('#allHorsesBody').hidden=!state.fieldOpen;return;}if(event.target.id==='refreshRace'){loadQueenslandRunners(true);return;}if(event.target.id==='loadQldCard'){const row=selectedMeeting();if(row)loadQueenslandCard(row).catch(error=>{$('#raceList').insertAdjacentHTML('beforeend',`<p class="analysis-state warning">${esc(error.message)}</p>`);});}});
+document.addEventListener('input',event=>{if(event.target.id==='fieldSearch'){state.fieldQuery=event.target.value;refreshPublicFieldList();}});
+document.addEventListener('change',event=>{if(event.target.id==='fieldSort'){state.fieldSort=event.target.value;refreshPublicFieldList();}if(event.target.id==='fieldGateFilter'){state.fieldGateRange=event.target.value;refreshPublicFieldList();}});
 (async function init(){
   state.date=dayAt(0);
   state.savedMeetings=savedMeetings();
@@ -100,12 +165,15 @@ document.addEventListener('click',event=>{const date=event.target.closest('[data
   const results=await Promise.allSettled([
     fetch('data/upcoming-races-2026-11-05.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(Error('Dated schedule unavailable'))),
     fetch('/api/schedule?action=meetings',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(Error('Queensland feed unavailable'))),
-    fetch('data/race-notes-2026-11-07.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(Error('Dated research unavailable')))
+    fetch('data/race-notes-2026-11-07.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(Error('Dated research unavailable'))),
+    fetch('data/race-fields-2026-11-07.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(Error('Public field snapshot unavailable')))
   ]);
   const fixture=results[0].status==='fulfilled'?results[0].value:null;
   const queensland=results[1].status==='fulfilled'?results[1].value:null;
   state.editorial=results[2].status==='fulfilled'?results[2].value:null;
-  state.publicMeetings=normalisePublic([...(fixture?.meetings||[]),...(queensland?.meetings||[])]);
+  state.publicFields=results[3].status==='fulfilled'?results[3].value:null;
+  const fieldSchedule=state.publicFields?.date===state.date?(state.publicFields.meetings||[]).map(row=>({date:state.publicFields.date,venue:row.venue,state:row.state,source_url:row.source_url,races:(row.races||[]).map(race=>({number:race.number,name:race.name,start_time:race.start_time,distance_m:race.distance_m,source_url:race.source_url}))})):[];
+  state.publicMeetings=normalisePublic([...(fixture?.meetings||[]),...fieldSchedule,...(queensland?.meetings||[])]);
   const featured=state.date==='2026-11-07'&&state.editorial
     ?mergedMeetings().find(row=>/flemington|rosehill/i.test(row.venue)&&row.races.some(race=>editorialNoteFor(race,row)))
     :null;
@@ -117,7 +185,7 @@ document.addEventListener('click',event=>{const date=event.target.closest('[data
       if(firstRace)state.race=raceId(firstRace,first);
     }
   }
-  $('#scheduleStatus').textContent=`${state.publicMeetings.length} meeting${state.publicMeetings.length===1?'':'s'} listed in the next seven days · ${queensland?'live Queensland feed':'Queensland feed unavailable'} · NSW/VIC dated schedule${state.editorial&&state.date==='2026-11-07'?' with 7 November research notes':''}.`;
+  $('#scheduleStatus').textContent=`${new Set(state.publicMeetings.map(meetingId)).size} meeting${new Set(state.publicMeetings.map(meetingId)).size===1?'':'s'} listed in the next seven days · ${queensland?'live Queensland feed':'Queensland feed unavailable'} · NSW/VIC dated schedule${state.publicFields&&state.date==='2026-11-07'?' with public field snapshots':''}${state.editorial&&state.date==='2026-11-07'?' and research notes':''}.`;
   renderBoard();renderAnalysis();
   if(first?.meeting_id)loadQueenslandCard(first,true).catch(error=>{$('#raceList').insertAdjacentHTML('beforeend',`<p class="analysis-state warning">${esc(error.message)}</p>`);});
 }()).catch(error=>{$('#scheduleStatus').textContent=error.message;renderBoard();});
@@ -154,6 +222,28 @@ function editorialPick(pick, kind, heading) {
   </article>`;
 }
 
+function resultCard(result){
+  if(!result||!Array.isArray(result.placings)||!result.placings.length)return '';
+  const placings=result.placings.filter(item=>item&&item.horse).sort((a,b)=>Number(a.position||99)-Number(b.position||99));
+  if(!placings.length)return '';
+  return `<section class="race-result" aria-label="Recorded race result"><div class="race-result-head"><div><p class="eyebrow">RACE OUTCOME</p><h4>${esc(result.status||'Recorded result')}</h4></div>${officialLink(result.source_url,'Official result ↗')}</div><ol>${placings.map(item=>`<li><span>${esc(item.position||'—')}</span><strong>${esc(item.horse)}</strong></li>`).join('')}</ol><p>This result is separate from the dated selections below.</p></section>`;
+}
+function baseHorseName(name){
+  return String(name||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/\s*\((?:AUS|NZ|IRE|GB|FR|USA|JPN|GER|CAN|SAF)\)\s*$/i,'').replace(/[’‘]/g,"'").replace(/[^a-z0-9]+/gi,'').toLowerCase();
+}
+function selectionFieldWarnings(note,race,meeting){
+  const field=publicFieldFor(race,meeting);
+  if(!field?.runners)return '';
+  const warnings=[];
+  for(const pick of [note.primary,note.alternative]){
+    const runner=field.runners.find(row=>baseHorseName(row.name)===baseHorseName(pick?.horse));
+    if(!runner)continue;
+    if(runner.scratched===true)warnings.push(`${pick.horse} is scratched in the sourced field.`);
+    else if(runner.emergency===true&&runner.promoted_emergency!==true)warnings.push(`${pick.horse} is listed as an emergency; confirm a start on the current official card.`);
+  }
+  return warnings.length?`<p class="analysis-state warning">${esc(warnings.join(' '))}</p>`:'';
+}
+
 function renderEditorial(race, meeting) {
   const note = editorialNoteFor(race, meeting);
   if (!note) return '';
@@ -167,10 +257,12 @@ function renderEditorial(race, meeting) {
     ?'<div class="editorial-weather"><div class="editorial-weather-head"><strong>'+(String(meeting.venue||'').toLowerCase()==='flemington'?'Flemington rain scenario':'Rosehill ground update')+'</strong><span>'+esc(weather.as_of||'Race-day snapshot')+'</span></div><p>'+esc(weather.status)+'</p><p>'+esc(note.weather_scenario||weather.if_soft)+'</p>'+(weatherLinks.length?'<div class="editorial-weather-links">'+weatherLinks.map(item=>'<a href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer">'+esc(item.label)+' ↗</a>').join('')+'</div>':'')+'</div>'
     :'';
   return `<section class="editorial-research" aria-label="Dated race research">
-    <div class="editorial-intro"><div><p class="eyebrow">7 NOVEMBER RESEARCH NOTES</p><h4>Two runners to examine</h4><p>Editorial assessment from public form and reports. These are not calibrated model probabilities or private insider information.</p>${state.editorial.method ? `<p class="editorial-method">${esc(state.editorial.method)}</p>` : ''}</div><span class="editorial-time">Checked ${esc(editorialAsOf(note.as_of || state.editorial.as_of))}</span></div>
+    <div class="editorial-intro"><div><p class="eyebrow">7 NOVEMBER RESEARCH NOTES</p><h4>Two runners to examine</h4><p>Editorial assessment from public form and reports. These are not calibrated model probabilities or private insider information.</p>${state.editorial.method ? `<p class="editorial-method">${esc(state.editorial.method)}</p>` : ''}</div><span class="editorial-time">${note.as_of?'Revised':'Initial research'} ${esc(editorialAsOf(note.as_of || state.editorial.as_of))}</span></div>
     ${facts.length ? `<div class="editorial-conditions">${facts.map(item => `<span>${esc(item)}</span>`).join('')}</div>` : ''}
-    <p class="analysis-state ${passed ? 'warning' : ''}">${passed ? 'The scheduled jump has passed. These dated editorial notes are not a verified pre-race prediction or confirmed results; check the official outcome.' : 'Pre-race view. Recheck scratchings, ground, rider changes and the available price before using this research.'}</p>
+    <p class="analysis-state ${passed ? 'warning' : ''}">${passed ? (note.result ? 'The scheduled jump has passed. The recorded outcome below is separate from these dated selections.' : 'The scheduled jump has passed. These dated editorial notes are not a verified pre-race prediction or confirmed results; check the official outcome.') : 'Pre-race view. Recheck scratchings, ground, rider changes and the available price before using this research.'}</p>
     ${note.revision_note ? `<p class="analysis-state warning">${esc(note.revision_note)}</p>` : ''}
+    ${selectionFieldWarnings(note,race,meeting)}
+    ${resultCard(note.result)}
     ${weatherHtml}
     <div class="editorial-picks">${editorialPick(note.primary, 'primary', passed && note.revision_note ? 'Revised form choice' : '')}${editorialPick(note.alternative, 'alternative')}</div>
     ${news.length ? `<div class="editorial-news"><h5>Public reports and stable comments</h5><ul>${news.map(item => { const url = safeUrl(item.url); return `<li>${esc(item.text)}${url ? ` <a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Read source ↗</a>` : ''}</li>`; }).join('')}</ul></div>` : ''}

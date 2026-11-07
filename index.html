@@ -9,17 +9,15 @@
   <meta name="apple-mobile-web-app-title" content="FormLine">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Upcoming Australian thoroughbred schedules, dated race research, public Queensland runner lists and personal Sydney form.">
+  <meta name="description" content="Upcoming Australian thoroughbred schedules, sourced race research and public racecard snapshots.">
   <title>Upcoming Races | FormLine</title>
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
   <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=2">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="today.css?v=14">
-  <link rel="stylesheet" href="sydney.css?v=13">
+  <link rel="stylesheet" href="today.css?v=17">
   <script>if (['flemington','randwick'].includes(new URLSearchParams(location.search).get('meeting')?.toLowerCase())) location.replace(`cup-day-2026.html${location.search}${location.hash}`);</script>
-  <script src="today.js?v=15" defer></script>
-  <script src="sydney.js?v=15" defer></script>
+  <script src="today.js?v=17" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#upcoming">Skip to upcoming races</a>
@@ -27,18 +25,18 @@
     <div class="header-inner">
       <button type="button" id="menuToggle" class="menu-toggle" aria-controls="appSidebar" aria-expanded="false" aria-label="Open navigation">☰</button>
       <a class="brand" href="/" aria-label="FormLine home"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></a>
-      <nav class="desktop-nav" aria-label="Sections"><a href="#upcoming">Upcoming races</a><a href="#analysis">Race analysis</a><a href="#publicTips">Public tips</a><a href="#sydney">Full form</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="cup-day-2026.html">Cup Day archive</a></nav>
+      <nav class="desktop-nav" aria-label="Sections"><a href="#upcoming">Upcoming races</a><a href="#analysis">Race analysis</a><a href="#publicTips">Public tips</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="cup-day-2026.html">Cup Day archive</a></nav>
       <span class="header-tag" id="todayTag">AUSTRALIAN RACING</span>
     </div>
   </header>
   <aside id="appSidebar" class="mobile-sidebar" aria-label="Mobile navigation">
     <div class="brand"><span class="brand-mark"><img src="logo-green.png" alt="" width="44" height="44"></span><span><strong>FORMLINE</strong><small>RACING RESEARCH LAB</small></span></div>
-    <nav aria-label="Mobile sections"><a href="#upcoming">Upcoming races</a><a href="#analysis">Race analysis</a><a href="#publicTips">Public tips</a><a href="#sydney">Full form</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="cup-day-2026.html">Cup Day archive</a><a href="cup-analysis.html">Cup history &amp; forecast</a></nav>
-    <p>Public Queensland fields · personal Sydney research · no bets placed</p>
+    <nav aria-label="Mobile sections"><a href="#upcoming">Upcoming races</a><a href="#analysis">Race analysis</a><a href="#publicTips">Public tips</a><a href="research-tools.html">Research tools</a><a href="research-tools.html#calculator">Betting calculator</a><a href="cup-day-2026.html">Cup Day archive</a><a href="cup-analysis.html">Cup history &amp; forecast</a></nav>
+    <p>Public racecard snapshots · no bets placed</p>
   </aside>
   <button type="button" id="menuScrim" class="menu-scrim" aria-label="Close navigation" tabindex="-1"></button>
   <main class="shell">
-    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>See the field.</span></h1><p class="hero-copy">Choose a day, meeting and race. Dated Rosehill and Flemington research notes appear where available; Queensland programs and runner lists load from public open data. For all-runner form and available odds at Flemington or Rosehill, open the personal PuntersEdge panel below.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
+    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>See the field.</span></h1><p class="hero-copy">Choose a day, meeting and race. Flemington and Rosehill show sourced, dated field snapshots and race research where available. Queensland programs and runner lists load from public open data.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
     <section id="installGuide" class="install-guide" aria-label="Add FormLine to your phone home screen"><img src="icon-192.png?v=2" alt="" width="52" height="52"><div><strong>Use FormLine like an app</strong><p>On iPhone, open in Safari and choose Share → Add to Home Screen. Launch from the FormLine icon for a standalone view without Safari tabs. On Android, choose Install app from the browser menu.</p></div></section>
     <section id="upcoming" class="today-board" aria-labelledby="upcoming-title">
       <div class="section-heading"><div><p class="eyebrow">01 / RACE FINDER</p><h2 id="upcoming-title">Today and the week ahead</h2></div><p id="scheduleStatus" role="status">Loading the published schedule…</p></div>
@@ -52,23 +50,7 @@
       <p class="tips-context">Publicly reported comments and previews, checked on race day. These are dated observations, not private information or confirmed outcomes.</p>
       <div id="tipsCards" class="tips-grid"></div>
     </section>
-    <section id="sydney" class="sydney-private" aria-labelledby="sydney-title">
-      <div class="sydney-head">
-        <div><p class="eyebrow">04 / PERSONAL RACE FORM</p><h2 id="sydney-title">All-horse race form</h2><p>Load Flemington and Rosehill fields, then select a race to see form history and ground conditions for every listed horse. This personal PuntersEdge view also supports other covered Sydney meetings.</p></div>
-        <a href="https://puntersedge.online/terms" target="_blank" rel="noopener noreferrer">PuntersEdge personal-use terms ↗</a>
-      </div>
-      <form id="peForm" class="sydney-form">
-        <label for="peDate">Meeting date<input id="peDate" type="date" required></label>
-        <label for="peKey">Your PuntersEdge API key<input id="peKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your own API key"></label>
-        <div class="sydney-form-actions"><button type="submit">Load meeting card · 2 credits</button><button id="peForget" type="button">Forget key</button></div>
-      </form>
-      <p class="sydney-privacy">The card costs 2 credits. Opening a new race loads form for all its runners for 3 credits; revisiting that race uses the tab cache. Odds and results are optional separate requests. Your key stays in this tab’s memory and is sent to PuntersEdge through FormLine’s server only for your requests.</p>
-      <p id="peStatus" class="sydney-status" role="status">Choose today’s date and enter your personal API key to load the form card.</p>
-      <div id="peMeetingTabs" class="sydney-tabs" role="group" aria-label="Personal race meetings"></div>
-      <div id="peRaceTabs" class="sydney-race-tabs" role="group" aria-label="Races at selected meeting"></div>
-      <div id="peDetail" class="sydney-detail" aria-live="polite"><div class="empty-state"><strong>No personal card loaded</strong><p>Use your own key to see the current Flemington and Rosehill fields and all-horse form.</p></div></div>
-    </section>
-    <section class="coverage-panel" aria-labelledby="coverage-title"><div><p class="eyebrow">DATA COVERAGE</p><h2 id="coverage-title">Public Queensland coverage</h2><p>Racing Queensland open data supplies meeting programs and listed horses, weights, jockeys and trainers. The public endpoints connected here do not include barriers, recent form, live odds or final placings. NSW and Victorian cards are dated schedules; occasional source-linked editorial notes are snapshots, not a live feed or validated model. Use the personal form panel above for current Flemington and Rosehill fields with your own key.</p></div><a class="outline-link" href="https://www.racingqueensland.com.au/about/reports-and-data/open-data" target="_blank" rel="noopener noreferrer">About the public feed ↗</a></section>
+    <section class="coverage-panel" aria-labelledby="coverage-title"><div><p class="eyebrow">DATA COVERAGE</p><h2 id="coverage-title">Sourced public fields</h2><p>Flemington and Rosehill cards show dated, independently sourced runner snapshots with links to official race forms. They may be overtaken by scratchings, ground and rider changes. Racing Queensland open data supplies current meeting programs and listed runners, but the connected endpoints do not include barriers, historical form, live odds or final placings. Race notes are editorial research, not a validated model.</p></div><a class="outline-link" href="https://www.racingqueensland.com.au/about/reports-and-data/open-data" target="_blank" rel="noopener noreferrer">Queensland public feed ↗</a></section>
     <section class="calculator-feature"><div><p class="eyebrow">PAPER BETTING TOOL</p><h2>Check the actual bookmaker quote.</h2><p>Use the calculator to record a hypothetical return from a quote you enter. It does not place bets or estimate fair odds.</p></div><a class="cup-feature-link" href="research-tools.html#calculator">Open betting calculator ↗</a></section>
     <section class="archive-link"><div><p class="eyebrow">PAST RESEARCH</p><h2>3 November Cup Day archive</h2><p>Review the Melbourne Cup and Randwick race notes, historical comparisons, and saved runner tags.</p></div><div><a class="outline-link" href="cup-day-2026.html">Open race archive ↗</a><a class="outline-link" href="cup-analysis.html">Cup history ↗</a></div></section>
   </main>

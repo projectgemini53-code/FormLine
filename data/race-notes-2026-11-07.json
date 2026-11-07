@@ -4,75 +4,531 @@
   "method": "Dated editorial form and race-shape assessment. Form, barrier, carried weight, class, distance and public stable or jockey reports are considered. Observed market prices informed comparisons but are not republished as live quotes. These selections are not calibrated model probabilities.",
   "meetings": {
     "rosehill gardens": {
-      "_tips": [{"race": "R5", "title": "Cashout's Sydney preparation", "detail": "The co-trainer reported Cashout had settled into a Sydney base after more than ten days and expected his forward running style to help. The latest Soft 6 board adds a ground question: his published Soft sample is limited.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"}, {"race": "R6", "title": "Wet ground changes the juvenile call", "detail": "Public stable comments say Proverb disliked very heavy ground and improved in a dry-track trial. Racing NSW says Silent Intent handled the heavy debut better; on the latest Soft 6 board she is the condition-led choice, with only one race run to assess.", "source": "Racing NSW · 5–6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/rosehill-preview-tips-for-five-diamonds-day-saturday-7th-november/"}, {"race": "R7–R8", "title": "Berry on Lazzura and Declichy Boulevard", "detail": "Jockey Tommy Berry highlighted Lazzura's low draw and weight, and said Declichy Boulevard should appreciate give in the ground. Both comments are public pre-race views, not a guarantee of the running.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"}, {"race": "R8", "title": "Welcometotheshow has a weight swing", "detail": "Trainer comments describe a luckless Prelude run; Welcometotheshow meets Declichy Boulevard 2 kg better. The 1800 m distance remains an untested part of that comparison.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/tyler-digging-for-a-welcome-five-diamonds-windfall/"}, {"race": "R10", "title": "Horseshoe Hill steps up in trip", "detail": "The Baker stable's racing manager said 1000 m was too short first-up and expects the 1200 m and gate two to suit a run just behind the pace. Verify current scratchings and conditions.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/baker-keen-to-get-horseshoe-back-on-the-right-foot/"}],
-      "_weather": {"as_of": "7 November 2026, 12:52 pm AEDT", "status": "Public track sources disagree: the Racing and Sports race-day field displays Soft 6, while Racing NSW acceptances still list Good 4. Recheck the official current rating and scratchings before relying on any later-race selection.", "if_soft": "The original selections have not been recalculated for Soft 6. Give more weight to verified wet-track form and race-day pattern before using them.", "sources": [{"label": "Rosehill race-day field", "url": "https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07/race-fields"}, {"label": "Racing NSW official fields", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}]},
+      "_tips": [{"race": "R5", "title": "Cashout's Sydney preparation", "detail": "The co-trainer reported Cashout had settled into a Sydney base after more than ten days and expected his forward running style to help. If the track is downgraded from the official Good 4 snapshot, his limited published Soft sample adds a ground question.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"}, {"race": "R6", "title": "Ground scenario for the juveniles", "detail": "Public stable comments say Proverb disliked very heavy ground and improved in a dry-track trial. Racing NSW says Silent Intent handled the heavy debut better; if the track is downgraded to Soft she becomes the stronger condition-led choice, with only one race run to assess.", "source": "Racing NSW · 5–6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/rosehill-preview-tips-for-five-diamonds-day-saturday-7th-november/"}, {"race": "R7–R8", "title": "Berry on Lazzura and Declichy Boulevard", "detail": "Jockey Tommy Berry highlighted Lazzura's low draw and weight, and said Declichy Boulevard should appreciate give in the ground. Both comments are public pre-race views, not a guarantee of the running.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"}, {"race": "R8", "title": "Welcometotheshow has a weight swing", "detail": "Trainer comments describe a luckless Prelude run; Welcometotheshow meets Declichy Boulevard 2 kg better. The 1800 m distance remains an untested part of that comparison.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/tyler-digging-for-a-welcome-five-diamonds-windfall/"}, {"race": "R10", "title": "Horseshoe Hill steps up in trip", "detail": "The Baker stable's racing manager said 1000 m was too short first-up and expects the 1200 m and gate two to suit a run just behind the pace. Verify current scratchings and conditions.", "source": "Racing NSW · 6 Nov", "url": "https://www.racingnsw.com.au/news/latest-racing-news/baker-keen-to-get-horseshoe-back-on-the-right-foot/"}],
+      "_weather": {"as_of": "7 November 2026, 1:12 pm AEDT", "status": "Racing NSW's official results header lists Good 4 at its 1:12 pm update. Some third-party race-day fields display Soft 6; the sources conflict, so check the official current rating before relying on a ground-specific assessment.", "if_soft": "Current main selections are assessed against the official Good 4 snapshot. If the rating changes to Soft, the race-specific wet-ground caveats below may change their order.", "sources": [{"label": "Racing NSW official results and track", "url": "https://mdata.racingnsw.com.au/FreeFields/Results.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Contrasting third-party field", "url": "https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07/race-fields"}]},
       "1": {
-        "track": "Good 4", "rail": "True",
+        "track": "Good 4",
+        "rail": "True",
         "as_of": "2026-11-07T12:52:00+11:00",
-        "revision_note": "Rosehill R1 was revised at 12:52 pm AEDT, after its scheduled 12:25 pm jump. Brave Xena is an after-the-fact form selection here, not an original pre-race prediction or a verified result.",
-        "primary": {"horse": "Brave Xena", "bet": "Revised win candidate", "metrics": ["No. 4", "Barrier 3", "58.5 kg including claim", "Previous Highway winner"], "reasons": ["Racing NSW noted her previous Highway win and that she was unlucky at Hawkesbury last start, while carrying 3.5 kg less here.", "She was a close third in a Randwick Class 3 over 1000 m, beaten 0.6 lengths; gate three offered a chance to save ground over 1200 m."], "risk": "Often settles midfield or farther back, so she needs a suitable tempo and a clear passage."},
-        "alternative": {"horse": "Mainstay", "bet": "Place candidate", "metrics": ["No. 3", "Barrier 7", "59 kg", "Recent form 1-1-1"], "reasons": ["Unbeaten three-run sequence offers a strong consistency case.", "Draw seven is manageable in this 1200 m field."], "risk": "This is a stronger, deeper race than the three prior wins alone establish."},
+        "revision_note": "Brave Xena was substituted after the scheduled jump. Racing NSW later confirmed she won; this is a post-race edit, not an original pre-race prediction.",
+        "primary": {
+          "horse": "Brave Xena",
+          "bet": "Revised win candidate",
+          "metrics": [
+            "No. 4",
+            "Barrier 3",
+            "58.5 kg including claim",
+            "Previous Highway winner"
+          ],
+          "reasons": [
+            "Racing NSW noted her previous Highway win and that she was unlucky at Hawkesbury last start, while carrying 3.5 kg less here.",
+            "She was a close third in a Randwick Class 3 over 1000 m, beaten 0.6 lengths; gate three offered a chance to save ground over 1200 m."
+          ],
+          "risk": "Often settles midfield or farther back, so she needs a suitable tempo and a clear passage."
+        },
+        "alternative": {
+          "horse": "Mainstay",
+          "bet": "Place candidate",
+          "metrics": [
+            "No. 3",
+            "Barrier 7",
+            "59 kg",
+            "Recent form 1-1-1"
+          ],
+          "reasons": [
+            "Unbeaten three-run sequence offers a strong consistency case.",
+            "Draw seven is manageable in this 1200 m field."
+          ],
+          "risk": "This is a stronger, deeper race than the three prior wins alone establish."
+        },
         "public_news": [],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Racing NSW race-day preview", "url": "https://www.racingnsw.com.au/news/latest-racing-news/rosehill-preview-tips-for-five-diamonds-day-saturday-7th-november/"}, {"label": "RaceHub R1 form preview", "url": "https://racehub.com.au/race-preview/rosehill-2026-11-07-preview"}]
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Racing NSW race-day preview",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/rosehill-preview-tips-for-five-diamonds-day-saturday-7th-november/"
+          },
+          {
+            "label": "RaceHub R1 form preview",
+            "url": "https://racehub.com.au/race-preview/rosehill-2026-11-07-preview"
+          }
+        ],
+        "result": {
+          "status": "Official result",
+          "placings": [
+            {
+              "position": 1,
+              "horse": "Brave Xena"
+            },
+            {
+              "position": 2,
+              "horse": "Athena's Treasure"
+            },
+            {
+              "position": 3,
+              "horse": "Yesspecially"
+            }
+          ],
+          "source_url": "https://mdata.racingnsw.com.au/FreeFields/Results.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+        }
       },
       "2": {
-        "track": "Good 4", "rail": "True",
-        "primary": {"horse": "Maidoff", "bet": "Win candidate", "metrics": ["No. 5", "Barrier 5", "58 kg", "Two wins in last three starts"], "reasons": ["Recent wins and a middle-inside gate give a solid form-and-trip combination at 1300 m.", "Nash Rawiller rides; the draw gives room to save ground without relying on a perfect start."], "risk": "The latest finish was fifth, so the recent winning level must be recovered."},
-        "alternative": {"horse": "Powder Man", "bet": "Place candidate", "metrics": ["No. 8", "Barrier 14", "56.5 kg", "Recent form includes 2-1-4"], "reasons": ["A recent win and second show current competitiveness.", "Zac Lloyd rides at 1.5 kg less than Maidoff's assigned weight."], "risk": "Barrier 14 can cost ground or force early work."},
-        "public_news": [{"text": "Official tactics notice says My Phar Lady is intended to race further forward, potentially adding pace.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Race-day field and scratches", "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_2"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Hellova Nature",
+          "bet": "User's win choice · finished 2nd",
+          "metrics": [
+            "No. 2",
+            "Barrier 8",
+            "59.5 kg",
+            "Rosehill 1300 m Soft 6 second in June"
+          ],
+          "reasons": [
+            "A prior second over this track and distance on Soft 6 supported a competitive 1300 m case.",
+            "Five career wins and a recent Good-track victory gave a plausible rebound case after a seventh at Randwick."
+          ],
+          "risk": "The official result was second, not a win; the wider draw and a limited Soft-track winning record were real pre-race concerns."
+        },
+        "alternative": {
+          "horse": "Scintilla",
+          "bet": "User's place choice · finished 3rd",
+          "metrics": [
+            "No. 7",
+            "Barrier 2",
+            "57 kg allotted · 54 kg after claim",
+            "Two wins from three Soft starts"
+          ],
+          "reasons": [
+            "Published form showed two wins from three Soft starts and two wins from three runs at 1300 m.",
+            "Barrier two and Olivia Chambers' claim offered a lighter, economical trip after a wide first-up run."
+          ],
+          "risk": "Her first-up ninth and uncertainty about the actual early pace limited confidence."
+        },
+        "public_news": [
+          {
+            "text": "Official tactics notice says My Phar Lady is intended to race further forward, potentially adding pace.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official result",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Results.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Independent race-day field and form",
+            "url": "https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07/race-fields"
+          }
+        ],
+        "as_of": "2026-11-07T13:21:00+11:00",
+        "revision_note": "Hellova Nature and Scintilla were entered as user-directed choices after the 1:00 pm scheduled jump. Racing NSW's result shows Hellova Nature second and Scintilla third; these are not pre-race predictions.",
+        "result": {
+          "status": "Official result",
+          "placings": [
+            {
+              "position": 1,
+              "horse": "Common Goal"
+            },
+            {
+              "position": 2,
+              "horse": "Hellova Nature"
+            },
+            {
+              "position": 3,
+              "horse": "Scintilla"
+            }
+          ],
+          "source_url": "https://mdata.racingnsw.com.au/FreeFields/Results.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+        },
+        "weather_scenario": "The official result header lists Good 4; a third-party field showed Soft 6. The actual placing is confirmed independently of that rating discrepancy."
       },
       "3": {
-        "track": "Good 4", "rail": "True",
-        "primary": {"horse": "Savvy Spy", "bet": "Win candidate", "metrics": ["No. 3", "Barrier 10", "55.5 kg", "Two consecutive wins"], "reasons": ["The two latest wins are the clearest recent staying-form signal in the field.", "At 2400 m, the draw usually gives more time to find position than in a sprint."], "risk": "Barrier 10 still creates a possible wide trip if early pace is slow."},
-        "alternative": {"horse": "Criteria", "bet": "Win or place candidate", "metrics": ["No. 5", "Barrier 6", "54 kg", "Recent finishes 2-1-3-2"], "reasons": ["Four consecutive top-three results make the place case unusually consistent.", "Carries 1.5 kg less than Savvy Spy and draws four stalls closer to the rail."], "risk": "Needs to turn consistent placings into a win at 2400 m."},
-        "public_news": [{"text": "Official tactics notice says Nkosi is intended to race further forward, relevant to the early staying-race tempo.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Race-day field and scratches", "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_3"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Savvy Spy",
+          "bet": "Win candidate",
+          "metrics": [
+            "No. 3",
+            "Barrier 10",
+            "55.5 kg",
+            "Two consecutive wins"
+          ],
+          "reasons": [
+            "The two latest wins are the clearest recent staying-form signal in the field.",
+            "At 2400 m, the draw usually gives more time to find position than in a sprint."
+          ],
+          "risk": "Barrier 10 still creates a possible wide trip if early pace is slow."
+        },
+        "alternative": {
+          "horse": "Criteria",
+          "bet": "Win or place candidate",
+          "metrics": [
+            "No. 5",
+            "Barrier 6",
+            "54 kg",
+            "Recent finishes 2-1-3-2"
+          ],
+          "reasons": [
+            "Four consecutive top-three results make the place case unusually consistent.",
+            "Carries 1.5 kg less than Savvy Spy and draws four stalls closer to the rail."
+          ],
+          "risk": "Needs to turn consistent placings into a win at 2400 m."
+        },
+        "public_news": [
+          {
+            "text": "Official tactics notice says Nkosi is intended to race further forward, relevant to the early staying-race tempo.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Race-day field and scratches",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_3"
+          }
+        ],
+        "weather_scenario": "Savvy Spy won recent Soft 5 and Soft 7 staying races; a downgrade would not by itself undermine this selection. Recheck the official rating and pace."
       },
       "4": {
-        "track": "Good 4", "rail": "True",
-        "primary": {"horse": "Botanical Boy", "bet": "Win candidate", "metrics": ["No. 3", "Barrier 6", "58 kg", "Recent form includes 5-1-3"], "reasons": ["A win followed by a third gives stronger current form than earlier runs suggest.", "Official notice says he will be ridden further forward, which may help him use barrier six."], "risk": "Several runners have announced forward tactics, creating a chance of an early speed contest."},
-        "alternative": {"horse": "Donatello", "bet": "Place candidate", "metrics": ["No. 6", "Barrier 9", "54.5 kg", "Recent finishes 1-2-2"], "reasons": ["Three consecutive top-two finishes support a place-oriented selection.", "Carries 3.5 kg less than Botanical Boy; officials also note an option to ride him forward."], "risk": "The wide-ish gate and possible shared lead could offset the weight benefit."},
-        "public_news": [{"text": "Racing NSW reported forward-riding intentions for Botanical Boy and Without Peer, with Donatello also able to go forward.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Race-day field and scratches", "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_4"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Botanical Boy",
+          "bet": "Win candidate",
+          "metrics": [
+            "No. 3",
+            "Barrier 6",
+            "58 kg",
+            "Recent form includes 5-1-3"
+          ],
+          "reasons": [
+            "A win followed by a third gives stronger current form than earlier runs suggest.",
+            "Official notice says he will be ridden further forward, which may help him use barrier six."
+          ],
+          "risk": "Several runners have announced forward tactics, creating a chance of an early speed contest."
+        },
+        "alternative": {
+          "horse": "Donatello",
+          "bet": "Place candidate",
+          "metrics": [
+            "No. 6",
+            "Barrier 9",
+            "54.5 kg",
+            "Recent finishes 1-2-2"
+          ],
+          "reasons": [
+            "Three consecutive top-two finishes support a place-oriented selection.",
+            "Carries 3.5 kg less than Botanical Boy; officials also note an option to ride him forward."
+          ],
+          "risk": "The wide-ish gate and possible shared lead could offset the weight benefit."
+        },
+        "public_news": [
+          {
+            "text": "Racing NSW reported forward-riding intentions for Botanical Boy and Without Peer, with Donatello also able to go forward.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Race-day field and scratches",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_4"
+          },
+          {
+            "label": "Samarelle and Botanical Boy form",
+            "url": "https://racehub.com.au/race-preview/rosehill-2026-11-07-preview"
+          }
+        ],
+        "weather_scenario": "If the official track becomes Soft, Samarelle's two recent Soft 5 wins over 1600–1800 m move her into the win discussion; Botanical Boy has Soft form too. Current Good 4 selections should be reviewed."
       },
       "5": {
-        "track": "Good 4", "rail": "True",
-        "primary": {"horse": "Cashout", "bet": "Win candidate", "metrics": ["No. 1", "Barrier 3", "59 kg", "Two consecutive wins", "Four wins from seven starts, all at 1400 m"], "reasons": ["The horse's four career wins have all been at today's 1400 m, a direct distance match.", "Gate three gives a straightforward path to a position near the speed."], "risk": "Top weight and several likely forward runners may make the early 1400 m section more demanding."},
-        "alternative": {"horse": "Pasadena", "bet": "Place candidate", "metrics": ["No. 7", "55 kg", "Second at latest start"], "reasons": ["A recent second supports current fitness.", "A strong pace could bring this closing runner into the finish carrying 4 kg less than Cashout."], "risk": "Needs the speed contest to materialise; a slow tempo would blunt the setup."},
-        "public_news": [{"text": "Cashout's co-trainer said he had settled after more than ten days based in Sydney; the official tactics notice points to additional forward runners.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"}, {"text": "Thebelmontgangster is to race further forward and Shotgun Bella may do so, according to Racing NSW.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Cashout stable report", "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Cashout",
+          "bet": "Win candidate",
+          "metrics": [
+            "No. 1",
+            "Barrier 3",
+            "59 kg",
+            "Two consecutive wins",
+            "Four wins from seven starts, all at 1400 m"
+          ],
+          "reasons": [
+            "The horse's four career wins have all been at today's 1400 m, a direct distance match.",
+            "Gate three gives a straightforward path to a position near the speed."
+          ],
+          "risk": "Top weight and several likely forward runners may make the early 1400 m section more demanding."
+        },
+        "alternative": {
+          "horse": "Pasadena",
+          "bet": "Place candidate",
+          "metrics": [
+            "No. 7",
+            "55 kg",
+            "Second at latest start"
+          ],
+          "reasons": [
+            "A recent second supports current fitness.",
+            "A strong pace could bring this closing runner into the finish carrying 4 kg less than Cashout."
+          ],
+          "risk": "Needs the speed contest to materialise; a slow tempo would blunt the setup."
+        },
+        "public_news": [
+          {
+            "text": "Cashout's co-trainer said he had settled after more than ten days based in Sydney; the official tactics notice points to additional forward runners.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"
+          },
+          {
+            "text": "Thebelmontgangster is to race further forward and Shotgun Bella may do so, according to Racing NSW.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/tactics-changes-rosehill-6/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Cashout stable report",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"
+          }
+        ],
+        "weather_scenario": "Cashout has a very small Soft sample, including a second; retain the Good-track form view only with reduced confidence if the rating changes."
       },
       "6": {
-        "track": "Soft 6 latest checked board", "rail": "True",
-        "as_of": "2026-11-07T12:53:00+11:00",
-        "revision_note": "Rosehill R6 selection revised before the scheduled jump for a Soft-track scenario. Public rating sources disagree; confirm the official current rating before relying on either runner.",
-        "weather_scenario": "If the official rating is Soft 6, Silent Intent has the better direct wet debut; if Good 4 remains, Proverb’s dry-track trial case strengthens. Neither is a calibrated probability.",
-        "primary": {"horse": "Silent Intent", "bet": "Condition-led win candidate", "metrics": ["No. 7", "Barrier 3", "56.5 kg", "Third on Heavy 10 debut"], "reasons": ["Racing NSW's race preview says her Heavy 10 debut was better than Proverb's under those conditions, and she has trialled well since.", "Barrier three and a 56.5 kg carried weight give her a practical setup over 1100 m if the Soft 6 rating persists."], "risk": "One race start is thin evidence, and Heavy 10 form does not precisely predict Soft 6 performance."},
-        "alternative": {"horse": "Proverb", "bet": "Conditional win or place candidate", "metrics": ["No. 5", "1100 m", "Two-year-old Listed race", "Dry-track trial win"], "reasons": ["The stable reported improvement in a trial after his debut on extremely heavy ground.", "Tommy Berry publicly highlighted his turn of foot, which may be more effective if the surface dries."], "risk": "The current Soft 6 rating may blunt the dry-track upside; Berry and the stable both raised wet-ground doubts."},
-        "public_news": [{"text": "The Freedman stable linked Proverb's debut defeat to extremely heavy ground; the latest Soft 6 board makes this a material warning.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Racing NSW race-day preview", "url": "https://www.racingnsw.com.au/news/latest-racing-news/rosehill-preview-tips-for-five-diamonds-day-saturday-7th-november/"}, {"label": "Proverb stable report", "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Silent Intent",
+          "bet": "Win candidate · ground check needed",
+          "metrics": [
+            "No. 7",
+            "Barrier 3",
+            "56.5 kg",
+            "Third on Heavy 10 debut"
+          ],
+          "reasons": [
+            "Racing NSW judged her heavy-ground debut more encouraging than Proverb’s and reported a positive subsequent trial.",
+            "She has an actual race placing and an economical barrier three over 1100 m; this edges a dry-trial-only case while the ground reports conflict."
+          ],
+          "risk": "Only one race start and no proven Good 4 win; a drying track could shift the comparison back toward Proverb."
+        },
+        "alternative": {
+          "horse": "Proverb",
+          "bet": "Win or place candidate if ground stays good",
+          "metrics": [
+            "No. 5",
+            "1100 m",
+            "Dry-track trial win"
+          ],
+          "reasons": [
+            "The stable said his debut on extreme heavy going did not suit and that he improved at a drier trial.",
+            "Tommy Berry publicly highlighted his turn of foot, which may show better on Good ground."
+          ],
+          "risk": "Only one race start; if the official surface is Soft, his wet-ground concern remains material."
+        },
+        "public_news": [
+          {
+            "text": "The Freedman stable publicly linked Proverb's debut to heavy ground and reported an improved dry-track trial.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Proverb stable report",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"
+          },
+          {
+            "label": "Racing NSW juvenile race preview",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/rosehill-preview-tips-for-five-diamonds-day-saturday-7th-november/"
+          }
+        ],
+        "weather_scenario": "If Good 4 is confirmed, Proverb’s dry-track upside rises; if Soft is confirmed, Silent Intent’s demonstrated Heavy 10 run has more direct ground evidence. The top two remain low-confidence juvenile assessments.",
+        "as_of": "2026-11-07T13:23:00+11:00",
+        "revision_note": "R6 was reassessed before its scheduled jump after comparing the official Good 4 header, conflicting Soft reports, public juvenile form and the current market order. Ground at jump remains to be confirmed."
       },
       "7": {
-        "track": "Good 4", "rail": "True",
-        "primary": {"horse": "Lazzura", "bet": "Win candidate", "metrics": ["No. 1", "Barrier 2", "57 kg", "Benchmark 115", "Recent form 1-2-3-1-1"], "reasons": ["The highest benchmark in the field and two latest wins make her the strongest class-and-form case.", "Level weights and gate two let Tommy Berry seek a economical run."], "risk": "A short-priced favourite can still be beaten by traffic or an unsuitable tempo."},
-        "alternative": {"horse": "Gerringong", "bet": "Place candidate", "metrics": ["No. 3", "Barrier 9", "57 kg", "Benchmark 104"], "reasons": ["Recent win and fourth suggest she can contest a top-three finish.", "Nash Rawiller rides at the same 57 kg as Lazzura."], "risk": "Barrier nine and an 11-point benchmark gap make the win case less compelling."},
-        "public_news": [{"text": "Tommy Berry publicly said Lazzura should be able to find a position from gate two.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Berry race-day comments", "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Lazzura",
+          "bet": "Win candidate",
+          "metrics": [
+            "No. 1",
+            "Barrier 2",
+            "57 kg",
+            "Benchmark 115",
+            "Recent form 1-2-3-1-1"
+          ],
+          "reasons": [
+            "The highest benchmark in the field and two latest wins make her the strongest class-and-form case.",
+            "Level weights and gate two let Tommy Berry seek a economical run."
+          ],
+          "risk": "A short-priced favourite can still be beaten by traffic or an unsuitable tempo."
+        },
+        "alternative": {
+          "horse": "Gerringong",
+          "bet": "Place candidate",
+          "metrics": [
+            "No. 3",
+            "Barrier 9",
+            "57 kg",
+            "Benchmark 104"
+          ],
+          "reasons": [
+            "Recent win and fourth suggest she can contest a top-three finish.",
+            "Nash Rawiller rides at the same 57 kg as Lazzura."
+          ],
+          "risk": "Barrier nine and an 11-point benchmark gap make the win case less compelling."
+        },
+        "public_news": [
+          {
+            "text": "Tommy Berry publicly said Lazzura should be able to find a position from gate two.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Berry race-day comments",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"
+          }
+        ],
+        "weather_scenario": "Lazzura has published Soft and Heavy placings and wins, so rain-affected ground would support rather than automatically weaken the main selection."
       },
       "8": {
-        "track": "Good 4", "rail": "True",
-        "primary": {"horse": "Declichy Boulevard", "bet": "Win candidate", "metrics": ["No. 8", "Barrier 5", "56 kg", "Benchmark 104", "Last-start win"], "reasons": ["Won the Prelude over Linebacker; Tommy Berry publicly said 1800 m should suit and described tactical flexibility.", "Carries 3 kg less than Linebacker and starts from a kinder gate."], "risk": "This Five Diamonds field is competitive and the Prelude form may not repeat unchanged."},
-        "alternative": {"horse": "Linebacker", "bet": "Win or place candidate", "metrics": ["No. 1", "Barrier 7", "59 kg", "Benchmark 107", "Recent finishes 4-3-2"], "reasons": ["The highest benchmark among the two selections and an improving placing sequence support a strong finish.", "Zac Lloyd rides; a clean passage can offset the three-kilogram weight difference."], "risk": "The top weight and prior defeat to Declichy Boulevard are material negatives."},
-        "public_news": [{"text": "Berry's public comments favour Declichy Boulevard at 1800 m.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"}, {"text": "A separate Racing NSW stable report says rival Zambardo missed ten days of work after colic.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Berry public comments", "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"}, {"label": "Zambardo stable report", "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Declichy Boulevard",
+          "bet": "Win candidate",
+          "metrics": [
+            "No. 8",
+            "Barrier 5",
+            "56 kg",
+            "Benchmark 104",
+            "Last-start win"
+          ],
+          "reasons": [
+            "Won the Prelude over Linebacker; Tommy Berry publicly said 1800 m should suit and described tactical flexibility.",
+            "Carries 3 kg less than Linebacker and starts from a kinder gate."
+          ],
+          "risk": "This Five Diamonds field is competitive and the Prelude form may not repeat unchanged."
+        },
+        "alternative": {
+          "horse": "Linebacker",
+          "bet": "Win or place candidate",
+          "metrics": [
+            "No. 1",
+            "Barrier 7",
+            "59 kg",
+            "Benchmark 107",
+            "Recent finishes 4-3-2"
+          ],
+          "reasons": [
+            "The highest benchmark among the two selections and an improving placing sequence support a strong finish.",
+            "Zac Lloyd rides; a clean passage can offset the three-kilogram weight difference."
+          ],
+          "risk": "The top weight and prior defeat to Declichy Boulevard are material negatives."
+        },
+        "public_news": [
+          {
+            "text": "Berry's public comments favour Declichy Boulevard at 1800 m.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"
+          },
+          {
+            "text": "A separate Racing NSW stable report says rival Zambardo missed ten days of work after colic.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Berry public comments",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/berry-banks-on-waller-mares-continuing-hot-streak/"
+          },
+          {
+            "label": "Zambardo stable report",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/state-switch-hands-pricekent-galloper-a-chance-to-cash-in/"
+          }
+        ],
+        "weather_scenario": "Declichy Boulevard has won on Soft and Heavy, and Tommy Berry publicly said give in the ground should suit. Check the official rating and 1800 m pace."
       },
       "9": {
-        "track": "Good 4", "rail": "True",
-        "primary": {"horse": "Agatha", "bet": "Win candidate", "metrics": ["No. 9", "Barrier 1", "55 kg", "Recent finishes 4-3-3"], "reasons": ["The low draw and 55 kg suit a short 1100 m race.", "The stable reported a barrier-blanket change corrected her slow starts; she drops 4 kg from a recent third."], "risk": "A fast-run race must still leave her a clear finishing lane from the inside."},
-        "alternative": {"horse": "Show Business", "bet": "Place candidate", "metrics": ["No. 11", "Barrier 3", "54 kg"], "reasons": ["One kilogram lighter than Agatha and drawn close to the rail.", "Zac Lloyd has options to save ground from gate three in a short sprint."], "risk": "The form case is weaker than Agatha's; place terms depend on the final field."},
-        "public_news": [{"text": "Agatha's trainer publicly discussed the barrier-blanket change and 4 kg weight drop.", "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"}],
-        "sources": [{"label": "Racing NSW official field", "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"}, {"label": "Agatha stable report", "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"}]
+        "track": "Good 4",
+        "rail": "True",
+        "primary": {
+          "horse": "Agatha",
+          "bet": "Win candidate",
+          "metrics": [
+            "No. 9",
+            "Barrier 1",
+            "55 kg",
+            "Recent finishes 4-3-3"
+          ],
+          "reasons": [
+            "The low draw and 55 kg suit a short 1100 m race.",
+            "The stable reported a barrier-blanket change corrected her slow starts; she drops 4 kg from a recent third."
+          ],
+          "risk": "A fast-run race must still leave her a clear finishing lane from the inside."
+        },
+        "alternative": {
+          "horse": "Show Business",
+          "bet": "Place candidate",
+          "metrics": [
+            "No. 11",
+            "Barrier 3",
+            "54 kg"
+          ],
+          "reasons": [
+            "One kilogram lighter than Agatha and drawn close to the rail.",
+            "Zac Lloyd has options to save ground from gate three in a short sprint."
+          ],
+          "risk": "The form case is weaker than Agatha's; place terms depend on the final field."
+        },
+        "public_news": [
+          {
+            "text": "Agatha's trainer publicly discussed the barrier-blanket change and 4 kg weight drop.",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"
+          }
+        ],
+        "sources": [
+          {
+            "label": "Racing NSW official field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens"
+          },
+          {
+            "label": "Agatha stable report",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/freedman-hoping-proverb-pounces-on-golden-opportunity/"
+          },
+          {
+            "label": "Rosehill R9 public form",
+            "url": "https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07/R9"
+          }
+        ],
+        "weather_scenario": "Agatha's published three Soft starts all resulted in third, with no win; if the track becomes Soft, her place case strengthens relative to her win case, while Show Business has two wins from three Soft starts."
       },
       "10": {
         "track": "Good 4", "rail": "True",
@@ -96,15 +552,64 @@
         "primary": {"horse": "Soldi", "bet": "Win candidate", "metrics": ["No. 4", "Barrier 9", "56 kg", "Won on debut"], "reasons": ["A race win provides firmer evidence than trials alone in this two-year-old field.", "Blake Shinn rides; the wide straight-course draw is a smaller concern than a sharp-turn sprint draw."], "risk": "Only one race start; two-year-old improvement is highly variable."},
         "alternative": {"horse": "She's Supreme", "bet": "Win or place candidate", "metrics": ["No. 5", "Barrier 1", "56 kg", "Third on debut"], "reasons": ["Debut third gives race experience and a demonstrated finish.", "Equal assigned weight to Soldi keeps the comparison focused on ability and track position."], "risk": "Inside stall may be the wrong part of the straight if the field shifts outward."},
         "public_news": [],
-        "sources": [{"label": "VRC official meeting", "url": "https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"}, {"label": "Race-day field and scratches", "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_1"}]
+        "sources": [{"label": "VRC official meeting", "url": "https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"}, {"label": "Race-day field and scratches", "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_1"}],
+        "result": {"status": "Official interim result", "placings": [{"position": 1, "horse": "Soldi"}, {"position": 2, "horse": "Goddess Kay"}, {"position": 3, "horse": "She's Supreme"}, {"position": 4, "horse": "Miss Ruthless"}], "source_url": "https://www.racingaustralia.horse/FreeFields/Results.aspx?Key=2026Nov07%2CVIC%2CFlemington"}
       },
       "2": {
-        "track": "Good 4 at research snapshot; recheck if rain arrives", "rail": "+9 m",
-        "weather_scenario": "If the surface turns Soft, the six-kilogram weight gap remains but today's dry-form comparison becomes less certain. Keep Fiorenot and Superfabulistic in the same order until a verified wet-ground record or early-race bias supports a change.",
-        "primary": {"horse": "Fiorenot", "bet": "Win candidate", "metrics": ["No. 2", "Barrier 4", "60 kg", "Recent finishes 1-2"], "reasons": ["A win followed by a second supports current mile fitness.", "Barrier four offers an economical route in a 1600 m handicap; VRC's published analyst also highlighted this runner."], "risk": "Carries 6 kg more than the alternative, so a tough pace may narrow the edge."},
-        "alternative": {"horse": "Superfabulistic", "bet": "Win or place candidate", "metrics": ["No. 13", "Barrier 2", "54 kg", "Recent form 2-1-1-2-3"], "reasons": ["Five consecutive top-three form figures and a six-kilogram weight advantage make the place case strong.", "Barrier two suits a forward-running map."], "risk": "Needs to handle the step up to this benchmark grade."},
+        "track": "Good 4 at research snapshot; recheck if rain arrives",
+        "rail": "+9 m",
+        "weather_scenario": "If the track turns Soft, Roulette King's one published Soft start was unplaced; Superfabulistic's Soft 7 second and low weight would gain relative appeal. The official Good 4 snapshot supports only a conditional rebound case.",
+        "primary": {
+          "horse": "Roulette King",
+          "bet": "User's revised win choice",
+          "metrics": [
+            "No. 1",
+            "Barrier 8",
+            "61.5 kg",
+            "Four wins from six starts"
+          ],
+          "reasons": [
+            "Published pre-race form showed four career wins from six starts and two wins from two second-up runs.",
+            "A return to Good 4 would be more favourable than the Soft 7 first-up run where he finished 12th in the Silver Eagle."
+          ],
+          "risk": "Top weight, barrier eight and the poor latest finish are substantial cautions; this user-directed edit is not a model consensus."
+        },
+        "alternative": {
+          "horse": "Superfabulistic",
+          "bet": "Win or place candidate",
+          "metrics": [
+            "No. 13",
+            "Barrier 2",
+            "54 kg",
+            "Recent form 2-1-1-2-3"
+          ],
+          "reasons": [
+            "Five consecutive top-three form figures and a 7.5 kg weight advantage over Roulette King make the place case strong.",
+            "Barrier two suits a forward-running map."
+          ],
+          "risk": "Needs to handle the step up to this benchmark grade."
+        },
         "public_news": [],
-        "sources": [{"label": "VRC official racebook", "url": "https://online.flippingbook.com/view/525741370/"}, {"label": "Race-day field and scratches", "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_2"}]
+        "sources": [
+          {
+            "label": "VRC official racebook",
+            "url": "https://online.flippingbook.com/view/525741370/"
+          },
+          {
+            "label": "Race-day field and scratches",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_2"
+          },
+          {
+            "label": "Roulette King public form",
+            "url": "https://www.racingandsports.com.au/form-guide/thoroughbred/australia/flemington/2026-11-07/R2/enhanced-form"
+          },
+          {
+            "label": "VRC official meeting",
+            "url": "https://www.vrc.com.au/race-days-and-events/2026-2027/tab-champions-stakes-day/"
+          }
+        ],
+        "as_of": "2026-11-07T13:21:00+11:00",
+        "revision_note": "Roulette King replaced Fiorenot at the user's request after the scheduled 1:15 pm jump. This is a retrospective form choice, not an original pre-race prediction; the result was not independently verified at the time of revision."
       },
       "3": {
         "track": "Good 4 at research snapshot; recheck if rain arrives", "rail": "+9 m",
