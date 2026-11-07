@@ -1,12 +1,13 @@
 'use strict';
 
 // Personal bring-your-own-key reads. No shared PuntersEdge key is held by FormLine.
-// The API is deliberately limited to Sydney thoroughbred meetings and fixed paths.
+// The API is limited to named Australian thoroughbred venues and fixed paths.
 const API_ORIGIN = 'https://api.puntersedge.online';
 const RESERVE_CREDITS = 5;
 const MAX_RESPONSE_CHARS = 12_000_000;
 const ACTION_COST = Object.freeze({ card: 2, odds: 4, form: 3, results: 2 });
 const VENUE_ALIASES = Object.freeze({
+  Flemington: ['Flemington'],
   Randwick: ['Randwick', 'Royal Randwick'],
   Kensington: ['Kensington', 'Randwick Kensington', 'Randwick (Kensington)'],
   Rosehill: ['Rosehill', 'Rosehill Gardens'],
@@ -70,6 +71,7 @@ function requireDate(value, earliest, latest) {
 
 function canonicalVenue(value) {
   const normalized = text(value, 80).toLowerCase().replace(/[()]/g, ' ').replace(/\s+/g, ' ');
+  if (normalized === 'flemington') return 'Flemington';
   if (/^(royal )?randwick$/.test(normalized)) return 'Randwick';
   if (/^(randwick )?kensington$/.test(normalized)) return 'Kensington';
   if (/^rosehill( gardens)?$/.test(normalized)) return 'Rosehill';
@@ -79,7 +81,7 @@ function canonicalVenue(value) {
 }
 function requireVenue(value) {
   const venue = canonicalVenue(value);
-  if (!venue) throw new FeedError(400, 'Choose Randwick, Kensington, Rosehill, Canterbury or Warwick Farm.');
+  if (!venue) throw new FeedError(400, 'Choose Flemington, Randwick, Kensington, Rosehill, Canterbury or Warwick Farm.');
   return venue;
 }
 function venueFilter(canonical) { return VENUE_ALIASES[canonical].join(','); }
@@ -170,7 +172,7 @@ function slimCard(raw, date, usage) {
   }));
   return {
     date, as_of: text(raw?.as_of, 40), usage, meetings,
-    note: meetings.length ? '' : 'No Sydney metro acceptances are published for this date.'
+    note: meetings.length ? '' : 'No supported acceptances are published for this date.'
   };
 }
 
@@ -194,7 +196,7 @@ function slimOdds(raw, date, venue, usage) {
     }).filter(Boolean)
   })).filter(race => race.number > 0);
   return { date, venue, as_of: new Date().toISOString(), usage, races,
-    note: races.length ? '' : 'No Sportsbet Sydney prices are available in the next-to-go window.' };
+    note: races.length ? '' : 'No Sportsbet prices are available for this venue in the next-to-go window.' };
 }
 
 function slimForm(raw, date, venue, raceNumber, usage) {
@@ -237,7 +239,7 @@ function slimResults(raw, date, venue, usage) {
     })).filter(row => row.name) : null
   })).filter(race => race.number > 0);
   return { date, venue, as_of: new Date().toISOString(), usage, results,
-    note: results.length ? '' : 'No Sydney results are available for this date and venue.' };
+    note: results.length ? '' : 'No results are available for this date and venue.' };
 }
 
 module.exports = async function handler(request, response) {
@@ -285,6 +287,6 @@ module.exports = async function handler(request, response) {
     return reply(response, 200, slimResults(results, date, venue, usage));
   } catch (error) {
     return reply(response, error instanceof FeedError ? error.status : 502,
-      { error: error instanceof FeedError ? error.message : 'Sydney racing data is unavailable.' });
+      { error: error instanceof FeedError ? error.message : 'Racing data is unavailable.' });
   }
 };

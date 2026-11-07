@@ -4,6 +4,20 @@
 @media(max-width:700px){.date-tabs{grid-template-columns:repeat(7,105px)}.today-board-layout{grid-template-columns:1fr}.coverage-panel{display:block}.coverage-panel .outline-link{display:inline-block;margin-top:12px}.public-runner-list{grid-template-columns:1fr}.meeting-picker,.race-picker{min-height:0}.analysis-panel{padding:18px}.analysis-top{display:block}.analysis-top a{display:inline-block;margin-top:9px}.archive-link{display:block}.archive-link>div:last-child{margin-top:11px}}
 @media(max-width:430px){.today-hero{min-height:240px}.today-board,.today-analysis{margin-top:26px}.section-heading h2{font-size:25px}.meeting-picker,.race-picker{padding:14px}.prediction-card,.multi-card{padding:13px}.coverage-panel{padding:18px}.analysis-actions{align-items:stretch}.analysis-actions label{width:100%}}
 
+.featured-meetings{margin:3px 0 14px}
+.featured-meetings[hidden]{display:none}
+.featured-meetings>.eyebrow{margin:0 0 8px;color:#387e55;font-size:10px;font-weight:900;letter-spacing:.12em}
+.featured-meeting-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.featured-choice{min-height:88px;padding:15px 18px;background:#173b2e;border-color:#173b2e;color:#fff;box-shadow:0 6px 20px #153c2a18}
+.featured-choice strong{font-size:18px;letter-spacing:-.03em}
+.featured-choice small{margin-top:3px;color:#d7eadb;font-size:11px}
+.featured-choice>span:last-child{color:#c7ebce;font-size:16px}
+.featured-choice .featured-kicker{display:block;margin-bottom:4px;color:#a8d6b5;font-size:9px;font-weight:900;letter-spacing:.11em}
+.featured-choice:hover{background:#245640;border-color:#6aab7b}
+.featured-choice[aria-pressed="true"]{background:#26744f;border-color:#86c391;box-shadow:inset 4px 0 #b7e3bb,0 6px 20px #153c2a18}
+.meeting-list-empty{font-size:11px;color:#657c6a;line-height:1.5;margin:8px 0}
+@media(max-width:700px){.featured-meeting-grid{grid-template-columns:1fr}.featured-choice{min-height:72px}}
+
 /* Dated, source-linked editorial selections for the current race card. */
 .editorial-research{margin-top:18px;overflow:hidden;border:1px solid #bfdac4;border-radius:10px;background:#f8fcf7}
 .editorial-intro{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 19px;background:#e8f3e8;border-bottom:1px solid #d1e5d2}
@@ -50,3 +64,20 @@
 .editorial-weather-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:9px}
 .editorial-weather-links a{font-size:10px;color:#1d7148;font-weight:800}
 @media(max-width:700px){.editorial-weather{margin:12px 12px 0}.editorial-weather-head{display:block}.editorial-weather-head span{display:block;margin-top:3px}}
+
+.today-tips{margin-top:32px;scroll-margin-top:98px}
+.today-tips[hidden]{display:none}
+.tips-context{margin:0 0 13px;color:#5f7564;font-size:11px;line-height:1.6}
+.tips-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tip-card{min-width:0;display:flex;flex-direction:column;padding:17px 18px;border:1px solid #d9e7d9;border-radius:9px;background:#fff;box-shadow:var(--shadow)}
+.tip-race{align-self:flex-start;margin-bottom:9px;padding:5px 7px;border-radius:4px;background:#e3f1e5;color:#2b744c;font-size:10px;font-weight:900}
+.tip-card h3{margin:0 0 8px;font-size:16px;letter-spacing:-.03em}
+.tip-card p{margin:0 0 15px;color:#4d6655;font-size:11px;line-height:1.6}
+.tip-source{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid #e3ece2;color:#708273;font-size:10px}
+.tip-source a{color:#23734c;font-weight:850}
+.tip-source a:focus-visible{outline:3px solid #75ac4f;outline-offset:2px}
+@media(max-width:700px){.tips-grid{grid-template-columns:1fr}}
+
+.install-guide{display:none}
+@media(max-width:700px){.install-guide{display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px 14px;border:1px solid #c8dfc9;border-radius:9px;background:#eff7ed}.install-guide img{flex:none;width:52px;height:52px;border-radius:10px}.install-guide strong{display:block;color:#245c3c;font-size:12px}.install-guide p{margin:3px 0 0;color:#54705b;font-size:10px;line-height:1.5}}
+@media(display-mode:standalone){.install-guide{display:none}}

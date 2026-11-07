@@ -18,16 +18,49 @@ function mergedMeetings(date=state.date){const map=new Map();for(const row of [.
 function selectedMeeting(){return mergedMeetings().find(row=>meetingId(row)===state.meeting);}
 function selectedRace(){const meeting=selectedMeeting();return meeting?.races.find(row=>raceId(row,meeting)===state.race);}
 function renderDates(){$('#dateTabs').innerHTML=Array.from({length:7},(_,i)=>{const date=dayAt(i),count=mergedMeetings(date).length;return `<button type="button" data-date="${date}" aria-pressed="${date===state.date}"><strong>${i===0?'Today':i===1?'Tomorrow':esc(dateLabel(date).split(',')[0])}</strong><small>${esc(dateLabel(date).replace(/^\w+,?\s*/,''))} · ${count} meeting${count===1?'':'s'}</small></button>`;}).join('');}
-function renderMeetings(){const meetings=mergedMeetings();$('#meetingCount').textContent=String(meetings.length);$('#meetingList').innerHTML=meetings.length?meetings.map(row=>`<button type="button" class="meeting-choice" data-meeting-id="${esc(meetingId(row))}" aria-pressed="${meetingId(row)===state.meeting}"><span><strong>${esc(row.venue)}</strong><small>${esc(row.state||'Saved')} · ${row.meeting_id?'Live QLD feed':row.source==='saved'?'Your saved card':'Dated schedule'} · ${row.races.length?`${row.races.length} race${row.races.length===1?'':'s'}`:row.race_count?`${row.race_count} scheduled`:'Program pending'}</small></span><span aria-hidden="true">↗</span></button>`).join(''):'<div class="empty-state"><strong>No meetings listed for this day</strong><p>Queensland open data and the dated NSW/Victorian schedule may not yet have a card. Check the official racing calendars.</p></div>';$('#scheduleSource').innerHTML=`Queensland meetings and runners update from ${officialLink('https://www.racingqueensland.com.au/about/reports-and-data/open-data','RQ Open Data ↗')}. NSW/Victorian entries are a dated schedule and may change. ${officialLink('https://www.racingnsw.com.au/race-time-information/','NSW times ↗')} ${officialLink('https://www.racing.com/group-races-calendar','VIC calendar ↗')}`;}
+function meetingChoice(row, featured=false){
+  const count=row.races.length?`${row.races.length} race${row.races.length===1?'':'s'}`:row.race_count?`${row.race_count} scheduled`:'Program pending';
+  const detail=`${esc(row.state||'Saved')} · ${esc(count)}`;
+  const source=row.meeting_id?'Live QLD feed':row.source==='saved'?'Your saved card':'Dated schedule';
+  return `<button type="button" class="meeting-choice${featured?' featured-choice':''}" data-meeting-id="${esc(meetingId(row))}" aria-pressed="${meetingId(row)===state.meeting}"><span>${featured?'<span class="featured-kicker">FEATURED MEETING</span>':''}<strong>${esc(row.venue)}</strong><small>${detail} · ${featured&&row.date==='2026-11-07'?'Race research':esc(source)}</small></span><span aria-hidden="true">↗</span></button>`;
+}
+function renderMeetings(){
+  const meetings=mergedMeetings();
+  const featured=meetings.filter(row=>/^(flemington|rosehill(?: gardens)?)$/i.test(String(row.venue).trim()))
+    .sort((a,b)=>Number(/rosehill/i.test(a.venue))-Number(/rosehill/i.test(b.venue)));
+  const others=meetings.filter(row=>!featured.includes(row));
+  const featuredRoot=$('#featuredMeetings');
+  featuredRoot.hidden=featured.length===0;
+  featuredRoot.innerHTML=featured.length?`<p class="eyebrow">FEATURED MEETINGS</p><div class="featured-meeting-grid">${featured.map(row=>meetingChoice(row,true)).join('')}</div>`:'';
+  $('#meetingTitle').textContent=featured.length?'Other meetings':'Meetings';
+  $('#meetingCount').textContent=String(others.length);
+  $('#meetingList').innerHTML=others.length?others.map(row=>meetingChoice(row)).join(''):featured.length
+    ?'<p class="meeting-list-empty">No other meetings listed for this day.</p>'
+    :'<div class="empty-state"><strong>No meetings listed for this day</strong><p>Queensland open data and the dated NSW/Victorian schedule may not yet have a card. Check the official racing calendars.</p></div>';
+  $('#scheduleSource').innerHTML=`Queensland meetings and runners update from ${officialLink('https://www.racingqueensland.com.au/about/reports-and-data/open-data','RQ Open Data ↗')}. NSW/Victorian entries are a dated schedule and may change. ${officialLink('https://www.racingnsw.com.au/race-time-information/','NSW times ↗')} ${officialLink('https://www.racing.com/group-races-calendar','VIC calendar ↗')}`;
+}
 function renderRaces(){const meeting=selectedMeeting();$('#selectedMeetingDate').textContent=meeting?dateLabel(meeting.date,{weekday:'long'}).toUpperCase():'CHOOSE A MEETING';$('#selectedMeetingTitle').textContent=meeting?meeting.venue+(meeting.feature?` · ${meeting.feature}`:''):'Race card';const source=safeUrl(meeting?.state==='QLD'?'https://www.racingqueensland.com.au/racing/full-calendar':meeting?.source_url);$('#meetingSourceLink').hidden=!source;if(source)$('#meetingSourceLink').href=source;$('#raceList').innerHTML=!meeting?'<p class="loading">Select a meeting to see its races.</p>':meeting.races.length?meeting.races.map(r=>{const started=r.start_time&&Date.parse(r.start_time)<=Date.now(),detail=meeting.meeting_id?'Open public runner list':editorialNoteFor(r,meeting)?'Research notes · two selections':r.savedRace?'Open saved research':r.preview_url?'Dated card · preview linked':'Dated race schedule';return `<button type="button" class="today-race ${started?'started':''}" data-race-id="${esc(raceId(r,meeting))}" aria-pressed="${state.race===raceId(r,meeting)}"><span>R${r.number}</span><span><strong>${esc(r.name||`Race ${r.number}`)}</strong><small>${r.distance_m?`${esc(r.distance_m)}m · `:''}${esc(detail)}</small></span><span>${esc(timeLabel(r.start_time))}</span></button>`;}).join(''):`<div class="empty-state"><strong>Race program pending</strong><p>${meeting.meeting_id?'This Queensland meeting is listed, but its races are not available through open data yet.':'Open the official meeting to check the latest program.'}</p></div>`;if(meeting?.meeting_id&&!state.qldCards.has(meetingId(meeting)))$('#raceList').insertAdjacentHTML('beforeend','<button type="button" id="loadQldCard" class="today-race"><span>↻</span><span><strong>Load Queensland race program</strong><small>Official public open data</small></span><span>Open</span></button>');}
 function renderBoard(){renderDates();renderMeetings();renderRaces();}
 function infoPanel(race,meeting,body){const started=race.start_time&&Date.parse(race.start_time)<=Date.now(),source=meeting.meeting_id?'https://www.racingqueensland.com.au/racing/full-calendar':race.source_url||meeting.source_url,details=state.qldDetails.get(meetingId(meeting));return `<div class="analysis-top"><div><p class="eyebrow">${esc(meeting.venue)} · R${race.number} · ${esc(dateLabel(meeting.date))}</p><h3>${esc(race.name||`Race ${race.number}`)}</h3><p>${esc(timeLabel(race.start_time))} AEDT · ${started?'Scheduled jump has passed':'Upcoming'}</p></div>${officialLink(source)}</div><div class="analysis-facts">${race.distance_m?`<span>${esc(race.distance_m)}m</span>`:''}${race.race_class?`<span>${esc(race.race_class)}</span>`:''}${race.track_rating||details?.track_rating?`<span>Track ${esc(race.track_rating||details.track_rating)}</span>`:''}${details?.rail_position?`<span>Rail ${esc(details.rail_position)}</span>`:''}<span>${esc(meeting.state||'Saved')}</span></div>${body}`;}
 function researchLens(race){const distance=Number(race.distance_m);if(Number.isFinite(distance)&&distance<=1200)return 'For a shorter race, inspect early pace, the actual barrier draw, rail position and whether a runner can find cover.';if(Number.isFinite(distance)&&distance>=2000)return 'For a staying race, inspect recent runs over a similar distance, carried weight, fitness and track suitability.';return 'Compare recent runs near this distance and class, likely early position and the current track rating.';}
 function fieldHtml(runners,asOf,label){if(!Array.isArray(runners)||!runners.length)return '<p class="analysis-state warning">No horses are currently listed for this race. Acceptances may still be pending.</p>';return `<div class="field-heading"><div><p class="eyebrow">${esc(label)}</p><h4>${runners.length} horses listed</h4></div>${asOf?`<span>Checked ${esc(timeLabel(asOf))} AEDT</span>`:''}</div><div class="public-runner-list">${runners.map(runner=>`<article class="public-runner"><div class="runner-number">${runner.number?`#${esc(runner.number)}`:'—'}</div><div><h5>${esc(runner.name||runner.runner_name)}</h5><p>${runner.jockey?`Jockey: ${esc(runner.jockey)}`:'Jockey TBC'}${runner.trainer?` · Trainer: ${esc(runner.trainer)}`:''}</p></div><strong>${runner.weight_kg||runner.weight?`${esc(runner.weight_kg||runner.weight)}kg`:'Weight TBC'}</strong></article>`).join('')}</div>`;}
+function renderTips(meeting){
+  const section=$('#publicTips');
+  const venue=String(meeting?.venue||'').trim().toLowerCase();
+  const tips=state.editorial?.meetings?.[venue]?._tips;
+  section.hidden=!Array.isArray(tips)||tips.length===0;
+  if(section.hidden)return;
+  $('#tipsMeeting').textContent=`${meeting.venue} · source-linked race-day notes`;
+  $('#tipsCards').innerHTML=tips.map(item=>{
+    const url=safeUrl(item.url);
+    return `<article class="tip-card"><span class="tip-race">${esc(item.race||'MEETING')}</span><h3>${esc(item.title)}</h3><p>${esc(item.detail)}</p><div class="tip-source"><span>${esc(item.source||'Public report')}</span>${url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Read source ↗</a>`:''}</div></article>`;
+  }).join('');
+}
 function renderAnalysis(){
   const race=selectedRace(),meeting=selectedMeeting();
+  renderTips(meeting);
   if(!race||!meeting){
-    $('#analysisPanel').innerHTML='<div class="empty-state"><strong>Choose a race above</strong><p>Open a Queensland race to see its current public runner list. NSW and Victorian entries show dated schedule facts.</p></div>';
+    $('#analysisPanel').innerHTML='<div class="empty-state"><strong>Choose a race above</strong><p>Choose a race from the selected meeting to inspect its field, research notes and form link.</p></div>';
     return;
   }
   if(state.loadingRace===state.race){
@@ -45,10 +78,10 @@ function renderAnalysis(){
     :editorial?'This NSW/Victorian card includes a dated, source-linked editorial assessment. A public live runner and odds feed is not connected.'
     :'This is a dated NSW/Victorian schedule entry. A public, reusable live runner feed for this state is not connected.';
   const pending='<div class="prediction-card model-pending"><p class="eyebrow">MODEL DECISION PENDING</p><h4>Research checklist</h4><p>'+esc(researchLens(race))+'</p><p>FormLine is not generating picks or two-horse placement combinations from a partial field. Those need a selected, tested probability model and licensed point-in-time form and odds data.</p></div>';
-  const sydneyLink=meeting.state==='NSW'&&/randwick|rosehill|canterbury|warwick farm/i.test(meeting.venue)?`<p class="analysis-foot"><a href="#sydney" data-pe-date="${esc(meeting.date)}">Open this date in personal Sydney research ↗</a></p>`:'';
+  const personalLink=/randwick|rosehill|canterbury|warwick farm|flemington/i.test(meeting.venue)?`<p class="analysis-foot"><a href="#sydney" data-pe-date="${esc(meeting.date)}" data-pe-venue="${esc(meeting.venue)}" data-pe-race="${esc(race.number)}">Open all-runner form · 3 credits ↗</a></p>`:'';
   const error=state.raceError?`<p class="analysis-state warning">${esc(state.raceError)}</p>`:'';
   const preview=race.preview_url?`<p class="analysis-foot">${officialLink(race.preview_url,'External race preview ↗')}</p>`:'';
-  $('#analysisPanel').innerHTML=infoPanel(race,meeting,`${error}<p class="analysis-state">${esc(coverage)}</p>${field}${editorial||pending}${meeting.meeting_id?'<div class="analysis-actions"><button type="button" class="secondary" id="refreshRace">Refresh public field</button></div>':''}${sydneyLink}${preview}<p class="analysis-foot">Verify scratchings, current ground, rider changes and results at the official source. No bets are placed here.</p>`);
+  $('#analysisPanel').innerHTML=infoPanel(race,meeting,`${error}<p class="analysis-state">${esc(coverage)}</p>${field}${editorial||pending}${meeting.meeting_id?'<div class="analysis-actions"><button type="button" class="secondary" id="refreshRace">Refresh public field</button></div>':''}${personalLink}${preview}<p class="analysis-foot">Verify scratchings, current ground, rider changes and results at the official source. No bets are placed here.</p>`);
 }
 async function loadQueenslandCard(meeting,autoOpen=false){if(!meeting?.meeting_id||state.qldCards.has(meetingId(meeting)))return;const url=new URL('/api/schedule',location.href);url.searchParams.set('action','card');url.searchParams.set('meeting_id',String(meeting.meeting_id));url.searchParams.set('date',meeting.date);const response=await fetch(url,{cache:'no-store'}),data=await response.json();if(!response.ok)throw Error(data.error||`Queensland race program returned HTTP ${response.status}.`);const original=state.publicMeetings.find(row=>meetingId(row)===meetingId(meeting)&&row.meeting_id);if(!original)return;original.races=normalisePublic([{...original,races:data.races}])[0]?.races||[];state.qldDetails.set(meetingId(meeting),data);state.qldCards.add(meetingId(meeting));renderBoard();if(autoOpen&&state.meeting===meetingId(meeting)&&original.races.length&&!state.race)selectRace(raceId(original.races[0],original),false);}
 async function loadQueenslandRunners(force=false){const meeting=selectedMeeting(),race=selectedRace();if(!meeting?.meeting_id||!race?.race_id)return;const id=String(race.race_id),requestId=++state.requestId;if(!force&&state.runnerCache.has(id)){renderAnalysis();return;}state.loadingRace=state.race;state.raceError='';renderAnalysis();try{const url=new URL('/api/schedule',location.href);url.searchParams.set('action','runners');url.searchParams.set('race_id',id);url.searchParams.set('meeting_id',String(meeting.meeting_id));url.searchParams.set('date',meeting.date);const response=await fetch(url,{cache:'no-store'}),data=await response.json();if(!response.ok)throw Error(data.error||`Queensland runner feed returned HTTP ${response.status}.`);if(requestId!==state.requestId)return;state.runnerCache.set(id,data);}catch(error){if(requestId===state.requestId)state.raceError=error.message;}finally{if(requestId===state.requestId){state.loadingRace='';renderAnalysis();}}}
@@ -108,10 +141,10 @@ function editorialAsOf(value) {
   return `${new Intl.DateTimeFormat('en-AU', {timeZone:'Australia/Sydney', day:'numeric', month:'short', hour:'numeric', minute:'2-digit', hour12:true}).format(new Date(parsed))} AEDT`;
 }
 
-function editorialPick(pick, kind) {
+function editorialPick(pick, kind, heading) {
   const metrics = Array.isArray(pick.metrics) ? pick.metrics.filter(Boolean) : [];
   const reasons = Array.isArray(pick.reasons) ? pick.reasons.filter(Boolean) : [];
-  const label = kind === 'primary' ? 'Win selection' : 'Other win / place candidate';
+  const label = heading || (kind === 'primary' ? 'Win selection' : 'Other win / place candidate');
   return `<article class="editorial-pick editorial-pick-${kind}">
     <div class="editorial-pick-head"><span>${label}</span><strong>${esc(pick.bet || (kind === 'primary' ? 'Win' : 'Win or place'))}</strong></div>
     <h4>${esc(pick.horse)}</h4>
@@ -128,17 +161,18 @@ function renderEditorial(race, meeting) {
   const facts = [note.track && `Track: ${note.track}`, note.rail && `Rail: ${note.rail}`].filter(Boolean);
   const news = (Array.isArray(note.public_news) ? note.public_news : []).filter(item => item?.text);
   const links = (Array.isArray(note.sources) ? note.sources : []).map(item => ({label:item?.label || 'Source', url:safeUrl(item?.url)})).filter(item => item.url);
-  const weather=String(meeting.venue||'').toLowerCase()==='flemington'?state.editorial.meetings?.flemington?._weather:null;
+  const weather=state.editorial.meetings?.[String(meeting.venue||'').toLowerCase()]?._weather;
   const weatherLinks=(Array.isArray(weather?.sources)?weather.sources:[]).map(item=>({label:item?.label||'Track source',url:safeUrl(item?.url)})).filter(item=>item.url);
   const weatherHtml=weather
-    ?'<div class="editorial-weather"><div class="editorial-weather-head"><strong>Flemington rain scenario</strong><span>'+esc(weather.as_of||'Race-day snapshot')+'</span></div><p>'+esc(weather.status)+'</p><p>'+esc(note.weather_scenario||weather.if_soft)+'</p>'+(weatherLinks.length?'<div class="editorial-weather-links">'+weatherLinks.map(item=>'<a href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer">'+esc(item.label)+' ↗</a>').join('')+'</div>':'')+'</div>'
+    ?'<div class="editorial-weather"><div class="editorial-weather-head"><strong>'+(String(meeting.venue||'').toLowerCase()==='flemington'?'Flemington rain scenario':'Rosehill ground update')+'</strong><span>'+esc(weather.as_of||'Race-day snapshot')+'</span></div><p>'+esc(weather.status)+'</p><p>'+esc(note.weather_scenario||weather.if_soft)+'</p>'+(weatherLinks.length?'<div class="editorial-weather-links">'+weatherLinks.map(item=>'<a href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer">'+esc(item.label)+' ↗</a>').join('')+'</div>':'')+'</div>'
     :'';
   return `<section class="editorial-research" aria-label="Dated race research">
     <div class="editorial-intro"><div><p class="eyebrow">7 NOVEMBER RESEARCH NOTES</p><h4>Two runners to examine</h4><p>Editorial assessment from public form and reports. These are not calibrated model probabilities or private insider information.</p>${state.editorial.method ? `<p class="editorial-method">${esc(state.editorial.method)}</p>` : ''}</div><span class="editorial-time">Checked ${esc(editorialAsOf(note.as_of || state.editorial.as_of))}</span></div>
     ${facts.length ? `<div class="editorial-conditions">${facts.map(item => `<span>${esc(item)}</span>`).join('')}</div>` : ''}
     <p class="analysis-state ${passed ? 'warning' : ''}">${passed ? 'The scheduled jump has passed. These dated editorial notes are not a verified pre-race prediction or confirmed results; check the official outcome.' : 'Pre-race view. Recheck scratchings, ground, rider changes and the available price before using this research.'}</p>
+    ${note.revision_note ? `<p class="analysis-state warning">${esc(note.revision_note)}</p>` : ''}
     ${weatherHtml}
-    <div class="editorial-picks">${editorialPick(note.primary, 'primary')}${editorialPick(note.alternative, 'alternative')}</div>
+    <div class="editorial-picks">${editorialPick(note.primary, 'primary', passed && note.revision_note ? 'Revised form choice' : '')}${editorialPick(note.alternative, 'alternative')}</div>
     ${news.length ? `<div class="editorial-news"><h5>Public reports and stable comments</h5><ul>${news.map(item => { const url = safeUrl(item.url); return `<li>${esc(item.text)}${url ? ` <a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Read source ↗</a>` : ''}</li>`; }).join('')}</ul></div>` : ''}
     ${links.length ? `<div class="editorial-sources"><strong>Research sources</strong><div>${links.map(item => `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.label)} ↗</a>`).join('')}</div></div>` : ''}
   </section>`;
