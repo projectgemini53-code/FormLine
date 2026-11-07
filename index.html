@@ -7,16 +7,16 @@
   <meta name="theme-color" content="#112826">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Upcoming Australian thoroughbred schedules, public Queensland runner lists and personal Sydney race research.">
+  <meta name="description" content="Upcoming Australian thoroughbred schedules, dated race research, public Queensland runner lists and personal Sydney form.">
   <title>Upcoming Races | FormLine</title>
   <link rel="icon" type="image/png" href="logo-green.png">
   <link rel="apple-touch-icon" href="logo-green.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="today.css?v=12">
+  <link rel="stylesheet" href="today.css?v=13">
   <link rel="stylesheet" href="sydney.css?v=13">
   <script>if (['flemington','randwick'].includes(new URLSearchParams(location.search).get('meeting')?.toLowerCase())) location.replace(`cup-day-2026.html${location.search}${location.hash}`);</script>
-  <script src="today.js?v=13" defer></script>
+  <script src="today.js?v=14" defer></script>
   <script src="sydney.js?v=14" defer></script>
 </head>
 <body>
@@ -36,13 +36,13 @@
   </aside>
   <button type="button" id="menuScrim" class="menu-scrim" aria-label="Close navigation" tabindex="-1"></button>
   <main class="shell">
-    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>See the field.</span></h1><p class="hero-copy">Choose a day, meeting and race. Queensland programs and runner lists load from public open data. For Sydney fields, form and odds, open the personal PuntersEdge panel below with your own API key.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
+    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>See the field.</span></h1><p class="hero-copy">Choose a day, meeting and race. Dated Rosehill and Flemington research notes appear where available; Queensland programs and runner lists load from public open data. For personal Sydney form and odds, use your own PuntersEdge key below.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
     <section id="upcoming" class="today-board" aria-labelledby="upcoming-title">
       <div class="section-heading"><div><p class="eyebrow">01 / RACE FINDER</p><h2 id="upcoming-title">Today and the week ahead</h2></div><p id="scheduleStatus" role="status">Loading the published schedule…</p></div>
       <div id="dateTabs" class="date-tabs" role="group" aria-label="Meeting date"></div>
       <div class="today-board-layout"><aside class="meeting-picker" aria-labelledby="meetingTitle"><div class="picker-head"><h3 id="meetingTitle">Meetings</h3><span id="meetingCount">—</span></div><div id="meetingList" class="meeting-list"><p class="loading">Checking upcoming meetings…</p></div><div class="source-note" id="scheduleSource"></div></aside><div class="race-picker"><div class="picker-head"><div><p class="eyebrow" id="selectedMeetingDate">CHOOSE A MEETING</p><h3 id="selectedMeetingTitle">Race card</h3></div><a id="meetingSourceLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Official card ↗</a></div><div id="raceList" class="today-race-list"><p class="loading">Select a meeting to see its races.</p></div></div></div>
     </section>
-    <section id="analysis" class="today-analysis" aria-labelledby="analysis-title"><div class="section-heading"><div><p class="eyebrow">02 / PUBLIC FIELD</p><h2 id="analysis-title">Race details</h2></div><p>Select a race to see available details.</p></div><div id="analysisPanel" class="analysis-panel" aria-live="polite"><div class="empty-state"><strong>Choose a race above</strong><p>Current Queensland runners will appear here where the public feed has published a field.</p></div></div></section>
+    <section id="analysis" class="today-analysis" aria-labelledby="analysis-title"><div class="section-heading"><div><p class="eyebrow">02 / RACE RESEARCH</p><h2 id="analysis-title">Race details</h2></div><p>Select a race to see its available field or dated research notes.</p></div><div id="analysisPanel" class="analysis-panel" aria-live="polite"><div class="empty-state"><strong>Choose a race above</strong><p>Available runner details and sourced editorial notes appear here.</p></div></div></section>
     <section id="sydney" class="sydney-private" aria-labelledby="sydney-title">
       <div class="sydney-head">
         <div><p class="eyebrow">03 / PERSONAL SYDNEY FEED</p><h2 id="sydney-title">Sydney race research</h2><p>Load Randwick, Rosehill, Canterbury and Warwick Farm cards, form and available odds through your own PuntersEdge key. Your key is used only for your requests in this browser tab; cards loaded here are not shared with other visitors.</p></div>
@@ -59,7 +59,7 @@
       <div id="peRaceTabs" class="sydney-race-tabs" role="group" aria-label="Races at selected Sydney meeting"></div>
       <div id="peDetail" class="sydney-detail" aria-live="polite"><div class="empty-state"><strong>No personal card loaded</strong><p>Use your own key to see the current Sydney field and its research data.</p></div></div>
     </section>
-    <section class="coverage-panel" aria-labelledby="coverage-title"><div><p class="eyebrow">DATA COVERAGE</p><h2 id="coverage-title">Public Queensland coverage</h2><p>Racing Queensland open data supplies meeting programs and listed horses, weights, jockeys and trainers. The public endpoints connected here do not include barriers, recent form, live odds or final placings. NSW and Victorian entries in the public race finder are dated schedules; use the personal Sydney panel above for current Sydney metropolitan research. We will choose a statistical model after securing the history and market data needed to test it.</p></div><a class="outline-link" href="https://www.racingqueensland.com.au/about/reports-and-data/open-data" target="_blank" rel="noopener noreferrer">About the public feed ↗</a></section>
+    <section class="coverage-panel" aria-labelledby="coverage-title"><div><p class="eyebrow">DATA COVERAGE</p><h2 id="coverage-title">Public Queensland coverage</h2><p>Racing Queensland open data supplies meeting programs and listed horses, weights, jockeys and trainers. The public endpoints connected here do not include barriers, recent form, live odds or final placings. NSW and Victorian cards are dated schedules; occasional source-linked editorial notes are snapshots, not a live feed or validated model. Use the personal Sydney panel above for current Sydney metropolitan research with your own key.</p></div><a class="outline-link" href="https://www.racingqueensland.com.au/about/reports-and-data/open-data" target="_blank" rel="noopener noreferrer">About the public feed ↗</a></section>
     <section class="calculator-feature"><div><p class="eyebrow">PAPER BETTING TOOL</p><h2>Check the actual bookmaker quote.</h2><p>Use the calculator to record a hypothetical return from a quote you enter. It does not place bets or estimate fair odds.</p></div><a class="cup-feature-link" href="research-tools.html#calculator">Open betting calculator ↗</a></section>
     <section class="archive-link"><div><p class="eyebrow">PAST RESEARCH</p><h2>3 November Cup Day archive</h2><p>Review the Melbourne Cup and Randwick race notes, historical comparisons, and saved runner tags.</p></div><div><a class="outline-link" href="cup-day-2026.html">Open race archive ↗</a><a class="outline-link" href="cup-analysis.html">Cup history ↗</a></div></section>
   </main>
