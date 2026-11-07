@@ -14,8 +14,8 @@
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=2">
   <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png?v=2">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="today.css?v=19">
+  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="stylesheet" href="today.css?v=20">
   <script>if (['flemington','randwick'].includes(new URLSearchParams(location.search).get('meeting')?.toLowerCase())) location.replace(`cup-day-2026.html${location.search}${location.hash}`);</script>
   <script src="today.js?v=19" defer></script>
 </head>
@@ -36,14 +36,13 @@
   </aside>
   <button type="button" id="menuScrim" class="menu-scrim" aria-label="Close navigation" tabindex="-1"></button>
   <main class="shell">
-    <section class="hero today-hero" aria-labelledby="page-title"><div><p class="eyebrow">UPCOMING AUSTRALIAN THOROUGHBRED RACING</p><h1 id="page-title">Find the race.<br><span>See the field.</span></h1><p class="hero-copy">Choose a day, meeting and race. Flemington and Rosehill show sourced, dated field snapshots and race research where available. Queensland programs and runner lists load from public open data.</p></div><div class="hero-badge"><span>7</span><small>DAYS<br>AHEAD</small></div></section>
-    <section id="installGuide" class="install-guide" aria-label="Add FormLine to your phone home screen"><img src="icon-192.png?v=2" alt="" width="52" height="52"><div><strong>Use FormLine like an app</strong><p>On iPhone, open in Safari and choose Share → Add to Home Screen. Launch from the FormLine icon for a standalone view without Safari tabs. On Android, choose Install app from the browser menu.</p></div></section>
     <section id="upcoming" class="today-board" aria-labelledby="upcoming-title">
-      <div class="section-heading"><div><p class="eyebrow">01 / RACE FINDER</p><h2 id="upcoming-title">Today and the week ahead</h2></div><p id="scheduleStatus" role="status">Loading the published schedule…</p></div>
+      <div class="section-heading"><div><p class="eyebrow">01 / RACE FINDER</p><h1 id="upcoming-title">Today and the week ahead</h1></div><p id="scheduleStatus" role="status">Loading the published schedule…</p></div>
       <div id="dateTabs" class="date-tabs" role="group" aria-label="Meeting date"></div>
       <div id="featuredMeetings" class="featured-meetings" aria-label="Featured meetings" hidden></div>
       <div class="today-board-layout"><aside class="meeting-picker" aria-labelledby="meetingTitle"><div class="picker-head"><h3 id="meetingTitle">Meetings</h3><span id="meetingCount">—</span></div><div id="meetingList" class="meeting-list"><p class="loading">Checking upcoming meetings…</p></div><div class="source-note" id="scheduleSource"></div></aside><div class="race-picker"><div class="picker-head"><div><p class="eyebrow" id="selectedMeetingDate">CHOOSE A MEETING</p><h3 id="selectedMeetingTitle">Race card</h3></div><a id="meetingSourceLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Official card ↗</a></div><div id="raceList" class="today-race-list"><p class="loading">Select a meeting to see its races.</p></div></div></div>
     </section>
+    <section id="installGuide" class="install-guide" aria-label="Add FormLine to your phone home screen"><img src="icon-192.png?v=2" alt="" width="52" height="52"><div><strong>Use FormLine like an app</strong><p>On iPhone, open in Safari and choose Share → Add to Home Screen. Launch from the FormLine icon for a standalone view without Safari tabs. On Android, choose Install app from the browser menu.</p></div></section>
     <section id="analysis" class="today-analysis" aria-labelledby="analysis-title"><div class="section-heading"><div><p class="eyebrow">02 / RACE RESEARCH</p><h2 id="analysis-title">Race details</h2></div><p>Select a race to see its available field or dated research notes.</p></div><div id="analysisPanel" class="analysis-panel" aria-live="polite"><div class="empty-state"><strong>Choose a race above</strong><p>Available runner details and sourced editorial notes appear here.</p></div></div></section>
     <section id="publicTips" class="today-tips" aria-labelledby="publicTipsTitle" hidden>
       <div class="section-heading"><div><p class="eyebrow">03 / PUBLIC RACE NOTES</p><h2 id="publicTipsTitle">Tips and stable reports</h2></div><p id="tipsMeeting">Source-linked reports for the selected meeting</p></div>
