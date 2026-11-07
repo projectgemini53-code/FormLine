@@ -1,0 +1,414 @@
+{
+  "date": "2026-11-07",
+  "as_of": "2026-11-07T13:45:19+11:00",
+  "method": "Sourced pre-race longshot assessments using public form, rider, barrier and race-shape evidence; market ranking checked independently. These are not calibrated win probabilities.",
+  "meetings": {
+    "flemington": {
+      "4": {
+        "horse": "Cripps",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 12",
+          "Gate 14",
+          "54 kg",
+          "Billy Egan",
+          "Recent form 1-1-3-1-3-1 before spell"
+        ],
+        "reasons": [
+          "Four wins in six completed starts before his spell show genuine upside beyond his market rank.",
+          "He has led to win at Flemington; a positive early position could matter if the 1200 m straight race lacks strong pace."
+        ],
+        "risk": "First-up since June and stepping into Listed company. Gate 14 is only helpful if the outer lane is racing well.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "RaceHub race preview",
+            "url": "https://racehub.com.au/race-preview/flemington-2026-11-07-preview"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://www.racingaustralia.horse/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2MDM1Mzg0NDM%3d&src=horseform&raceentry=MzQ1ODYwMDExNzc%3d&stage=Acceptances&Key=2026Nov07,VIC,Flemington"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_4"
+          }
+        ]
+      },
+      "5": {
+        "horse": "Zuleika",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 7",
+          "Gate 5",
+          "56 kg",
+          "William Pike",
+          "One win from two at 2000 m"
+        ],
+        "reasons": [
+          "The 2000 m trip suits her published record better than the shorter lead-up; she closed for third at Randwick last start.",
+          "William Pike rides from a middle draw, leaving options to find cover before the turn."
+        ],
+        "risk": "Flemington debut and a stronger Group 2 field make the distance case uncertain.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "TABtouch public form",
+            "url": "https://www.tabtouch.com.au/racing/2026-11-07/mr/5"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://www.racingaustralia.horse/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2MjYzMzU5ODc%3d&src=horseform&raceentry=MzQ1ODYyNjY3NzE%3d&stage=Acceptances&Key=2026Nov07,VIC,Flemington"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_5"
+          }
+        ]
+      },
+      "6": {
+        "horse": "Headwall",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 3",
+          "Gate 6",
+          "58.5 kg",
+          "Ethan Brown",
+          "Two Flemington straight seconds"
+        ],
+        "reasons": [
+          "Two seconds up the Flemington straight supply course evidence that the shorter-priced Tempted lacks.",
+          "His recent second to Pericles and close fourth in The Everest show he can finish against strong sprinters."
+        ],
+        "risk": "No win from five published 1200 m starts; lane bias or a slow tempo could blunt his late run.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "VRC Champions Sprint preview",
+            "url": "https://www.vrc.com.au/latest-news/vrc-champions-sprint-preview/"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://www.racingaustralia.horse/InteractiveForm/HorseFullForm.aspx?horsecode=MTE1MDk4MTg1OTM%3d&src=horseform&raceentry=MzQ0NzM5MjI2ODY%3d&stage=Acceptances&Key=2026Nov07,VIC,Flemington"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_6"
+          }
+        ]
+      },
+      "7": {
+        "horse": "Lindermann",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 2",
+          "Gate 3",
+          "59 kg",
+          "Damian Lane",
+          "Last-start Craven Plate winner"
+        ],
+        "reasons": [
+          "He won the Craven Plate over 1800 m last start and finished ahead of main place pick Tom Kitten.",
+          "A likely forward position from gate three gives Damian Lane a chance to control or track the mile pace."
+        ],
+        "risk": "Autumn Glow has repeatedly beaten him and carries 2 kg less; he may need the favourite to underperform.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "VRC Champions Mile preview",
+            "url": "https://www.vrc.com.au/latest-news/vrc-champions-mile-preview/"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://www.racingaustralia.horse/InteractiveForm/HorseFullForm.aspx?horsecode=MTE1MDY5NjY3MjM%3d&src=horseform&raceentry=MzQ1NTg0MDExNzE%3d&stage=Acceptances&Key=2026Nov07,VIC,Flemington"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_7"
+          }
+        ]
+      },
+      "8": {
+        "horse": "Sir Delius",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 3",
+          "Gate 7",
+          "59 kg",
+          "Craig Williams",
+          "Past Flemington 2000 m Group 1 winner"
+        ],
+        "reasons": [
+          "His Turnbull Stakes win at this course and distance is a concrete reason to consider a rebound.",
+          "Gate seven gives Craig Williams more room to find cover than the widest-drawn runners."
+        ],
+        "risk": "Recent finishes of fourth, fourth and sixth are below his best; the latest Cox Plate run needs forgiving.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "VRC Champions Stakes preview",
+            "url": "https://www.vrc.com.au/latest-news/tab-champions-stakes-preview/"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://www.racingaustralia.horse/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2OTI5MTczNTU%3d&src=horseform&raceentry=MzQ1OTI2NDEwMjc%3d&stage=Acceptances&Key=2026Nov07,VIC,Flemington"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_8"
+          }
+        ]
+      },
+      "9": {
+        "horse": "Lawborough",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 19e · promoted emergency",
+          "Gate 15",
+          "58 kg",
+          "Jye McNeil",
+          "Last-start 1100 m BM78 winner"
+        ],
+        "reasons": [
+          "A Bendigo BM78 win at the same 1100 m trip and three career wins from eight starts provide a form case.",
+          "His outer gate may be useful in a straight sprint if earlier races show the outer lanes are quicker."
+        ],
+        "risk": "Ten-day back-up, a BM80 rise and untested Flemington straight form; the outside lane may offer no advantage.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "RaceHub race form",
+            "url": "https://racehub.com.au/form-guide/horse-racing/flemington/2026-11-07/race-9"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://www.racingaustralia.horse/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2NzY5NTEyMzc%3d&src=horseform&raceentry=MzQ1ODg1NzY1Njg%3d&stage=Acceptances&Key=2026Nov07,VIC,Flemington"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/flemington-20261107/FLEM_071126_9"
+          }
+        ]
+      }
+    },
+    "rosehill gardens": {
+      "4": {
+        "horse": "Without Peer",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 5",
+          "Gate 5",
+          "55 kg",
+          "Tommy Berry",
+          "Close second to Botanical Boy two runs ago"
+        ],
+        "reasons": [
+          "He finished close to main pick Botanical Boy two runs ago, which is more informative than his long quote alone.",
+          "Blinkers are added; as a backmarker he can use a genuine 1800 m tempo to close from gate five."
+        ],
+        "risk": "Last-start eighth followed a slow getaway; he needs pace and a clear late run.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "Racing NSW race preview",
+            "url": "https://www.racingnsw.com.au/news/latest-racing-news/rosehill-preview-tips-for-five-diamonds-day-saturday-7th-november/"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2NDcyNjc4NDI%3d&src=horseform&raceentry=MzQ1NDMzNDkzOTM%3d&stage=Acceptances&Key=2026Nov07,NSW,Rosehill Gardens"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_4"
+          }
+        ]
+      },
+      "5": {
+        "horse": "Shotgun Bella",
+        "bet": "Speculative place",
+        "metrics": [
+          "No. 9",
+          "Gate 5",
+          "53.5 kg",
+          "Kerrin McEvoy",
+          "Past 1400 m BM84 winner"
+        ],
+        "reasons": [
+          "A 1400 m BM84 win and a light 53.5 kg give her a relevant trip-and-weight case.",
+          "The public speed map has her around midfield; gate five could let Kerrin McEvoy find cover before asking for a run."
+        ],
+        "risk": "Two recent fourths mean she must improve to make the placings in this field.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "Racing & Sports form",
+            "url": "https://www.racingandsports.com.au/form-guide/thoroughbred/australia/rosehill/2026-11-07/R5"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?horsecode=MTE1ODc5OTkwMTc%3d&src=horseform&raceentry=MzQ1ODQ2OTI4MDA%3d&stage=Acceptances&Key=2026Nov07,NSW,Rosehill Gardens"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_5"
+          }
+        ]
+      },
+      "6": {
+        "horse": "Torshavn",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 8",
+          "Gate 1",
+          "56.5 kg",
+          "Andrew Adkins",
+          "Won 1050 m Randwick trial"
+        ],
+        "reasons": [
+          "A 1050 m trial win is close to today’s 1100 m distance, giving some evidence of early speed.",
+          "Gate one can save ground in a short race if he begins cleanly and the rail is racing fairly."
+        ],
+        "risk": "First race start: trial speed is not proven under race pressure, and the inside gate could become a traffic problem.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "RaceHub trial preview",
+            "url": "https://racehub.com.au/race-preview/early-look-2026-11-07"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?horsecode=MTE3MTY0NDQxOTQ%3d&src=horseform&raceentry=MzQ1OTEzMjE3NjU%3d&stage=Acceptances&Key=2026Nov07,NSW,Rosehill Gardens"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_6"
+          }
+        ]
+      },
+      "7": {
+        "horse": "Chains Of Love",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 8",
+          "Gate 8",
+          "57 kg",
+          "Zac Lloyd",
+          "Last-start Kosciuszko winner"
+        ],
+        "reasons": [
+          "Her last-start Kosciuszko win and four wins from seven starts show more ability than the longer quote may suggest.",
+          "She can settle back and finish strongly if the 1400 m pace is genuine; Zac Lloyd rides."
+        ],
+        "risk": "First run at 1400 m and a Group 2 step make the closing run less certain.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "Racing NSW race-day field",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens#Race7"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2MzA1MTE0NzM%3d&src=horseform&raceentry=MzQ1ODY1ODY3OTA%3d&stage=Acceptances&Key=2026Nov07,NSW,Rosehill Gardens"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_7"
+          }
+        ]
+      },
+      "8": {
+        "horse": "Brindavan",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 12",
+          "Gate 8",
+          "56 kg",
+          "Ben Thompson",
+          "Recent finishes 1-2-2-1"
+        ],
+        "reasons": [
+          "His four latest runs include two wins and two seconds, and the trainer publicly identified this 1800 m race as the target.",
+          "The trainer expects him to sit in the first three pairs, a workable position from gate eight if he settles."
+        ],
+        "risk": "Sydney debut and higher class; his latest Heavy-track win may not translate to the current Good 4.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "Trainer report via RaceHub",
+            "url": "https://racehub.com.au/news/general/2026-11-05-gollan-turns-to-import-brindavan-in-bid-to-break-five-diamonds-drought"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?horsecode=MTE3Mjg1OTgzODU%3d&src=horseform&raceentry=MzQ1ODk4NDM1ODI%3d&stage=Acceptances&Key=2026Nov07,NSW,Rosehill Gardens"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_8"
+          }
+        ]
+      },
+      "9": {
+        "horse": "Detain",
+        "bet": "Speculative win/place",
+        "metrics": [
+          "No. 6",
+          "Gate 8",
+          "56 kg",
+          "Ashley Morgan",
+          "Two wins before spell"
+        ],
+        "reasons": [
+          "He won his last two completed races before the break, a better current sequence than the headline quote implies.",
+          "A forward-running style can help at 1100 m if Ashley Morgan secures a position without a wide trip."
+        ],
+        "risk": "First-up after a spell and no Soft-track win from three published starts; a downgrade would weaken the case.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "Racing NSW official form",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens#Race9"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2Nzg1ODgzNDE%3d&src=horseform&raceentry=MzQ1ODkzOTI5NDM%3d&stage=Acceptances&Key=2026Nov07,NSW,Rosehill Gardens"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_9"
+          }
+        ]
+      },
+      "10": {
+        "horse": "Chemtrail",
+        "bet": "Speculative place",
+        "metrics": [
+          "No. 13",
+          "Gate 3",
+          "52 kg allotted",
+          "Siena Grima",
+          "Recent first then second"
+        ],
+        "reasons": [
+          "A recent 1100 m win and 1200 m second show current form, while gate three and a light allotted weight favour an economical on-pace trip.",
+          "Siena Grima’s claim may reduce the carried weight toward the 51 kg minimum, subject to the official race-day declaration."
+        ],
+        "risk": "Sharp rise to BM78; no published win from five starts at 1200 m or four at Rosehill.",
+        "market_context": "Longer win quote than both main selections on the checked race-day board. Prices can change.",
+        "sources": [
+          {
+            "label": "Racing NSW official form",
+            "url": "https://mdata.racingnsw.com.au/FreeFields/Acceptances.aspx?Key=2026Nov07%2CNSW%2CRosehill+Gardens#Race10"
+          },
+          {
+            "label": "Official horse form",
+            "url": "https://mdata.racingnsw.com.au/InteractiveForm/HorseFullForm.aspx?horsecode=MTE2MTMyOTc5MzQ%3d&src=horseform&raceentry=MzQ1ODYwMjk0Nzg%3d&stage=Acceptances&Key=2026Nov07,NSW,Rosehill Gardens"
+          },
+          {
+            "label": "Public market board",
+            "url": "https://theoverlay.com.au/racing/2026-11-07/rosehill-20261107/RHIL_071126_10"
+          }
+        ]
+      }
+    }
+  }
+}
